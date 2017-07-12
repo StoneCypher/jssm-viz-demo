@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+  <head>
+
+    <title>Viz test</title>
+
+    <style type="text/css">
+
+      html, body, table, textarea { height: 100%; width: 100%; margin: 0; padding: 0; border: 0; border-collapse: collapse; }
+      th, td                      { margin: 0; padding: 0.5em; border: 0; }
+      th                          { height: 1em; border-bottom: 1px solid #ddd; background: #eee; font-weight: normal; font-family: sans-serif; text-align: left; }
+      td+td                       { border-left : 1px solid #ddd; }
+
+      #textrow                    { height: 50%; }
+      #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
+      #textrow textarea           { resize: none; }
+
+      #editor                     { font-family: monospace; }
+
+      #error_range                { float: right; color: #800; }
+
+      #dot_target                 { white-space: pre; font-family: monospace; }
+
+    </style>
+
+    <script defer type="text/javascript" src="node_modules/jssm/dist/jssm.es5.cjs.js"></script>
+    <script defer type="text/javascript" src="node_modules/jssm-viz/dist/jssm-viz.es5.cjs.js"></script>
+
+    <script defer type="text/javascript">
+
+      window.onload = () => {
+
+
+
+        const jssm   = require('jssm'),
+              jviz   = require('jssm-viz');
+
+        const svg_t  = document.getElementById('svg_target'),
+              png_t  = document.getElementById('png_target'),
+              dot_t  = document.getElementById('dot_target'),
+              editor = document.getElementById('editor'),
+              errorX = document.getElementById('error_range');
+
+
+
+        const updateVisual = (config) => {
+
+          const machine   = new jssm.machine(config),
+                dot       = jviz.dot(machine),
+                svg       = jviz.svg(dot);
+
+          dot_t.innerHTML = dot;
+
+          svg_t.innerHTML = jviz.svg(dot);
+
+          png_t.innerHTML = '';
+          png_t.appendChild(jviz.png_el(dot));
+
+        };
+
+
+        var was = '';
+        const updateCode = () => {
+
+          try {
+
+          	const val = editor.value;
+          	if (val === was) { return; }
+
+            const newConfig = JSON.parse(val);
+            updateVisual(newConfig);
+
+            errorX.innerHTML = '';
+
+          } catch (e) {
+          	errorX.innerHTML = e.message;
+          }
+
+          was = editor.value;
+
+        }
+
+
+
+        const l_config = {
+
+          initial_state: 'Red',
+
+          transitions: [
+
+            { name: 'OffToRed',     action: 'On',      from:'Off',    to:'Red'    },
+
+            { name: 'RedToOff',     action: 'Off',     from:'Red',    to:'Off'    },
+            { name: 'YellowToOff',  action: 'Off',     from:'Yellow', to:'Off'    },
+            { name: 'GreenToOff',   action: 'Off',     from:'Green',  to:'Off'    },
+
+            { name: 'SwitchToWarn', action: 'Proceed', from:'Green',  to:'Yellow' },
+            { name: 'SwitchToHalt', action: 'Proceed', from:'Yellow', to:'Red'    },
+            { name: 'SwitchToGo',   action: 'Proceed', from:'Red',    to:'Green'  }
+
+          ]
+        };
+
+
+
+        was              = JSON.stringify(l_config, undefined, 2);
+        editor.innerHTML = was;
+        editor.onkeyup   = () => updateCode();
+
+        updateVisual(l_config);
+
+
+
+      }
+
+    </script>
+
+
+  </head>
+
+  <body>
+
+    <table>
+
+      <tr>
+        <th>SVG version</th>
+        <th>PNG version</th>
+        <th>DOT version</th>
+      </tr>
+
+      <tr>
+        <td id="svg_target"></td>
+        <td id="png_target"></td>
+        <td id="dot_target"></td>
+      </tr>
+
+      <tr id="textheader">
+        <th colspan="3">
+          <span id="error_range"></span>
+          Use the JSSM JSON notation for FSMs below.
+        </th>
+      </tr>
+
+      <tr id="textrow">
+        <td colspan="3"><textarea id="editor"></textarea></td>
+      </tr>
+
+    </table>
+
+  </body>
+
+</html>

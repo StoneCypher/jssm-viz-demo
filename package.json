@@ -1,0 +1,39 @@
+{
+  "name": "jssm-viz-demo",
+  "version": "1.0.0",
+  "description": "Show how to use jssm-viz in a project, to render a jssm machine",
+  "main": "dist/index.cjs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StoneCypher/jssm-viz-demo.git"
+  },
+  "keywords": [
+    "jssm",
+    "jssm-viz",
+    "finite",
+    "state",
+    "machine",
+    "finite_state_machine",
+    "finite-state-machine",
+    "fsm",
+    "state-machine",
+    "state_machine",
+    "visualization",
+    "demo",
+    "viz"
+  ],
+  "author": "John Haugeland <stonecypher@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StoneCypher/jssm-viz-demo/issues"
+  },
+  "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
+  "devDependencies": {
+    "jssm": "^3.1.14",
+    "jssm-viz": "^0.6.4"
+  },
+  "dependencies": {}
+}
