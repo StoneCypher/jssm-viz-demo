@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {
-    "jssm": "^3.1.14",
-    "jssm-viz": "^0.6.4"
+    "jssm": "^4.3.2",
+    "jssm-viz": "^0.7.0"
   }
 }
