@@ -11,13 +11,17 @@
       th, td                      { margin: 0; padding: 0.5em; border: 0; }
       td+td+td                    { padding: 0; }
       th                          { height: 1em; border-bottom: 1px solid #ddd; background: #eee; font-weight: normal; font-family: sans-serif; text-align: left; }
+
+      td                          { width: 50%; }
       td+td                       { border-left : 1px solid #ddd; }
 
-      table                       { max-width: 100%; width: 100%; }
+      table                       { height: 100%; width: 100%; table-layout: fixed; }
 
       #textrow                    { height: 50%; }
       #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea           { resize: none; }
+
+      #png_target                 { height: 100%; }
 
       #editor                     { font-family: monospace; }
 
@@ -43,10 +47,7 @@
               sm     = jssm.sm,
               jviz   = require('jssm-viz');
 
-        const svg_t  = document.getElementById('svg_target'),
-              png_t  = document.getElementById('png_target'),
-              json_t = document.getElementById('json_target'),
-              dot_t  = document.getElementById('dot_target'),
+        const png_t  = document.getElementById('png_target'),
               editor = document.getElementById('editor'),
               errorX = document.getElementById('error_range');
 
@@ -54,17 +55,10 @@
 
         const updateVisual = (config) => {
 
-          const machine    = sm`${config}`,
-                dot        = jviz.dot(machine),
-                svg        = jviz.svg(dot);
-
-          json_t.innerHTML = `<div>${JSON.stringify(jssm.make(config), undefined, 2)}</div>`;
-          dot_t.innerHTML  = `<div>${dot}</div>`;
-
-          svg_t.innerHTML  = jviz.svg(dot);
+          const machine    = sm`${config}`;
 
           png_t.innerHTML  = '';
-          png_t.appendChild(jviz.png_el(dot));
+          png_t.appendChild(jviz.png_el(jviz.dot(machine), { engine: machine.layout() || 'dot' }));
 
         };
 
@@ -115,28 +109,18 @@
     <table>
 
       <tr>
-        <th>SVG version</th>
-        <th>PNG version</th>
-        <th>JSON version</th>
-        <th>DOT version</th>
-      </tr>
-
-      <tr>
-        <td id="svg_target"></td>
         <td id="png_target"></td>
-        <td id="json_target"></td>
-        <td id="dot_target"></td>
+        <td><textarea id="editor"></textarea></td>
       </tr>
 
       <tr id="textheader">
         <th colspan="4">
           <span id="error_range"></span>
-          Use the DSL notation for FSMs below.  Don't bother with the <tt>sm``</tt> part.
+          Use the DSL notation for FSMs.  Don't bother with the <tt>sm``</tt> part.
         </th>
       </tr>
 
       <tr id="textrow">
-        <td colspan="4"><textarea id="editor"></textarea></td>
       </tr>
 
     </table>
