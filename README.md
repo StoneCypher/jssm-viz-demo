@@ -3,6 +3,11 @@ Show how to use jssm-viz in a project, to render a jssm machine
 
 [Live hosted here](https://stonecypher.github.io/jssm-viz-demo/) by Github Pages
 
+* [https://stonecypher.github.io/jssm-viz-demo/graph_explorer.html](Graph explorer)
+* [https://stonecypher.github.io/jssm-viz-demo/language_explorer.html](Language explorer)
+
+
+
 ## A quick how-to for jssm-viz
 This shows how to use [jssm-viz](https://github.com/StoneCypher/jssm-viz) in
 projects.  Just `npm install` to get the relevant libraries, then open
