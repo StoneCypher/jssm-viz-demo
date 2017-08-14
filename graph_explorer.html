@@ -86,7 +86,7 @@
 
 
 
-        const l_config = `Off 'Enable' -> Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;\n\n[Red Yellow Green] ~> Off;`;
+        const l_config = `Off 'Enable' -> Red;\n\nRed 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;\n\n[Red Yellow Green] ~> Off;`;
 
 
 
@@ -110,7 +110,7 @@
 
       <tr>
         <td id="png_target"></td>
-        <td><textarea id="editor">off -> Red => Green => Yellow => Red; [Red Yellow Green] ~> off;</textarea></td>
+        <td><textarea id="editor"></textarea></td>
       </tr>
 
       <tr id="textheader">
