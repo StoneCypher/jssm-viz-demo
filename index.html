@@ -9,6 +9,7 @@
 
       html, body, table, textarea { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; border-collapse: collapse; }
       th, td                      { margin: 0; padding: 0.5em; border: 0; }
+      td+td+td                    { padding: 0; }
       th                          { height: 1em; border-bottom: 1px solid #ddd; background: #eee; font-weight: normal; font-family: sans-serif; text-align: left; }
       td+td                       { border-left : 1px solid #ddd; }
 
@@ -23,6 +24,9 @@
       #error_range                { float: right; color: #800; }
 
       #dot_target, #json_target   { white-space: pre; font-family: monospace; overflow: hidden; }
+
+      #dot_target div,
+      #json_target div            { height: 500px; overflow: auto; max-width: 850px; }
 
     </style>
 
@@ -55,7 +59,7 @@
                 svg        = jviz.svg(dot);
 
           json_t.innerHTML = `<div>${JSON.stringify(jssm.make(config), undefined, 2)}</div>`;
-          dot_t.innerHTML  = dot;
+          dot_t.innerHTML  = `<div>${dot}</div>`;
 
           svg_t.innerHTML  = jviz.svg(dot);
 
