@@ -4,7 +4,10 @@
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -f jssm.es5.cjs.min.js && rm -f jssm-viz.es5.cjs.min.js",
+    "clone": "cp ./node_modules/jssm/dist/jssm.es5.cjs.min.js . && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.min.js .",
+    "build": "npm run clean && npm run clone"
   },
   "repository": {
     "type": "git",
