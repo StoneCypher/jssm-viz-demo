@@ -77,7 +77,11 @@
             errorX.innerHTML = '';
 
           } catch (e) {
-          	errorX.innerHTML = e.message;
+            const start_r = `${e.location.start.line}:${e.location.start.column}`,
+                  end_r   = `${e.location.end.line}:${e.location.end.column}`;
+
+          	errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
+                                                   : `${e.message} (${start_r}&rarr;${end_r})`;
           }
 
           was = editor.value;
@@ -116,7 +120,6 @@
       <tr id="textheader">
         <th colspan="4">
           <span id="error_range"></span>
-          Use the DSL notation for FSMs.  (Don't bother with the <tt>sm``</tt> part.)
         </th>
       </tr>
 
