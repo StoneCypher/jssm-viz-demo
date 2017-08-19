@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -f jssm.es5.cjs.min.js && rm -f jssm-viz.es5.cjs.min.js",
-    "clone": "cp ./node_modules/jssm/dist/jssm.es5.cjs.min.js . && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.min.js .",
+    "clone": "cp ./node_modules/jssm/dist/jssm.es5.cjs.min.js . && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.js .",
     "build": "npm run clean && npm run clone"
   },
   "repository": {
@@ -36,7 +36,7 @@
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {},
   "devDependencies": {
-    "jssm": "^4.4.2",
-    "jssm-viz": "^1.0.0"
+    "jssm": "^4.5.0",
+    "jssm-viz": "^1.1.0"
   }
 }
