@@ -15,8 +15,8 @@
 
       table                       { max-width: 100%; width: 100%; }
 
-      #textrow                    { height: 50%; }
-      #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
+      #textrow                    { height: 50%; height: 8em; }
+      #textrow td                 { border-top : 1px solid #ddd; background-color: #eee; height: 8em; }
       #textrow textarea           { resize: none; }
 
       #editor                     { font-family: monospace; }
@@ -39,31 +39,34 @@
 
 
 
-        const jssm   = require('jssm'),
-              sm     = jssm.sm,
-              jviz   = require('jssm-viz');
+        const jssm    = require('jssm'),
+              sm      = jssm.sm,
+              jviz    = require('jssm-viz');
 
-        const svg_t  = document.getElementById('svg_target'),
-              png_t  = document.getElementById('png_target'),
-              json_t = document.getElementById('json_target'),
-              dot_t  = document.getElementById('dot_target'),
-              editor = document.getElementById('editor'),
-              errorX = document.getElementById('error_range');
+        const svg_t   = document.getElementById('svg_target'),
+              png_t   = document.getElementById('png_target'),
+              ptree_t = document.getElementById('ptree_target'),
+              json_t  = document.getElementById('json_target'),
+              dot_t   = document.getElementById('dot_target'),
+              editor  = document.getElementById('editor'),
+              errorX  = document.getElementById('error_range');
 
 
 
-        const updateVisual = (config) => {
+        const updateVisual  = (config) => {
 
-          const machine    = sm`${config}`,
-                dot        = jviz.dot(machine),
-                svg        = jviz.dot_to_svg(dot, { engine: machine.layout() || 'dot' });
+          const machine     = sm`${config}`,
+                dot         = jviz.dot(machine),
+                svg         = jviz.dot_to_svg(dot, { engine: machine.layout() || 'dot' });
 
-          json_t.innerHTML = `<div>${JSON.stringify(jssm.make(config), undefined, 2)}</div>`;
-          dot_t.innerHTML  = `<div>${dot}</div>`;
+          ptree_t.innerText = JSON.stringify(jssm.parse(config), undefined, 2);
 
-          svg_t.innerHTML  = svg;
+          json_t.innerHTML  = `<div>${JSON.stringify(jssm.make(config), undefined, 2)}</div>`;
+          dot_t.innerHTML   = `<div>${dot}</div>`;
 
-          png_t.innerHTML  = '';
+          svg_t.innerHTML   = svg;
+
+          png_t.innerHTML   = '';
           png_t.appendChild(jviz.png_el(dot, { engine: machine.layout() || 'dot' }));
 
         };
@@ -115,8 +118,9 @@
     <table>
 
       <tr>
-        <th>SVG version</th>
-        <th>PNG version</th>
+        <th>SVG</th>
+        <th>PNG</th>
+        <th>Parse tree</th>
         <th>JSON version</th>
         <th>DOT version</th>
       </tr>
@@ -124,19 +128,20 @@
       <tr>
         <td id="svg_target"></td>
         <td id="png_target"></td>
+        <td><pre id="ptree_target"></pre></td>
         <td id="json_target"></td>
         <td id="dot_target"></td>
       </tr>
 
       <tr id="textheader">
-        <th colspan="4">
+        <th colspan="5">
           <span id="error_range"></span>
           Use the DSL notation for FSMs below.  Don't bother with the <tt>sm``</tt> part.
         </th>
       </tr>
 
       <tr id="textrow">
-        <td colspan="4"><textarea id="editor"></textarea></td>
+        <td colspan="5"><textarea id="editor"></textarea></td>
       </tr>
 
     </table>

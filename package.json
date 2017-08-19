@@ -36,7 +36,7 @@
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {},
   "devDependencies": {
-    "jssm": "^4.5.0",
-    "jssm-viz": "^1.1.0"
+    "jssm": "^4.6.0",
+    "jssm-viz": "^1.1.1"
   }
 }
