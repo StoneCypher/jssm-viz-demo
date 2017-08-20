@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+  <head>
+
+    <title>Viz test</title>
+
+    <style type="text/css">
+
+      html, body, table, textarea { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; border-collapse: collapse; }
+      th, td                      { margin: 0; padding: 0.5em; border: 0; }
+      td+td+td                    { padding: 0; }
+      th                          { height: 1em; border-bottom: 1px solid #ddd; background: #eee; font-weight: normal; font-family: sans-serif; text-align: left; }
+
+      td                          { width: 50%; }
+      td+td                       { border-left : 1px solid #ddd; }
+
+      table                       { height: 100%; width: 100%; table-layout: fixed; }
+
+      #textrow                    { height: 50%; }
+      #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
+      #textrow textarea           { resize: none; }
+
+      #png_target                 { height: 100%; }
+
+      #editor                     { font-family: monospace; }
+
+      #error_range                { float: right; color: #800; }
+
+      #dot_target, #json_target   { white-space: pre; font-family: monospace; overflow: hidden; }
+
+      #dot_target div,
+      #json_target div            { height: 500px; overflow: auto; max-width: 850px; }
+
+    </style>
+
+    <script defer type="text/javascript" src="jssm.es5.cjs.min.js"></script>
+    <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
+
+    <script defer type="text/javascript">
+
+      window.onload = () => {
+
+
+
+        const jssm   = require('jssm'),
+              sm     = jssm.sm,
+              jviz   = require('jssm-viz');
+
+        const png_t  = document.getElementById('png_target'),
+              editor = document.getElementById('editor'),
+              errorX = document.getElementById('error_range');
+
+
+
+        const updateVisual = (config) => {
+
+          const machine    = sm`${config}`;
+
+          png_t.innerHTML  = '';
+          png_t.appendChild(jviz.png_el(jviz.dot(machine), { engine: machine.layout() || 'dot' }));
+
+        };
+
+
+        var was = '';
+        const updateCode = () => {
+
+          try {
+
+          	const val = editor.value;
+          	if (val === was) { return; }
+
+            const newConfig = val;
+            updateVisual(newConfig);
+
+            errorX.innerHTML = '';
+
+          } catch (e) {
+            const start_r = `${e.location.start.line}:${e.location.start.column}`,
+                  end_r   = `${e.location.end.line}:${e.location.end.column}`;
+
+          	errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
+                                                   : `${e.message} (${start_r}&rarr;${end_r})`;
+          }
+
+          was = editor.value;
+
+          updateCode();
+
+        }
+
+
+
+        const l_config = `Off 'Enable' -> Red;\n\nRed 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;\n\n[Red Yellow Green] ~> Off;`;
+
+
+
+        editor.innerHTML = l_config;
+        editor.onkeyup   = () => updateCode();
+
+        updateVisual(l_config);
+
+
+
+      }
+
+    </script>
+
+
+  </head>
+
+  <body>
+
+    <table>
+
+      <tr>
+        <td id="png_target"></td>
+        <td><textarea id="editor"></textarea></td>
+      </tr>
+
+      <tr id="textheader">
+        <th colspan="4">
+          <span id="error_range"></span>
+        </th>
+      </tr>
+
+      <tr id="textrow">
+      </tr>
+
+    </table>
+
+  </body>
+
+</html>
