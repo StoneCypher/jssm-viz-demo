@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+  <head>
+
+    <title>Viz test</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet">
+
+    <style type="text/css">
+      #editor { position: fixed; top: 0; right: 0; bottom: 1em; width: 50%; font-family: "inconsolata", monospace; }
+    </style>
+
+    <script defer type="text/javascript" src="jssm.es5.cjs.min.js"></script>
+    <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
+
+    <script defer src="ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <script defer type="text/javascript">
+      window.onload = () => {
+
+        window.ace_ed = ace.edit("editor");
+               ace_ed.setTheme("ace/theme/monokai");
+               ace_ed.getSession().setMode("ace/mode/javascript");
+
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div id="png_target"></div>
+    <div id="editor">Off 'Enable' -> Red;
+Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
+[Red Yellow Green] ~> Off;</div>
+
+    <div id="error_range"></div>
+    <div id="textrow"></div>
+
+  </body>
+
+</html>

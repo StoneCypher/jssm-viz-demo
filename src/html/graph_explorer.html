@@ -4,28 +4,23 @@
   <head>
 
     <title>Viz test</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet">
 
     <style type="text/css">
 
-      html, body, table, textarea { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; border-collapse: collapse; }
-      th, td                      { margin: 0; padding: 0.5em; border: 0; }
-      td+td+td                    { padding: 0; }
-      th                          { height: 1em; border-bottom: 1px solid #ddd; background: #eee; font-weight: normal; font-family: sans-serif; text-align: left; }
+      html, body                  { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
+      html, body, #error_range    { font-family: "open sans", sans-serif; }
 
-      td                          { width: 50%; }
-      td+td                       { border-left : 1px solid #ddd; }
-
-      table                       { height: 100%; width: 100%; table-layout: fixed; }
-
-      #textrow                    { height: 50%; }
+      #textrow                    { }
       #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea           { resize: none; }
 
-      #png_target                 { height: 100%; }
+      #png_target                 { position: fixed; top: 0; left: 0; width: 50%; bottom: 1em; }
 
-      #editor                     { font-family: monospace; }
+      #editor                     { position: fixed; top: 0; right: 0; bottom: 1em; width: 50%; font-family: "inconsolata", monospace; }
 
-      #error_range                { float: right; color: #800; }
+      #error_range                { position: fixed; bottom: 0; left: 0; right: 0; height: 1em; line-height: 100%;
+                                    padding: 0; margin: 0; border: 0; color: #b00; }
 
       #dot_target, #json_target   { white-space: pre; font-family: monospace; overflow: hidden; }
 
@@ -112,23 +107,11 @@
 
   <body>
 
-    <table>
+    <div id="png_target"></div>
+    <textarea id="editor"></textarea>
 
-      <tr>
-        <td id="png_target"></td>
-        <td><textarea id="editor"></textarea></td>
-      </tr>
-
-      <tr id="textheader">
-        <th colspan="4">
-          <span id="error_range"></span>
-        </th>
-      </tr>
-
-      <tr id="textrow">
-      </tr>
-
-    </table>
+    <div id="error_range"></div>
+    <div id="textrow"></div>
 
   </body>
 
