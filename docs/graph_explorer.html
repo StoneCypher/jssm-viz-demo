@@ -53,7 +53,7 @@
           const machine    = sm`${config}`;
 
           png_t.innerHTML  = '';
-          png_t.appendChild(jviz.png_el(jviz.dot(machine), { engine: machine.layout() || 'dot' }));
+          png_t.appendChild(jviz.png_el(jviz.dot(machine), { engine: machine.graph_layout() || 'dot' }));
 
         };
 
