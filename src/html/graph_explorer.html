@@ -72,11 +72,20 @@
             errorX.innerHTML = '';
 
           } catch (e) {
-            const start_r = `${e.location.start.line}:${e.location.start.column}`,
-                  end_r   = `${e.location.end.line}:${e.location.end.column}`;
 
-          	errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
-                                                   : `${e.message} (${start_r}&rarr;${end_r})`;
+            if (e.message) {
+
+              errorX.innerHTML = e.message;
+
+            } else {
+
+              const start_r = `${e.location.start.line}:${e.location.start.column}`,
+                    end_r   = `${e.location.end.line}:${e.location.end.column}`;
+
+              errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
+                                                     : `${e.message} (${start_r}&rarr;${end_r})`;
+            }
+
           }
 
           was = editor.value;
