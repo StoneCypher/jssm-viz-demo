@@ -38,10 +38,10 @@
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {
-    "jssm-viz": "^1.1.5"
+    "jssm": "file:../jssm"
   },
   "devDependencies": {
     "ace-builds": "^1.2.8",
-    "jssm": "^5.9.5"
+    "jssm-viz": "^1.1.5"
   }
 }
