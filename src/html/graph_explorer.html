@@ -11,16 +11,22 @@
       html, body                  { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
       html, body, #error_range    { font-family: "open sans", sans-serif; }
 
+      #topbox                     { position: fixed; top: 0; left: 0; right: 0; bottom: 2em; }
+      .hideError #topbox          { bottom: 0; }
+
       #textrow                    { }
       #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea           { resize: none; }
 
-      #png_target                 { position: fixed; top: 0; left: 0; width: 50%; bottom: 1em; }
+      #png_target                 { position: absolute; top: 0; left: 0; width: 50%; bottom: 0; }
 
-      #editor                     { position: fixed; top: 0; right: 0; bottom: 1em; width: 50%; font-family: "inconsolata", monospace; }
+      #editor                     { position: absolute; top: 0; right: 0; bottom: 0; width: 50%;
+                                    font-family: "inconsolata", monospace; }
 
-      #error_range                { position: fixed; bottom: 0; left: 0; right: 0; height: 1em; line-height: 100%;
-                                    padding: 0; margin: 0; border: 0; color: #b00; }
+      #error_range                { position: fixed; bottom: 0; left: 0; right: 0; height: 2em; line-height: 2em;
+                                    padding: 0 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
+
+      .hideError #error_range     { display: none; }
 
       #dot_target, #json_target   { white-space: pre; font-family: monospace; overflow: hidden; }
 
@@ -70,6 +76,7 @@
             updateVisual(newConfig);
 
             errorX.innerHTML = '';
+            document.body.classList.toggle('hideError', true);
 
           } catch (e) {
 
@@ -86,6 +93,8 @@
                                                      : `${e.message} (${start_r}&rarr;${end_r})`;
             }
 
+            document.body.classList.toggle('hideError', false);
+
           }
 
           was = editor.value;
@@ -96,7 +105,26 @@
 
 
 
-        const l_config = `Off 'Enable' -> Red;\n\nRed 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;\n\n[Red Yellow Green] ~> Off;`;
+        const l_config = `
+machine_name     : "Example traffic light";
+machine_author   : "John Haugeland <stonecypher@gmail.com>";
+machine_license  : MIT;
+machine_comment  : "Just a quick example of how these are written";
+machine_language : en;
+machine_version  : 1.0.0;
+fsl_version      : 1.0.0;
+
+start_states     : [Off Red];
+
+
+
+
+
+Off 'Enable' -> Red;
+
+Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
+
+[Red Yellow Green] ~> Off;`.trim();
 
 
 
@@ -114,10 +142,12 @@
 
   </head>
 
-  <body>
+  <body class="hideError">
 
-    <div id="png_target"></div>
-    <textarea id="editor"></textarea>
+    <div id="topbox">
+      <div id="png_target"></div>
+      <textarea id="editor"></textarea>
+    </div>
 
     <div id="error_range"></div>
     <div id="textrow"></div>
