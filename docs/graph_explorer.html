@@ -8,31 +8,38 @@
 
     <style type="text/css">
 
-      html, body                  { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
-      html, body, #error_range    { font-family: "open sans", sans-serif; }
+      html, body                          { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
+      html, body, #error_range            { font-family: "open sans", sans-serif; }
 
-      #topbox                     { height: 100%; width: 100%; margin: 0; padding: 0; border-collapse: collapse; border: 0; table-layout: fixed; }
+      #topbox                             { height: 100%; width: 100%; margin: 0; padding: 0; border-collapse: collapse; border: 0; table-layout: fixed; }
 
-      .hideError #topbox          { bottom: 0; }
+      .hideError #topbox                  { bottom: 0; }
 
-      #textrow                    { }
-      #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
-      #textrow textarea           { resize: none; }
+      #textrow                            { }
+      #textrow td                         { border-top  : 1px solid #ddd; background-color: #eee; }
+      #textrow textarea                   { resize: none; }
 
-      #edit_row td                { height: 100%; }
+      #edit_row td                        { height: 100%; }
 
-      #svg_target                 { width: calc(50% - 10px); text-align: center; position: relative; }
-      #svg_target svg             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target              { width: calc(50% - 10px); }
-      #widget_target              { width: 20px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
-                                    box-sizing: border-box; padding: 5px; }
+      #svg_target                         { width: calc(50% - 30px); text-align: center; position: relative; }
+      #svg_target svg                     { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+      #editor_target                      { width: calc(50% - 30px); }
 
-      #editor                     { font-family: "inconsolata", monospace; height: 100%; width: 100%;
-                                    box-sizing: border-box; margin: 0; padding: 0 0 0 0.5em; border: 0; }
+      #widget_target                      { width: 60px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
+                                            box-sizing: border-box; padding: 0.5em 5px; vertical-align: bottom; }
 
-      #error_range                { padding: 0.25em 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
+      #widget_target input[type="button"] { border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; display: block;
+      	                                    height: 40px; width: 40px; line-height: 40px; margin: 0 auto; padding: 0; }
 
-      .hideError #error_range     { display: none; }
+      #widget_target input[type="button"]+
+                     input[type="button"] { margin-top: 0.2em; }
+
+      #editor                             { font-family: "inconsolata", monospace; height: 100%; width: 100%;
+                                            box-sizing: border-box; margin: 0; padding: 0 0 0 0.5em; border: 0; }
+
+      #error_range                        { padding: 0.25em 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
+
+      .hideError #error_range             { display: none; }
 
     </style>
 
@@ -45,13 +52,39 @@
 
 
 
-        const jssm   = require('jssm'),
-              sm     = jssm.sm,
-              jviz   = require('jssm-viz');
+        const jssm     = require('jssm'),
+              sm       = jssm.sm,
+              jviz     = require('jssm-viz'),
+              byId     = z => document.getElementById(z);
 
-        const svg_t  = document.getElementById('svg_target'),
-              editor = document.getElementById('editor'),
-              errorX = document.getElementById('error_range');
+        const svg_t    = byId('svg_target'),
+              editor   = byId('editor'),
+              errorX   = byId('error_range'),
+              textUp   = byId('textUp'),
+              textDpwn = byId('textDown');
+
+        const minSz  = 3;
+        let   edSize = 13;
+
+
+
+        const updateEditor = () => {
+        	editor.style.fontSize = `${edSize}px`;
+        };
+
+
+
+        const bumpTsUp = () => {
+        	edSize += 1;
+        	updateEditor();
+        };
+
+
+
+        const bumpTsDown = () => {
+        	edSize = Math.max(edSize - 1, minSz);
+        	updateEditor();
+        };
 
 
 
@@ -61,6 +94,12 @@
           svg_t.innerHTML = jviz.dot_to_svg(jviz.dot(machine), { engine: machine.graph_layout() || 'dot' });
 
         };
+
+
+
+        textDown.onclick = bumpTsDown;
+        textUp.onclick   = bumpTsUp;
+
 
 
         var was = '';
@@ -147,7 +186,11 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
     	<tr id="edit_row">
     		<td id="svg_target"></td>
-        <td id="widget_target"></td>
+        <td id="widget_target">
+        	<input id="textUp"   type="button" value="T &uarr;"/>
+        	<input id="textDown" type="button" value="T &darr;"/><br/>
+        	<input id="popPng"   type="button" value="PNG"/>
+        </td>
         <td id="editor_target"><textarea id="editor"></textarea></td>
       </tr>
 
