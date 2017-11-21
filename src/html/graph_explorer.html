@@ -11,27 +11,28 @@
       html, body                  { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
       html, body, #error_range    { font-family: "open sans", sans-serif; }
 
-      #topbox                     { position: fixed; top: 0; left: 0; right: 0; bottom: 2em; }
+      #topbox                     { height: 100%; width: 100%; margin: 0; padding: 0; border-collapse: collapse; border: 0; table-layout: fixed; }
+
       .hideError #topbox          { bottom: 0; }
 
       #textrow                    { }
       #textrow td                 { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea           { resize: none; }
 
-      #png_target                 { position: absolute; top: 0; left: 0; width: 50%; bottom: 0; }
+      #edit_row td                { height: 100%; }
 
-      #editor                     { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; height: 100%;
-                                    font-family: "inconsolata", monospace; }
+      #svg_target                 { width: calc(50% - 10px); text-align: center; position: relative; }
+      #svg_target svg             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+      #editor_target              { width: calc(50% - 10px); }
+      #widget_target              { width: 20px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
+                                    box-sizing: border-box; padding: 5px; }
 
-      #error_range                { position: fixed; bottom: 0; left: 0; right: 0; height: 2em; line-height: 2em;
-                                    padding: 0 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
+      #editor                     { font-family: "inconsolata", monospace; height: 100%; width: 100%;
+                                    box-sizing: border-box; margin: 0; padding: 0 0 0 0.5em; border: 0; }
+
+      #error_range                { padding: 0.25em 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
 
       .hideError #error_range     { display: none; }
-
-      #dot_target, #json_target   { white-space: pre; font-family: monospace; overflow: hidden; }
-
-      #dot_target div,
-      #json_target div            { height: 500px; overflow: auto; max-width: 850px; }
 
     </style>
 
@@ -48,7 +49,7 @@
               sm     = jssm.sm,
               jviz   = require('jssm-viz');
 
-        const png_t  = document.getElementById('png_target'),
+        const svg_t  = document.getElementById('svg_target'),
               editor = document.getElementById('editor'),
               errorX = document.getElementById('error_range');
 
@@ -56,10 +57,8 @@
 
         const updateVisual = (config) => {
 
-          const machine    = sm`${config}`;
-
-          png_t.innerHTML  = '';
-          png_t.appendChild(jviz.png_el(jviz.dot(machine), { engine: machine.graph_layout() || 'dot' }));
+          const machine = sm`${config}`;
+          svg_t.innerHTML = jviz.dot_to_svg(jviz.dot(machine), { engine: machine.graph_layout() || 'dot' });
 
         };
 
@@ -144,12 +143,18 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
   <body class="hideError">
 
-    <div id="topbox">
-      <div id="png_target"></div>
-      <textarea id="editor"></textarea>
-    </div>
+    <table id="topbox">
 
-    <div id="error_range"></div>
+    	<tr id="edit_row">
+    		<td id="svg_target"></td>
+        <td id="widget_target"></td>
+        <td id="editor_target"><textarea id="editor"></textarea></td>
+      </tr>
+
+      <tr><td colspan="3" id="error_range"></td></tr>
+
+    </table>
+
     <div id="textrow"></div>
 
   </body>

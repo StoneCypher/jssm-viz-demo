@@ -5,7 +5,7 @@
   "main": "dist/index.cjs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf ./docs/ && mkdir ./docs/",
+    "clean": "rm -rf ./docs/ && mkdir docs",
     "cloneace": "cp -r ./node_modules/ace-builds/src/* ./docs",
     "clonejs": "cp ./node_modules/jssm/dist/jssm.es5.cjs.min.js ./docs/ && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.js ./docs/",
     "clonehtml": "cp ./src/html/* ./docs/",
@@ -39,10 +39,11 @@
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {
     "jssm": "^5.11.4",
-    "jssm-viz": "^1.1.5"
+    "jssm-viz": "^1.1.8"
   },
   "devDependencies": {
     "ace-builds": "^1.2.8",
-    "eslint": "^4.8.0"
+    "eslint": "^4.8.0",
+    "rimraf": "^2.6.2"
   }
 }
