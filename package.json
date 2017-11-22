@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "1.3.7",
+  "version": "1.4.0",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {

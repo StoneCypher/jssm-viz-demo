@@ -29,7 +29,7 @@
                                             box-sizing: border-box; padding: 0.5em 5px; vertical-align: bottom; }
 
       #widget_target input[type="button"] { border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; display: block;
-      	                                    height: 40px; width: 40px; line-height: 40px; margin: 0 auto; padding: 0; }
+                                            height: 40px; width: 40px; line-height: 40px; margin: 0 auto; padding: 0; }
 
       #widget_target input[type="button"]+
                      input[type="button"] { margin-top: 0.2em; }
@@ -60,8 +60,9 @@
         const svg_t    = byId('svg_target'),
               editor   = byId('editor'),
               errorX   = byId('error_range'),
+              graphRot = byId('graphRot'),
               textUp   = byId('textUp'),
-              textDpwn = byId('textDown');
+              textDown = byId('textDown');
 
         const minSz  = 3;
         let   edSize = 13;
@@ -69,21 +70,21 @@
 
 
         const updateEditor = () => {
-        	editor.style.fontSize = `${edSize}px`;
+          editor.style.fontSize = `${edSize}px`;
         };
 
 
 
         const bumpTsUp = () => {
-        	edSize += 1;
-        	updateEditor();
+          edSize += 1;
+          updateEditor();
         };
 
 
 
         const bumpTsDown = () => {
-        	edSize = Math.max(edSize - 1, minSz);
-        	updateEditor();
+          edSize = Math.max(edSize - 1, minSz);
+          updateEditor();
         };
 
 
@@ -97,18 +98,13 @@
 
 
 
-        textDown.onclick = bumpTsDown;
-        textUp.onclick   = bumpTsUp;
-
-
-
         var was = '';
         const updateCode = () => {
 
           try {
 
-          	const val = editor.value;
-          	if (val === was) { return; }
+            const val = editor.value;
+            if (val === was) { return; }
 
             const newConfig = val;
             updateVisual(newConfig);
@@ -140,6 +136,24 @@
           updateCode();
 
         }
+
+
+
+        const graphRotate = () => {
+          // todo whargarbl comeback fixme
+          // this is implemented in a really gross way in jssm-viz right now
+          // remove this once fixed there; this should be a language feature
+
+          window.lrGViz = (!(window.lrGViz)); // graph checks this before issuing the internal instruction :/
+          was = false;
+          updateCode();
+        };
+
+
+
+        textDown.onclick = bumpTsDown;
+        textUp.onclick   = bumpTsUp;
+        graphRot.onclick = graphRotate;
 
 
 
@@ -184,12 +198,13 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
     <table id="topbox">
 
-    	<tr id="edit_row">
-    		<td id="svg_target"></td>
+      <tr id="edit_row">
+        <td id="svg_target"></td>
         <td id="widget_target">
-        	<input id="textUp"   type="button" value="T &uarr;"/>
-        	<input id="textDown" type="button" value="T &darr;"/><br/>
-        	<input id="popPng"   type="button" value="PNG"/>
+          <input id="graphRot" type="button" value="&#8635;"/><br/>
+          <input id="textUp"   type="button" value="T &uarr;"/>
+          <input id="textDown" type="button" value="T &darr;"/><br/>
+          <input id="popPng"   type="button" value="PNG"/>
         </td>
         <td id="editor_target"><textarea id="editor"></textarea></td>
       </tr>
