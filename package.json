@@ -38,12 +38,12 @@
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {
-    "jssm": "^5.11.4",
-    "jssm-viz": "^1.1.9"
+    "jssm": "^5.11.4"
   },
   "devDependencies": {
     "ace-builds": "^1.2.8",
     "eslint": "^4.8.0",
+    "jssm-viz": "file:../jssm-viz",
     "rimraf": "^2.6.2"
   }
 }
