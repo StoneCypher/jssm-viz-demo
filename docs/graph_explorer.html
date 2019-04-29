@@ -28,6 +28,8 @@
       #dot_code_target                          { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
                                                   display: none; }
 
+      #svg_code, #dot_code                      { height: 100%; margin: 0; }
+
       .show_svg      #svg_target                { display: block; }
       .show_svg_code #svg_code_target           { display: block; }
       .show_dot_code #dot_code_target           { display: block; }
@@ -126,6 +128,8 @@
                 u_svg = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' });
 
           svg_t.innerHTML = u_svg;
+          dot_display? dot_display.setValue(u_dot, 1) : true;
+          svg_display? svg_display.setValue(u_svg, 1) : true;
 
         };
 
@@ -268,9 +272,20 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         ace_editor.focus();
         ace_editor.navigateFileEnd();
 
+
         window.ae = ace_editor;
         window.cm = curSM;
         // word wrap
+
+        var svg_display = ace.edit("svg_code");
+        svg_display.session.setMode("ace/mode/svg");
+        svg_display.getSession().setUseWrapMode(true)
+//        svg_display.session.readOnly(true);
+
+        var dot_display = ace.edit("dot_code");
+        dot_display.session.setMode("ace/mode/dot");
+        dot_display.getSession().setUseWrapMode(true)
+//        dot_display.session.readOnly(true);
 
 
       }
