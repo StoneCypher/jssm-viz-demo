@@ -24,7 +24,7 @@
       #svg_host                           { width: 70%; text-align: center; position: relative; overflow: auto; }
       #svg_target                         { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
       #svg_host svg                       { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                      { width: 30%; }
+      #editor_target                      { width: 30%; position: relative; }
 
       #widget_target                      { width: 60px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
                                             box-sizing: border-box; padding: 0.5em 5px; vertical-align: bottom; }
@@ -38,8 +38,15 @@
       #widget_target input[type="number"] { width: 70%; margin: 0 auto 0 auto; display: block; letter-spacing: -0.1em; font-size: 70%; }
       .small_label                        { font-size: 90%; text-align: center; }
 
-      #editor                             { font-family: "inconsolata", monospace; height: 100%; width: 100%;
-                                            box-sizing: border-box; margin: 0; padding: 0 0 0 0.5em; border: 0; }
+      #editorBox                          { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0; }
+      #editor                             { font-family: "inconsolata", monospace; box-sizing: border-box; margin: 0;
+                                            padding: 0 0 0 0.5em; border: 0; height: 100%; }
+
+      #editorTopBar                       { position: absolute; top: 0; left: 0; right: 0; height: 2em;
+                                            line-height: 2em; background-color: yellow; }
+
+      #editorBottomBar                    { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
+                                            line-height: 1.5em; background-color: orange; padding-left: 0.3em; }
 
       #error_range                        { padding: 0.25em 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
 
@@ -234,7 +241,13 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
           <input id="popSvg"   type="button" value="SVG"/>
           <input id="popDot"   type="button" value="DOT"/>
         </td>
-        <td id="editor_target"><pre id="editor"></pre></td>
+        <td id="editor_target">
+          <div id="editorTopBar"></div>
+          <div id="editorBox">
+            <pre id="editor"></pre>
+          </div>
+          <div id="editorBottomBar"></div>
+        </td>
       </tr>
 
       <tr><td colspan="3" id="error_range"></td></tr>
