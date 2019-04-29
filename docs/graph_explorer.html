@@ -134,9 +134,11 @@
         const getStatusReadout = () => {
 
           const cpos  = ace_editor.selection.getCursor(),
-                lines = ace_editor.session.getLength();
+                lines = ace_editor.session.getLength(),
+                nodecount = curSM? curSM._states.size : 'no',
+                edgecount = curSM? curSM._edges.length : 'no';
 
-          return `Line ${cpos.row+1} col ${cpos.column+1}; ${lines} lines; TODO nodes (X start, X fin); TODO edges`;
+          return `Line ${cpos.row+1} col ${cpos.column+1}; ${lines} lines; ${nodecount} nodes; ${edgecount} edges`;
 
         };
 
@@ -259,12 +261,15 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         updateCode();
         byId('vis_btn').click();
         ace_editor.session.setTabSize(2);
-        ace_editor.session.useSoftTabs(true);
-        ace_editor.session.enableLiveAutocompletion(true);
+//        ace_editor.session.useSoftTabs(true);
+//        ace_editor.session.enableLiveAutocompletion(true);
         ace_editor.selection.on('changeCursor', () => byId('editorBottomBar').innerHTML = getStatusReadout() );
-        ace_editor.renderer.setTabSize(2);
+//        ace_editor.renderer.setTabSize(2);
         ace_editor.focus();
         ace_editor.navigateFileEnd();
+
+        window.ae = ace_editor;
+        window.cm = curSM;
         // word wrap
 
 
@@ -282,8 +287,8 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
       <tr id="edit_row">
         <td id="svg_host">
           <div id="svg_target"></div>
-          <div id="svg_code_target"></div>
-          <div id="dot_code_target"></div>
+          <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
+          <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
         </td>
         <td id="editor_target">
           <div id="editorTopBar">
