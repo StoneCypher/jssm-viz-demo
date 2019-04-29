@@ -8,49 +8,58 @@
 
     <style type="text/css">
 
-      html, body                          { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; overflow: hidden; }
-      html, body, #error_range            { font-family: "open sans", sans-serif; }
+      html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
+                                                  border: 0; overflow: hidden; font-family: "open sans", sans-serif; }
 
-      #topbox                             { height: 100%; width: 100%; margin: 0; padding: 0; border-collapse: collapse; border: 0; table-layout: fixed; }
+      #topbox                                   { height: 100%; width: 100%; margin: 0; padding: 0;
+                                                  border-collapse: collapse; border: 0; table-layout: fixed; }
 
-      .hideError #topbox                  { bottom: 0; }
+      .showError #editorBottomBar               { background-color: #faa; color: black; }
 
-      #textrow                            { }
-      #textrow td                         { border-top  : 1px solid #ddd; background-color: #eee; }
-      #textrow textarea                   { resize: none; }
+      #textrow                                  { }
+      #textrow td                               { border-top  : 1px solid #ddd; background-color: #eee; }
+      #textrow textarea                         { resize: none; }
 
-      #edit_row td                        { height: 100%; }
+      #edit_row td                              { height: 100%; }
 
-      #svg_host                           { width: 70%; text-align: center; position: relative; overflow: auto; }
-      #svg_target                         { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
-      #svg_host svg                       { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                      { width: 30%; position: relative; }
+      #svg_host                                 { width: 70%; text-align: center; position: relative; overflow: auto; }
 
-      #widget_target                      { width: 60px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
-                                            box-sizing: border-box; padding: 0.5em 5px; vertical-align: bottom; }
+      #svg_target,  #svg_code_target,
+      #dot_code_target                          { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+                                                  display: none; }
 
-      #widget_target input[type="button"] { border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; display: block;
-                                            height: 40px; width: 40px; line-height: 40px; margin: 0 auto; padding: 0; }
+      .show_svg      #svg_target                { display: block; }
+      .show_svg_code #svg_code_target           { display: block; }
+      .show_dot_code #dot_code_target           { display: block; }
 
-      #widget_target input[type="button"]+
-                     input[type="button"] { margin-top: 0.2em; }
+      .show_svg      #editorTopBar #vis_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
+      .show_svg_code #editorTopBar #svg_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
+      .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
 
-      #widget_target input[type="number"] { width: 70%; margin: 0 auto 0 auto; display: block; letter-spacing: -0.1em; font-size: 70%; }
-      .small_label                        { font-size: 90%; text-align: center; }
+      #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+      #editor_target                            { width: 30%; position: relative; }
 
-      #editorBox                          { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0; }
-      #editor                             { font-family: "inconsolata", monospace; box-sizing: border-box; margin: 0;
-                                            padding: 0 0 0 0.5em; border: 0; height: 100%; }
+      #editorTopBar .right                      { float: right; }
 
-      #editorTopBar                       { position: absolute; top: 0; left: 0; right: 0; height: 2em;
-                                            line-height: 2em; background-color: yellow; }
+      #editorTopBar input[type="button"]        { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+                                                  height: 1.5em; line-height: 1.5em; margin: 0 auto; padding: 0 0.3em;
+                                                  background-color: #ddd; color: black; }
 
-      #editorBottomBar                    { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
-                                            line-height: 1.5em; background-color: orange; padding-left: 0.3em; }
+      #editorTopBar input[type="number"]        { width: 3.5em; }
+      .small_label                              { font-size: 90%; text-align: center; display: inline-block; }
 
-      #error_range                        { padding: 0.25em 0.5em; margin: 0; border: 0; color: #b00; background-color: #fdd; }
+      html body #editorTopBar .gapAfter         { margin-right: 1em; }
 
-      .hideError #error_range             { display: none; }
+      #editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0; }
+      #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
+                                                  margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
+
+      #editorTopBar                             { position: absolute; top: 0; left: 0; right: 0; height: 2em;
+                                                  line-height: 2em; background-color: #eee; padding: 0 0.6em; }
+
+      #editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
+                                                  line-height: 1.5em; background-color: #ccc; padding-left: 0.4em;
+                                                  transition: background-color 0.15s, color 0.15s; }
 
     </style>
 
@@ -71,14 +80,21 @@
 
         const svg_t    = byId('svg_target'),
               editor   = byId('editor'),
-              errorX   = byId('error_range'),
+              errorX   = byId('editorBottomBar'),
               graphRot = byId('graphRot'),
               textUp   = byId('textUp'),
               textDown = byId('textDown'),
-              zoom     = byId('zoom');
+              zoom     = byId('zoom'),
+              theme    = byId('theme'),
+              vis_btn  = byId('vis_btn'),
+              svg_btn  = byId('svg_btn'),
+              dot_btn  = byId('dot_btn');
 
         const minSz  = 3;
         let   edSize = 21;
+
+        let   view   = 'vis',
+              curSM  = null;
 
 
 
@@ -104,8 +120,23 @@
 
         const updateVisual = (config) => {
 
-          const machine = sm`${config}`;
-          svg_t.innerHTML = jviz.dot_to_svg(jviz.dot(machine), { engine: machine.graph_layout() || 'dot' });
+          curSM = sm`${config}`;
+
+          const u_dot = jviz.dot(curSM),
+                u_svg = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' });
+
+          svg_t.innerHTML = u_svg;
+
+        };
+
+
+
+        const getStatusReadout = () => {
+
+          const cpos  = ace_editor.selection.getCursor(),
+                lines = ace_editor.session.getLength();
+
+          return `Line ${cpos.row+1} col ${cpos.column+1}; ${lines} lines; TODO nodes (X start, X fin); TODO edges`;
 
         };
 
@@ -122,25 +153,25 @@
             const newConfig = val;
             updateVisual(newConfig);
 
-            errorX.innerHTML = '';
-            document.body.classList.toggle('hideError', true);
+            errorX.innerHTML = getStatusReadout();
+            document.body.classList.toggle('showError', false);
 
           } catch (e) {
 
-            if (e.message) {
-
-              errorX.innerHTML = e.message;
-
-            } else {
+            if (e.location) {
 
               const start_r = `${e.location.start.line}:${e.location.start.column}`,
                     end_r   = `${e.location.end.line}:${e.location.end.column}`;
 
               errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
                                                      : `${e.message} (${start_r}&rarr;${end_r})`;
+            } else {
+
+              errorX.innerHTML = e.message;
+
             }
 
-            document.body.classList.toggle('hideError', false);
+            document.body.classList.toggle('showError', true);
 
           }
 
@@ -176,10 +207,21 @@
 
 
 
+        const setTheme = () => {
+          ace_editor.setTheme(`ace/theme/${byId('theme').value}`);
+        };
+
+
+
         textDown.onclick = bumpTsDown;
         textUp.onclick   = bumpTsUp;
         graphRot.onclick = graphRotate;
         zoom.oninput     = setZoom;
+        theme.onchange   = setTheme;
+
+        vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
+        svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
+        dot_btn.onclick  = () => byId('topbox').className = 'show_dot_code';
 
 
 
@@ -210,12 +252,20 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         editor.onkeyup   = () => updateCode();
 
         var ace_editor = ace.edit("editor");
-        ace_editor.setTheme("ace/theme/solarized_dark");
+        setTheme();
         ace_editor.session.setMode("ace/mode/fsl");
 
         updateVisual(l_config);
         updateCode();
-
+        byId('vis_btn').click();
+        ace_editor.session.setTabSize(2);
+        ace_editor.session.useSoftTabs(true);
+        ace_editor.session.enableLiveAutocompletion(true);
+        ace_editor.selection.on('changeCursor', () => byId('editorBottomBar').innerHTML = getStatusReadout() );
+        ace_editor.renderer.setTabSize(2);
+        ace_editor.focus();
+        ace_editor.navigateFileEnd();
+        // word wrap
 
 
       }
@@ -230,27 +280,70 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
     <table id="topbox">
 
       <tr id="edit_row">
-        <td id="svg_host"><div id="svg_target"></div></td>
-        <td id="widget_target">
-          <div class="small_label">Zoom</div>
-          <input id="zoom"     type="number" min="0" step="10" value="100"/><br/>
-          <input id="graphRot" type="button" value="&#8635;"/><br/>
-          <input id="textUp"   type="button" value="T &uarr;"/>
-          <input id="textDown" type="button" value="T &darr;"/><br/>
-          <input id="popPng"   type="button" value="PNG"/>
-          <input id="popSvg"   type="button" value="SVG"/>
-          <input id="popDot"   type="button" value="DOT"/>
+        <td id="svg_host">
+          <div id="svg_target"></div>
+          <div id="svg_code_target"></div>
+          <div id="dot_code_target"></div>
         </td>
         <td id="editor_target">
-          <div id="editorTopBar"></div>
+          <div id="editorTopBar">
+            <span class="right">
+              <span class="small_label">Zoom</span>
+              <input id="zoom"     type="number" min="0" step="10" value="100" class="gapAfter"/>
+              <input id="textUp"   type="button" value="T &uarr;"/>
+              <input id="textDown" type="button" value="T &darr;"/>
+              <select id="theme">
+                <option>ambiance</option>
+                <option>chaos</option>
+                <option>chrome</option>
+                <option>clouds</option>
+                <option>clouds_midnight</option>
+                <option>cobalt</option>
+                <option>crimson_editor</option>
+                <option>dawn</option>
+                <option>dracula</option>
+                <option>dreamweaver</option>
+                <option>eclipse</option>
+                <option>github</option>
+                <option>gob</option>
+                <option>gruvbox</option>
+                <option>idle_fingers</option>
+                <option>iplastic</option>
+                <option>katzenmilch</option>
+                <option>kr_theme</option>
+                <option>kuroir</option>
+                <option>merbivore</option>
+                <option>merbivore_soft</option>
+                <option>mono_industrial</option>
+                <option>monokai</option>
+                <option>pastel_on_dark</option>
+                <option selected>solarized_dark</option>
+                <option>solarized_light</option>
+                <option>sqlserver</option>
+                <option>terminal</option>
+                <option>textmate</option>
+                <option>tomorrow</option>
+                <option>tomorrow_night</option>
+                <option>tomorrow_night_blue</option>
+                <option>tomorrow_night_bright</option>
+                <option>tomorrow_night_eighties</option>
+                <option>twilight</option>
+                <option>vibrant_ink</option>
+                <option>xcode</option>
+              </select>
+            </span>
+            <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
+            <input id="vis_btn"  type="button" value="Vis" class="active"/>
+            <input id="svg_btn"  type="button" value="SVG"/>
+            <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
+            <input id="png_btn"  type="button" value="Export PNG"/>
+          </div>
           <div id="editorBox">
             <pre id="editor"></pre>
           </div>
           <div id="editorBottomBar"></div>
         </td>
       </tr>
-
-      <tr><td colspan="3" id="error_range"></td></tr>
 
     </table>
 
