@@ -148,7 +148,9 @@
 
 
 
-        var was = '';
+        let was      = '',
+            markerId = null;
+
         const updateCode = () => {
 
           try {
@@ -162,6 +164,10 @@
             errorX.innerHTML = getStatusReadout();
             document.body.classList.toggle('showError', false);
 
+            ace_editor.getSession().setAnnotations([]);
+
+            // if (markerId) { ace_editor.getSession().removeMarker(markerId); }
+
           } catch (e) {
 
             if (e.location) {
@@ -171,6 +177,20 @@
 
               errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
                                                      : `${e.message} (${start_r}&rarr;${end_r})`;
+
+              ace_editor.getSession().setAnnotations([{
+                row: e.location.start.line-1,
+                column: e.location.start.column-1,
+                text: e.message,
+                type: "error"
+              }]);
+
+              // markerId = ace_editor.getSession().addMarker(
+              //   new Range(e.location.start.line-1, e.location.start.column-1, e.location.end.line-1, e.location.end.column-1),
+              //   "error",
+              //   e.message
+              // );
+
             } else {
 
               errorX.innerHTML = e.message;
@@ -272,7 +292,6 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         ace_editor.focus();
         ace_editor.navigateFileEnd();
 
-
         window.ae = ace_editor;
         window.cm = curSM;
         // word wrap
@@ -280,12 +299,12 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         var svg_display = ace.edit("svg_code");
         svg_display.session.setMode("ace/mode/svg");
         svg_display.getSession().setUseWrapMode(true)
-//        svg_display.session.readOnly(true);
+//        svg_display.readOnly(true);
 
         var dot_display = ace.edit("dot_code");
         dot_display.session.setMode("ace/mode/dot");
         dot_display.getSession().setUseWrapMode(true)
-//        dot_display.session.readOnly(true);
+//        dot_display.readOnly(true);
 
 
       }
