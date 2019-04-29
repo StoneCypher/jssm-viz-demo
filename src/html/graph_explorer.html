@@ -8,7 +8,7 @@
 
     <style type="text/css">
 
-      html, body                          { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; }
+      html, body                          { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0; border: 0; overflow: hidden; }
       html, body, #error_range            { font-family: "open sans", sans-serif; }
 
       #topbox                             { height: 100%; width: 100%; margin: 0; padding: 0; border-collapse: collapse; border: 0; table-layout: fixed; }
@@ -21,9 +21,10 @@
 
       #edit_row td                        { height: 100%; }
 
-      #svg_target                         { width: calc(50% - 30px); text-align: center; position: relative; }
-      #svg_target svg                     { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                      { width: calc(50% - 30px); }
+      #svg_host                           { width: 70%; text-align: center; position: relative; overflow: auto; }
+      #svg_target                         { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+      #svg_host svg                       { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+      #editor_target                      { width: 30%; }
 
       #widget_target                      { width: 60px; border: solid #ddd; border-width: 0 1px; background-color: #f8f8f8;
                                             box-sizing: border-box; padding: 0.5em 5px; vertical-align: bottom; }
@@ -33,6 +34,9 @@
 
       #widget_target input[type="button"]+
                      input[type="button"] { margin-top: 0.2em; }
+
+      #widget_target input[type="number"] { width: 70%; margin: 0 auto 0 auto; display: block; letter-spacing: -0.1em; font-size: 70%; }
+      .small_label                        { font-size: 90%; text-align: center; }
 
       #editor                             { font-family: "inconsolata", monospace; height: 100%; width: 100%;
                                             box-sizing: border-box; margin: 0; padding: 0 0 0 0.5em; border: 0; }
@@ -62,7 +66,8 @@
               errorX   = byId('error_range'),
               graphRot = byId('graphRot'),
               textUp   = byId('textUp'),
-              textDown = byId('textDown');
+              textDown = byId('textDown'),
+              zoom     = byId('zoom');
 
         const minSz  = 3;
         let   edSize = 13;
@@ -140,6 +145,7 @@
 
 
         const graphRotate = () => {
+
           // todo whargarbl comeback fixme
           // this is implemented in a really gross way in jssm-viz right now
           // remove this once fixed there; this should be a language feature
@@ -147,6 +153,18 @@
           window.lrGViz = (!(window.lrGViz)); // graph checks this before issuing the internal instruction :/
           was = false;
           updateCode();
+
+        };
+
+
+
+        const setZoom = () => {
+
+          const newZoom = Math.max(1, byId('zoom').value);
+
+          byId('svg_target').style.width  = `${newZoom}%`;
+          byId('svg_target').style.height = `${newZoom}%`;
+
         };
 
 
@@ -154,6 +172,7 @@
         textDown.onclick = bumpTsDown;
         textUp.onclick   = bumpTsUp;
         graphRot.onclick = graphRotate;
+        zoom.oninput     = setZoom;
 
 
 
@@ -199,8 +218,10 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
     <table id="topbox">
 
       <tr id="edit_row">
-        <td id="svg_target"></td>
+        <td id="svg_host"><div id="svg_target"></div></td>
         <td id="widget_target">
+          <div class="small_label">Zoom</div>
+          <input id="zoom"     type="number" min="0" step="10" value="100"/><br/>
           <input id="graphRot" type="button" value="&#8635;"/><br/>
           <input id="textUp"   type="button" value="T &uarr;"/>
           <input id="textDown" type="button" value="T &darr;"/><br/>

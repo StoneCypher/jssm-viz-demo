@@ -9,7 +9,7 @@
     "cloneace": "cp -r ./node_modules/ace-builds/src/* ./docs",
     "clonejs": "cp ./node_modules/jssm/dist/jssm.es5.cjs.min.js ./docs/ && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.js ./docs/",
     "clonehtml": "cp ./src/html/* ./docs/",
-    "clone": "npm run clonejs && npm run clonehtml && npm run cloneace",
+    "clone": "npm run clonejs && npm run clonehtml",
     "build": "npm run clean && npm run clone"
   },
   "repository": {
@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
   "dependencies": {
-    "jssm": "^5.11.4",
-    "jssm-viz": "^1.1.9"
+    "jssm": "5.11.4",
+    "jssm-viz": "1.1.9"
   },
   "devDependencies": {
     "ace-builds": "^1.2.8",
