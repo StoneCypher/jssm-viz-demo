@@ -49,6 +49,7 @@
 
     <script defer type="text/javascript" src="jssm.es5.cjs.min.js"></script>
     <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
+    <script defer type="text/javascript" src="ace.js"></script>
 
     <script defer type="text/javascript">
 
@@ -70,7 +71,7 @@
               zoom     = byId('zoom');
 
         const minSz  = 3;
-        let   edSize = 13;
+        let   edSize = 21;
 
 
 
@@ -108,7 +109,7 @@
 
           try {
 
-            const val = editor.value;
+            const val = ace_editor.getValue();
             if (val === was) { return; }
 
             const newConfig = val;
@@ -137,8 +138,7 @@
           }
 
           was = editor.value;
-
-          updateCode();
+          updateEditor();
 
         }
 
@@ -202,7 +202,12 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         editor.innerHTML = l_config;
         editor.onkeyup   = () => updateCode();
 
+        var ace_editor = ace.edit("editor");
+        ace_editor.setTheme("ace/theme/solarized_dark");
+        ace_editor.session.setMode("ace/mode/fsl");
+
         updateVisual(l_config);
+        updateCode();
 
 
 
@@ -226,8 +231,10 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
           <input id="textUp"   type="button" value="T &uarr;"/>
           <input id="textDown" type="button" value="T &darr;"/><br/>
           <input id="popPng"   type="button" value="PNG"/>
+          <input id="popSvg"   type="button" value="SVG"/>
+          <input id="popDot"   type="button" value="DOT"/>
         </td>
-        <td id="editor_target"><textarea id="editor"></textarea></td>
+        <td id="editor_target"><pre id="editor"></pre></td>
       </tr>
 
       <tr><td colspan="3" id="error_range"></td></tr>
