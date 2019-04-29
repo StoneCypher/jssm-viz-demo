@@ -299,13 +299,39 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         var svg_display = ace.edit("svg_code");
         svg_display.session.setMode("ace/mode/svg");
         svg_display.getSession().setUseWrapMode(true)
-//        svg_display.readOnly(true);
+        svg_display.setReadOnly(true);
 
         var dot_display = ace.edit("dot_code");
         dot_display.session.setMode("ace/mode/dot");
         dot_display.getSession().setUseWrapMode(true)
-//        dot_display.readOnly(true);
+        dot_display.setReadOnly(true);
 
+        ace_editor.commands.bindKeys({
+          'ctrl-r'    : null,
+          'ctrl-t'    : null,
+          'ctrl-l'    : null,
+          'command-r' : null,
+          'command-t' : null,
+          'command-l' : null
+        });
+
+        svg_display.commands.bindKeys({
+          'ctrl-r'    : null,
+          'ctrl-t'    : null,
+          'ctrl-l'    : null,
+          'command-r' : null,
+          'command-t' : null,
+          'command-l' : null
+        });
+
+        dot_display.commands.bindKeys({
+          'ctrl-r'    : null,
+          'ctrl-t'    : null,
+          'ctrl-l'    : null,
+          'command-r' : null,
+          'command-t' : null,
+          'command-l' : null
+        });
 
       }
 
