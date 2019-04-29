@@ -68,6 +68,7 @@
     <script defer type="text/javascript" src="jssm.es5.cjs.min.js"></script>
     <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
     <script defer type="text/javascript" src="ace.js"></script>
+    <script defer type="text/javascript" src="ext-language_tools.js"></script>
 
     <script defer type="text/javascript">
 
@@ -277,6 +278,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         editor.innerHTML = l_config;
         editor.onkeyup   = () => updateCode();
 
+        ace.require("ace/ext/language_tools");
         var ace_editor = ace.edit("editor");
         setTheme();
         ace_editor.session.setMode("ace/mode/fsl");
@@ -286,7 +288,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         byId('vis_btn').click();
         ace_editor.session.setTabSize(2);
 //        ace_editor.session.useSoftTabs(true);
-//        ace_editor.session.enableLiveAutocompletion(true);
+        ace_editor.setOptions({ enableLiveAutocompletion: true });
         ace_editor.selection.on('changeCursor', () => byId('editorBottomBar').innerHTML = getStatusReadout() );
 //        ace_editor.renderer.setTabSize(2);
         ace_editor.focus();
