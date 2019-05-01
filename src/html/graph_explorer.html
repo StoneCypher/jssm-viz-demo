@@ -76,22 +76,23 @@
 
 
 
-        const jssm     = require('jssm'),
-              sm       = jssm.sm,
-              jviz     = require('jssm-viz'),
-              byId     = z => document.getElementById(z);
+        const jssm      = require('jssm'),
+              sm        = jssm.sm,
+              jviz      = require('jssm-viz'),
+              byId      = z => document.getElementById(z);
 
-        const svg_t    = byId('svg_target'),
-              editor   = byId('editor'),
-              errorX   = byId('editorBottomBar'),
-              graphRot = byId('graphRot'),
-              textUp   = byId('textUp'),
-              textDown = byId('textDown'),
-              zoom     = byId('zoom'),
-              theme    = byId('theme'),
-              vis_btn  = byId('vis_btn'),
-              svg_btn  = byId('svg_btn'),
-              dot_btn  = byId('dot_btn');
+        const svg_t     = byId('svg_target'),
+              editor    = byId('editor'),
+              errorX    = byId('editorBottomBar'),
+              graphRot  = byId('graphRot'),
+              textUp    = byId('textUp'),
+              textDown  = byId('textDown'),
+              addHeader = byId('addHeader'),
+              zoom      = byId('zoom'),
+              theme     = byId('theme'),
+              vis_btn   = byId('vis_btn'),
+              svg_btn   = byId('svg_btn'),
+              dot_btn   = byId('dot_btn');
 
         const minSz  = 3;
         let   edSize = 21;
@@ -144,6 +145,29 @@
                 edgecount = curSM? curSM._edges.length : 'no';
 
           return `Line ${cpos.row+1} col ${cpos.column+1}; ${lines} lines; ${nodecount} nodes; ${edgecount} edges`;
+
+        };
+
+
+
+        const addFslHeader = () => {
+
+          const header = `
+machine_name     : "A machine name";
+machine_author   : "Shelby Everyperson <user@example.com>";
+machine_license  : MIT;
+machine_comment  : "Just a quick example of how these are written";
+machine_language : en;
+machine_version  : 1.0.0;
+fsl_version      : 1.0.0;
+
+start_states     : [Load Reset];
+end_states       : [];
+
+
+`;
+
+          ace_editor.setValue(header + ace_editor.getValue());
 
         };
 
@@ -240,11 +264,12 @@
 
 
 
-        textDown.onclick = bumpTsDown;
-        textUp.onclick   = bumpTsUp;
-        graphRot.onclick = graphRotate;
-        zoom.oninput     = setZoom;
-        theme.onchange   = setTheme;
+        textDown.onclick  = bumpTsDown;
+        textUp.onclick    = bumpTsUp;
+        graphRot.onclick  = graphRotate;
+        zoom.oninput      = setZoom;
+        theme.onchange    = setTheme;
+        addHeader.onclick = addFslHeader;
 
         vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
         svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
@@ -253,25 +278,12 @@
 
 
         const l_config = `
-machine_name     : "Example traffic light";
-machine_author   : "John Haugeland <stonecypher@gmail.com>";
-machine_license  : MIT;
-machine_comment  : "Just a quick example of how these are written";
-machine_language : en;
-machine_version  : 1.0.0;
-fsl_version      : 1.0.0;
-
-start_states     : [Off Red];
-
-
-
-
-
 Off 'Enable' -> Red;
 
 Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
-[Red Yellow Green] ~> Off;`.trim();
+[Red Yellow Green] ~> Off;
+`.trim();
 
 
 
@@ -355,10 +367,11 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         <td id="editor_target">
           <div id="editorTopBar">
             <span class="right">
+              <input id="addHeader" type="button" value="≔" class="gapAfter"/>
               <span class="small_label">Zoom</span>
-              <input id="zoom"     type="number" min="0" step="10" value="100" class="gapAfter"/>
-              <input id="textUp"   type="button" value="T &uarr;"/>
-              <input id="textDown" type="button" value="T &darr;"/>
+              <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
+              <input id="textUp"    type="button" value="T &uarr;"/>
+              <input id="textDown"  type="button" value="T &darr;"/>
               <select id="theme">
                 <option>ambiance</option>
                 <option>chaos</option>
