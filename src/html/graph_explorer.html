@@ -52,7 +52,13 @@
 
       html body #editorTopBar .gapAfter         { margin-right: 1em; }
 
-      #editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0; }
+      #editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0;
+                                                  transition: right 0.5s; z-index: 2; background-color: black; }
+      .showHelp #editorBox                      { right: 24em; }
+
+      #editorHelp                               { position: absolute; top: 2em; bottom: 1.5em; right: 0; width: 24em;
+                                                  z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; }
+
       #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
                                                   margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
 
@@ -62,6 +68,19 @@
       #editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
                                                   line-height: 1.5em; background-color: #ccc; padding-left: 0.4em;
                                                   transition: background-color 0.15s, color 0.15s; }
+
+      #editorHelp dl, #editorHelp dt,
+      #editorHelp dd                            { border: 0; margin: 0; padding: 0; }
+
+      #editorHelp dt                            { font-size: 75%; }
+      #editorHelp dt tt                         { padding: 0.2em 0.5em; }
+      #editorHelp dl tt                         { font-family: monospace; background-color: #eee; border-radius: 0.25em; }
+      #editorHelp dd                            { font-size: 66%; margin: 0.25em 0 1em 0.75em; }
+
+      #editorHelp em                            { font-weight: bold; color: #004; }
+      #editorHelp h1                            { font-size: 120%; margin: 0; padding: 0; }
+      #editorHelp dl + h1                       { margin-top: 1em; }
+      #editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
 
     </style>
 
@@ -90,6 +109,7 @@
               addHeader = byId('addHeader'),
               zoom      = byId('zoom'),
               theme     = byId('theme'),
+              showHelp  = byId('showHelp'),
               vis_btn   = byId('vis_btn'),
               svg_btn   = byId('svg_btn'),
               dot_btn   = byId('dot_btn');
@@ -119,6 +139,11 @@
           edSize = Math.max(edSize - 1, minSz);
           updateEditor();
         };
+
+
+
+        const toggleHelp = () =>
+          byId('editor_target').classList.toggle('showHelp');
 
 
 
@@ -152,7 +177,7 @@
 
         const addFslHeader = () => {
 
-          const header = `
+          ace_editor.setValue(`
 machine_name     : "A machine name";
 machine_author   : "Shelby Everyperson <user@example.com>";
 machine_license  : MIT;
@@ -164,10 +189,7 @@ fsl_version      : 1.0.0;
 start_states     : [Load Reset];
 end_states       : [];
 
-
-`;
-
-          ace_editor.setValue(header + ace_editor.getValue());
+${ace_editor.getValue()}`.trim());
 
         };
 
@@ -270,6 +292,7 @@ end_states       : [];
         zoom.oninput      = setZoom;
         theme.onchange    = setTheme;
         addHeader.onclick = addFslHeader;
+        showHelp.onclick  = toggleHelp;
 
         vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
         svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
@@ -354,7 +377,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
   </head>
 
-  <body class="hideError">
+  <body>
 
     <table id="topbox">
 
@@ -367,12 +390,13 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         <td id="editor_target">
           <div id="editorTopBar">
             <span class="right">
-              <input id="addHeader" type="button" value="≔" class="gapAfter"/>
+              <input id="addHeader"  type="button" value="&#x2630;"/>
+              <input id="addPalette" type="button" value="&#x1F3A8;" class="gapAfter"/>
               <span class="small_label">Zoom</span>
               <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
               <input id="textUp"    type="button" value="T &uarr;"/>
               <input id="textDown"  type="button" value="T &darr;"/>
-              <select id="theme">
+              <select id="theme" class="gapAfter">
                 <option>ambiance</option>
                 <option>chaos</option>
                 <option>chrome</option>
@@ -411,6 +435,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
                 <option>vibrant_ink</option>
                 <option>xcode</option>
               </select>
+              <input id="showHelp"   type="button" value="?"/>
             </span>
             <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
             <input id="vis_btn"  type="button" value="Vis" class="active"/>
@@ -420,6 +445,69 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
           </div>
           <div id="editorBox">
             <pre id="editor"></pre>
+          </div>
+          <div id="editorHelp">
+
+            <h1>Transitions</h1>
+            <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
+            <dl>
+              <dt><tt>On -&gt; Off;</tt></dt>
+              <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+
+              <dt><tt>On =&gt; Off;</tt></dt>
+              <dd>A <em>main path</em> transition</dd>
+
+              <dt><tt>On ~&gt; Off;</tt></dt>
+              <dd>A <em>forced only</em> transition</dd>
+
+              <dt><tt>On &lt;-&gt; Off;</tt></dt>
+              <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
+
+              <dt><tt>On &lt;=~&gt; Off;</tt></dt>
+              <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
+
+              <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
+              <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
+            </dl>
+
+            <h1>Actions</h1>
+            <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
+            <dl>
+              <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
+              <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> event will cause a switch to the <tt>Off</tt> state</dd>
+
+              <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
+              <dd>A <tt>toggle event</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
+
+              <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
+              <dd>A <tt>proceed event</tt> which cycles through a traffic light's colors automatically</dd>
+            </dl>
+
+<!--
+            <h1>Timeouts</h1>
+            <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
+            <dl>
+              <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
+              <dd>A traffic light which changes colors on a timer automatically</dd>
+            </dl>
+-->
+
+            <h1>Spread</h1>
+            <p>Spread is a convenient way to write multiple similar edges at once.</p>
+            <dl>
+              <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
+              <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
+
+              <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
+              <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
+
+              <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
+              <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
+<!--
+              <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
+              <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
+-->
+            </dl>
           </div>
           <div id="editorBottomBar"></div>
         </td>
