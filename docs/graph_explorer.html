@@ -79,7 +79,12 @@
 
       #editorHelp em                            { font-weight: bold; color: #004; }
       #editorHelp h1                            { font-size: 120%; margin: 0; padding: 0; }
-      #editorHelp dl + h1                       { margin-top: 1em; }
+      #editorHelp .topicBox        + .topicBox  { margin-top: 1em; }
+      #editorHelp .topicBox.folded + .topicBox  { margin-top: 0; }
+      #editorHelp .topicBox.folded dl           { display: none; }
+      #editorHelp .topicBox.folded p            { display: none; }
+      #editorHelp h1::before                    { content: "\23f7"; }
+      #editorHelp .topicBox.folded h1::before   { content: "\23f5"; }
       #editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
 
     </style>
@@ -144,6 +149,11 @@
 
         const toggleHelp = () =>
           byId('editor_target').classList.toggle('showHelp');
+
+
+
+        const toggleHelpTopicBox = evt =>
+          evt.target.parentNode.classList.toggle('folded');
 
 
 
@@ -298,6 +308,11 @@ ${ace_editor.getValue()}`.trim());
         svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
         dot_btn.onclick  = () => byId('topbox').className = 'show_dot_code';
 
+        [... document.querySelectorAll('#editorHelp .topicBox h1')].map(h1 => {
+          h1.onclick = toggleHelpTopicBox;
+          h1.parentNode.classList.add('folded');
+        });
+
 
 
         const l_config = `
@@ -448,40 +463,59 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
           </div>
           <div id="editorHelp">
 
-            <h1>Transitions</h1>
-            <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
+            <div class="topicBox">
+              <h1>Transitions</h1>
+              <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
+              <dl>
+                <dt><tt>On -&gt; Off;</tt></dt>
+                <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+
+                <dt><tt>On =&gt; Off;</tt></dt>
+                <dd>A <em>main path</em> transition</dd>
+
+                <dt><tt>On ~&gt; Off;</tt></dt>
+                <dd>A <em>forced only</em> transition</dd>
+
+                <dt><tt>On &lt;-&gt; Off;</tt></dt>
+                <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
+
+                <dt><tt>On &lt;=~&gt; Off;</tt></dt>
+                <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
+
+                <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
+                <dd><em>Writing in chains</em>, for density and readability</dd>
+
+                <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
+                <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
+              </dl>
+            </div>
+
+            <div class="topicBox">
+              <h1>Actions</h1>
+              <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
+              <dl>
+                <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
+                <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
+
+                <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
+                <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
+
+                <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
+                <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
+              </dl>
+            </div>
+
+<!--
+            <h1>Probability</h1>
+            <p>These edges can be randomized under an action.</p>
             <dl>
-              <dt><tt>On -&gt; Off;</tt></dt>
-              <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+              <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
+              <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
 
-              <dt><tt>On =&gt; Off;</tt></dt>
-              <dd>A <em>main path</em> transition</dd>
-
-              <dt><tt>On ~&gt; Off;</tt></dt>
-              <dd>A <em>forced only</em> transition</dd>
-
-              <dt><tt>On &lt;-&gt; Off;</tt></dt>
-              <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
-
-              <dt><tt>On &lt;=~&gt; Off;</tt></dt>
-              <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
-
-              <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
-              <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
+              <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
+              <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
             </dl>
-
-            <h1>Actions</h1>
-            <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
-            <dl>
-              <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
-              <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> event will cause a switch to the <tt>Off</tt> state</dd>
-
-              <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
-              <dd>A <tt>toggle event</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
-
-              <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
-              <dd>A <tt>proceed event</tt> which cycles through a traffic light's colors automatically</dd>
-            </dl>
+-->
 
 <!--
             <h1>Timeouts</h1>
@@ -492,23 +526,26 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
             </dl>
 -->
 
-            <h1>Spread</h1>
-            <p>Spread is a convenient way to write multiple similar edges at once.</p>
-            <dl>
-              <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
-              <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
+            <div class="topicBox">
+              <h1>Spread</h1>
+              <p>Spread is a convenient way to write multiple similar edges at once.</p>
+              <dl>
+                <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
+                <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
 
-              <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
-              <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
+                <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
+                <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
 
-              <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
-              <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
-<!--
-              <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
-              <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
--->
-            </dl>
+                <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
+                <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
+  <!--
+                <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
+                <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
+  -->
+              </dl>
+            </div>
           </div>
+
           <div id="editorBottomBar"></div>
         </td>
       </tr>
