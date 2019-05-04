@@ -25,17 +25,19 @@
       #svg_host                                 { width: 50%; text-align: center; position: relative; overflow: auto; }
 
       #svg_target,  #svg_code_target,
-      #dot_code_target                          { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+      #tree_target, #dot_code_target            { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
                                                   display: none; }
 
-      #svg_code, #dot_code                      { height: 100%; margin: 0; }
+      #svg_code, #dot_code, #tree                { height: 100%; margin: 0; }
 
       .show_svg      #svg_target                { display: block; }
+      .show_tree     #tree_target               { display: block; }
       .show_svg_code #svg_code_target           { display: block; }
       .show_dot_code #dot_code_target           { display: block; }
 
-      .show_svg      #editorTopBar #vis_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
-      .show_svg_code #editorTopBar #svg_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
+      .show_svg      #editorTopBar #vis_btn,
+      .show_tree     #editorTopBar #tree_btn,
+      .show_svg_code #editorTopBar #svg_btn,
       .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
 
       #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
@@ -83,7 +85,7 @@
       #editorHelp .topicBox.folded + .topicBox  { margin-top: 0; }
       #editorHelp .topicBox.folded dl           { display: none; }
       #editorHelp .topicBox.folded p            { display: none; }
-      #editorHelp h1::before                    { content: "\23f7"; }
+      #editorHelp h1::before                    { content: "\23f7"; padding-right: 0.25em; }
       #editorHelp .topicBox.folded h1::before   { content: "\23f5"; }
       #editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
 
@@ -116,6 +118,7 @@
               theme     = byId('theme'),
               showHelp  = byId('showHelp'),
               vis_btn   = byId('vis_btn'),
+              tree_btn  = byId('tree_btn'),
               svg_btn   = byId('svg_btn'),
               dot_btn   = byId('dot_btn');
 
@@ -161,14 +164,21 @@
 
           curSM = sm`${config}`;
 
-          const u_dot = jviz.dot(curSM),
-                u_svg = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' });
+          const u_dot  = jviz.dot(curSM),
+                u_svg  = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' }),
+                u_tree = JSON.stringify(jssm.parse(config), undefined, 2);
 
           svg_t.innerHTML = u_svg;
-          dot_display? dot_display.setValue(u_dot, 1) : true;
-          svg_display? svg_display.setValue(u_svg, 1) : true;
+          tree_display ? tree_display.setValue(u_tree, 1) : true;
+          dot_display  ? dot_display.setValue( u_dot,  1) : true;
+          svg_display  ? svg_display.setValue( u_svg,  1) : true;
 
         };
+
+
+
+        const maybe_s = (count, label) =>
+          `${count} ${label}${count == 1? '' : 's'}`;
 
 
 
@@ -176,10 +186,11 @@
 
           const cpos  = ace_editor.selection.getCursor(),
                 lines = ace_editor.session.getLength(),
-                nodecount = curSM? curSM._states.size : 'no',
-                edgecount = curSM? curSM._edges.length : 'no';
+                nodecount = curSM? maybe_s(curSM._states.size, 'state')       : 'no',
+                edgecount = curSM? maybe_s(curSM._edges.length, 'transition') : 'no',
+                evtcount  = curSM? maybe_s(curSM._actions.size, 'action')     : 'no';
 
-          return `Line ${cpos.row+1} col ${cpos.column+1}; ${lines} lines; ${nodecount} nodes; ${edgecount} edges`;
+          return `Line ${cpos.row+1} col ${cpos.column+1} out of ${lines} lines &nbsp; &nbsp; ${nodecount}; ${edgecount}; ${evtcount}`;
 
         };
 
@@ -305,6 +316,7 @@ ${ace_editor.getValue()}`.trim());
         showHelp.onclick  = toggleHelp;
 
         vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
+        tree_btn.onclick = () => byId('topbox').className = 'show_tree';
         svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
         dot_btn.onclick  = () => byId('topbox').className = 'show_dot_code';
 
@@ -315,9 +327,9 @@ ${ace_editor.getValue()}`.trim());
 
 
 
-        const l_config = `
-Off 'Enable' -> Red;
+        const l_config = `machine_name: "Traffic light";
 
+Off 'Enable' -> Red;
 Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
 [Red Yellow Green] ~> Off;
@@ -347,6 +359,11 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         window.ae = ace_editor;
         window.cm = curSM;
         // word wrap
+
+        var tree_display = ace.edit("tree");
+        tree_display.session.setMode("ace/mode/javascript");
+        tree_display.getSession().setUseWrapMode(true)
+        tree_display.setReadOnly(true);
 
         var svg_display = ace.edit("svg_code");
         svg_display.session.setMode("ace/mode/svg");
@@ -399,6 +416,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
       <tr id="edit_row">
         <td id="svg_host">
           <div id="svg_target"></div>
+          <div id="tree_target"><pre id="tree">tree</pre></div>
           <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
           <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
         </td>
@@ -454,6 +472,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
             </span>
             <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
             <input id="vis_btn"  type="button" value="Vis" class="active"/>
+            <input id="tree_btn" type="button" value="Tree"/>
             <input id="svg_btn"  type="button" value="SVG"/>
             <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
             <input id="png_btn"  type="button" value="Export PNG"/>
@@ -518,6 +537,10 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 -->
 
 <!--
+            <h1>Named Ordered Sets</h1>
+            <h1>Stripes</h1>
+            <h1>Cycles</h1>
+
             <h1>Timeouts</h1>
             <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
             <dl>
@@ -544,6 +567,22 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
   -->
               </dl>
             </div>
+
+            <div class="topicBox">
+              <h1>Machine Attributes</h1>
+              <p>The machine itself has some attributes.</p>
+              <dl>
+                <dt><tt>machine_name: "Example";</tt></dt>
+                <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
+
+                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+
+                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+              </dl>
+            </div>
+
           </div>
 
           <div id="editorBottomBar"></div>
