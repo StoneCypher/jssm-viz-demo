@@ -6,6 +6,8 @@
     <title>Viz test</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet">
 
+    <script type="text/javascript" src="lz-string.js"></script>
+
     <style type="text/css">
 
       html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
@@ -89,9 +91,12 @@
       #editorHelp .topicBox.folded h1::before   { content: "\23f5"; }
       #editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
 
+      #toolbay                                  { float: right; }
+      #viewLink                                 { padding-right: 0.2em; text-decoration: none; }
+
     </style>
 
-    <script defer type="text/javascript" src="jssm.es5.cjs.min.js"></script>
+    <script defer type="text/javascript" src="jssm.iife.js"></script>
     <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
     <script defer type="text/javascript" src="ace.js"></script>
     <script defer type="text/javascript" src="ext-language_tools.js"></script>
@@ -102,14 +107,14 @@
 
 
 
-        const jssm      = require('jssm'),
-              sm        = jssm.sm,
+        const sm        = jssm.sm,
               jviz      = require('jssm-viz'),
               byId      = z => document.getElementById(z);
 
         const svg_t     = byId('svg_target'),
               editor    = byId('editor'),
-              errorX    = byId('editorBottomBar'),
+              errorX    = byId('errorX'),
+              viewLink  = byId('viewLink'),
               graphRot  = byId('graphRot'),
               textUp    = byId('textUp'),
               textDown  = byId('textDown'),
@@ -121,6 +126,8 @@
               tree_btn  = byId('tree_btn'),
               svg_btn   = byId('svg_btn'),
               dot_btn   = byId('dot_btn');
+
+        const viewerUrl = 'https://fsl.tools/viewer/?z=';
 
         const minSz  = 3;
         let   edSize = 21;
@@ -168,7 +175,9 @@
                 u_svg  = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' }),
                 u_tree = JSON.stringify(jssm.parse(config), undefined, 2);
 
+          viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(config);
           svg_t.innerHTML = u_svg;
+
           tree_display ? tree_display.setValue(u_tree, 1) : true;
           dot_display  ? dot_display.setValue( u_dot,  1) : true;
           svg_display  ? svg_display.setValue( u_svg,  1) : true;
@@ -351,7 +360,7 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
         ace_editor.session.setTabSize(2);
 //        ace_editor.session.useSoftTabs(true);
         ace_editor.setOptions({ enableLiveAutocompletion: true });
-        ace_editor.selection.on('changeCursor', () => byId('editorBottomBar').innerHTML = getStatusReadout() );
+        ace_editor.selection.on('changeCursor', () => errorX.innerHTML = getStatusReadout() );
 //        ace_editor.renderer.setTabSize(2);
         ace_editor.focus();
         ace_editor.navigateFileEnd();
@@ -585,7 +594,12 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
           </div>
 
-          <div id="editorBottomBar"></div>
+          <div id="editorBottomBar">
+            <div id="toolbay">
+              <a href="#" id="viewLink" target="_blank">🌎</a>
+            </div>
+            <div id="errorX"></div>
+          </div>
         </td>
       </tr>
 
