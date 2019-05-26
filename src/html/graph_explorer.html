@@ -13,16 +13,13 @@
       html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
                                                   border: 0; overflow: hidden; font-family: "open sans", sans-serif; }
 
-      #topbox                                   { height: 100%; width: 100%; margin: 0; padding: 0;
-                                                  border-collapse: collapse; border: 0; table-layout: fixed; }
+      #topbox                                   { height: 100%; width: 100%; margin: 0; padding: 0; border: 0; }
 
       .showError #editorBottomBar               { background-color: #faa; color: black; }
 
       #textrow                                  { }
       #textrow td                               { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea                         { resize: none; }
-
-      #edit_row td                              { height: 100%; }
 
       #svg_host                                 { width: 50%; text-align: center; position: relative; overflow: auto; }
 
@@ -42,8 +39,9 @@
       .show_svg_code #editorTopBar #svg_btn,
       .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
 
+      #svg_host                                 { height: 100%; }
       #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                            { width: 50%; position: relative; }
+      #editor_target                            { width: 50%; position: absolute; height: 100%; top: 0; right: 0; }
 
       #editorTopBar .right                      { float: right; }
 
@@ -420,190 +418,188 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
   <body>
 
-    <table id="topbox">
+    <div id="topbox">
 
-      <tr id="edit_row">
-        <td id="svg_host">
-          <div id="svg_target"></div>
-          <div id="tree_target"><pre id="tree">tree</pre></div>
-          <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
-          <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
-        </td>
-        <td id="editor_target">
-          <div id="editorTopBar">
-            <span class="right">
-              <input id="addHeader"  type="button" value="&#x2630;"/>
-              <input id="addPalette" type="button" value="&#x1F3A8;" class="gapAfter"/>
-              <span class="small_label">Zoom</span>
-              <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
-              <input id="textUp"    type="button" value="T &uarr;"/>
-              <input id="textDown"  type="button" value="T &darr;"/>
-              <select id="theme" class="gapAfter">
-                <option>ambiance</option>
-                <option>chaos</option>
-                <option>chrome</option>
-                <option>clouds</option>
-                <option>clouds_midnight</option>
-                <option>cobalt</option>
-                <option>crimson_editor</option>
-                <option>dawn</option>
-                <option>dracula</option>
-                <option>dreamweaver</option>
-                <option>eclipse</option>
-                <option>github</option>
-                <option>gob</option>
-                <option>gruvbox</option>
-                <option>idle_fingers</option>
-                <option>iplastic</option>
-                <option>katzenmilch</option>
-                <option>kr_theme</option>
-                <option>kuroir</option>
-                <option>merbivore</option>
-                <option>merbivore_soft</option>
-                <option>mono_industrial</option>
-                <option>monokai</option>
-                <option>pastel_on_dark</option>
-                <option selected>solarized_dark</option>
-                <option>solarized_light</option>
-                <option>sqlserver</option>
-                <option>terminal</option>
-                <option>textmate</option>
-                <option>tomorrow</option>
-                <option>tomorrow_night</option>
-                <option>tomorrow_night_blue</option>
-                <option>tomorrow_night_bright</option>
-                <option>tomorrow_night_eighties</option>
-                <option>twilight</option>
-                <option>vibrant_ink</option>
-                <option>xcode</option>
-              </select>
-              <input id="showHelp"   type="button" value="?"/>
-            </span>
-            <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
-            <input id="vis_btn"  type="button" value="Vis" class="active"/>
-            <input id="tree_btn" type="button" value="Tree"/>
-            <input id="svg_btn"  type="button" value="SVG"/>
-            <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
-            <input id="png_btn"  type="button" value="Export PNG"/>
+      <div id="svg_host">
+        <div id="svg_target"></div>
+        <div id="tree_target"><pre id="tree">tree</pre></div>
+        <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
+        <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
+      </div>
+      <div id="editor_target">
+        <div id="editorTopBar">
+          <span class="right">
+            <input id="addHeader"  type="button" value="&#x2630;"/>
+            <input id="addPalette" type="button" value="&#x1F3A8;" class="gapAfter"/>
+            <span class="small_label">Zoom</span>
+            <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
+            <input id="textUp"    type="button" value="T &uarr;"/>
+            <input id="textDown"  type="button" value="T &darr;"/>
+            <select id="theme" class="gapAfter">
+              <option>ambiance</option>
+              <option>chaos</option>
+              <option>chrome</option>
+              <option>clouds</option>
+              <option>clouds_midnight</option>
+              <option>cobalt</option>
+              <option>crimson_editor</option>
+              <option>dawn</option>
+              <option>dracula</option>
+              <option>dreamweaver</option>
+              <option>eclipse</option>
+              <option>github</option>
+              <option>gob</option>
+              <option>gruvbox</option>
+              <option>idle_fingers</option>
+              <option>iplastic</option>
+              <option>katzenmilch</option>
+              <option>kr_theme</option>
+              <option>kuroir</option>
+              <option>merbivore</option>
+              <option>merbivore_soft</option>
+              <option>mono_industrial</option>
+              <option>monokai</option>
+              <option>pastel_on_dark</option>
+              <option selected>solarized_dark</option>
+              <option>solarized_light</option>
+              <option>sqlserver</option>
+              <option>terminal</option>
+              <option>textmate</option>
+              <option>tomorrow</option>
+              <option>tomorrow_night</option>
+              <option>tomorrow_night_blue</option>
+              <option>tomorrow_night_bright</option>
+              <option>tomorrow_night_eighties</option>
+              <option>twilight</option>
+              <option>vibrant_ink</option>
+              <option>xcode</option>
+            </select>
+            <input id="showHelp"   type="button" value="?"/>
+          </span>
+          <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
+          <input id="vis_btn"  type="button" value="Vis" class="active"/>
+          <input id="tree_btn" type="button" value="Tree"/>
+          <input id="svg_btn"  type="button" value="SVG"/>
+          <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
+          <input id="png_btn"  type="button" value="Export PNG"/>
+        </div>
+        <div id="editorBox">
+          <pre id="editor"></pre>
+        </div>
+        <div id="editorHelp">
+
+          <div class="topicBox">
+            <h1>Transitions</h1>
+            <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
+            <dl>
+              <dt><tt>On -&gt; Off;</tt></dt>
+              <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+
+              <dt><tt>On =&gt; Off;</tt></dt>
+              <dd>A <em>main path</em> transition</dd>
+
+              <dt><tt>On ~&gt; Off;</tt></dt>
+              <dd>A <em>forced only</em> transition</dd>
+
+              <dt><tt>On &lt;-&gt; Off;</tt></dt>
+              <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
+
+              <dt><tt>On &lt;=~&gt; Off;</tt></dt>
+              <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
+
+              <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
+              <dd><em>Writing in chains</em>, for density and readability</dd>
+
+              <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
+              <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
+            </dl>
           </div>
-          <div id="editorBox">
-            <pre id="editor"></pre>
+
+          <div class="topicBox">
+            <h1>Actions</h1>
+            <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
+            <dl>
+              <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
+              <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
+
+              <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
+              <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
+
+              <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
+              <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
+            </dl>
           </div>
-          <div id="editorHelp">
-
-            <div class="topicBox">
-              <h1>Transitions</h1>
-              <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
-              <dl>
-                <dt><tt>On -&gt; Off;</tt></dt>
-                <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
-
-                <dt><tt>On =&gt; Off;</tt></dt>
-                <dd>A <em>main path</em> transition</dd>
-
-                <dt><tt>On ~&gt; Off;</tt></dt>
-                <dd>A <em>forced only</em> transition</dd>
-
-                <dt><tt>On &lt;-&gt; Off;</tt></dt>
-                <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
-
-                <dt><tt>On &lt;=~&gt; Off;</tt></dt>
-                <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
-
-                <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
-                <dd><em>Writing in chains</em>, for density and readability</dd>
-
-                <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
-                <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
-              </dl>
-            </div>
-
-            <div class="topicBox">
-              <h1>Actions</h1>
-              <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
-              <dl>
-                <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
-                <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
-
-                <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
-                <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
-
-                <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
-                <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
-              </dl>
-            </div>
 
 <!--
-            <h1>Probability</h1>
-            <p>These edges can be randomized under an action.</p>
-            <dl>
-              <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
-              <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
+          <h1>Probability</h1>
+          <p>These edges can be randomized under an action.</p>
+          <dl>
+            <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
+            <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
 
-              <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
-              <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
-            </dl>
+            <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
+            <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
+          </dl>
 -->
 
 <!--
-            <h1>Named Ordered Sets</h1>
-            <h1>Stripes</h1>
-            <h1>Cycles</h1>
+          <h1>Named Ordered Sets</h1>
+          <h1>Stripes</h1>
+          <h1>Cycles</h1>
 
-            <h1>Timeouts</h1>
-            <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
-            <dl>
-              <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
-              <dd>A traffic light which changes colors on a timer automatically</dd>
-            </dl>
+          <h1>Timeouts</h1>
+          <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
+          <dl>
+            <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
+            <dd>A traffic light which changes colors on a timer automatically</dd>
+          </dl>
 -->
 
-            <div class="topicBox">
-              <h1>Spread</h1>
-              <p>Spread is a convenient way to write multiple similar edges at once.</p>
-              <dl>
-                <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
-                <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
+          <div class="topicBox">
+            <h1>Spread</h1>
+            <p>Spread is a convenient way to write multiple similar edges at once.</p>
+            <dl>
+              <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
+              <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
 
-                <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
-                <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
+              <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
+              <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
 
-                <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
-                <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
-  <!--
-                <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
-                <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
-  -->
-              </dl>
-            </div>
-
-            <div class="topicBox">
-              <h1>Machine Attributes</h1>
-              <p>The machine itself has some attributes.</p>
-              <dl>
-                <dt><tt>machine_name: "Example";</tt></dt>
-                <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
-
-                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
-                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
-
-                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
-                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
-              </dl>
-            </div>
-
+              <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
+              <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
+<!--
+              <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
+              <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
+-->
+            </dl>
           </div>
 
-          <div id="editorBottomBar">
-            <div id="toolbay">
-              <a href="#" id="viewLink" target="_blank">🌎</a>
-            </div>
-            <div id="errorX"></div>
-          </div>
-        </td>
-      </tr>
+          <div class="topicBox">
+            <h1>Machine Attributes</h1>
+            <p>The machine itself has some attributes.</p>
+            <dl>
+              <dt><tt>machine_name: "Example";</tt></dt>
+              <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
 
-    </table>
+              <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+              <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+
+              <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+              <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+            </dl>
+          </div>
+
+        </div>
+
+        <div id="editorBottomBar">
+          <div id="toolbay">
+            <a href="#" id="viewLink" target="_blank">🌎</a>
+          </div>
+          <div id="errorX"></div>
+        </div>
+      </div>
+
+    </div>
 
     <div id="textrow"></div>
 
