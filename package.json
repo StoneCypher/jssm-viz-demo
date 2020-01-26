@@ -1,13 +1,13 @@
 {
   "name": "jssm-viz-demo",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf ./docs/ && mkdir docs",
-    "cloneace": "cp ./node_modules/ace-builds/src-noconflict/ace.js ./docs && cp ./node_modules/ace-builds/src-noconflict/ext-*.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-fsl.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-javascript.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-svg.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-dot.js ./docs && cp ./node_modules/ace-builds/src-noconflict/theme-*.js ./docs",
-    "clonejs": "cp ./node_modules/jssm/dist/jssm.iife.js ./docs/ && cp ./node_modules/jssm-viz/dist/jssm-viz.es5.cjs.js ./docs/",
+    "cloneace": "cp ./node_modules/ace-builds/src-noconflict/ace.js ./docs && cp ./node_modules/ace-builds/src-noconflict/ext-*.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-fsl.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-javascript.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-svg.js ./docs && cp ./node_modules/ace-builds/src-noconflict/mode-dot.js ./docs && cp ./node_modules/ace-builds/src-noconflict/theme-*.js ./docs && cp ./node_modules/ace-builds/src-noconflict/worker-javascript.js ./docs && cp ./node_modules/ace-builds/src-noconflict/worker-xml.js ./docs",
+    "clonejs": "cp ./node_modules/jssm-viz/dist/jssm-viz.iife.js ./docs/",
     "clonehtml": "cp ./src/html/* ./docs/",
     "clone": "npm run clonejs && npm run clonehtml && npm run cloneace",
     "build": "npm run clean && npm run clone"
@@ -37,13 +37,11 @@
     "url": "https://github.com/StoneCypher/jssm-viz-demo/issues"
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
-  "dependencies": {
-    "jssm-viz": "1.1.9"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ace-builds": "^1.4.4",
     "eslint": "^4.8.0",
-    "jssm": "file:../jssm",
+    "jssm-viz": "^1.9.0",
     "rimraf": "^2.6.2"
   }
 }

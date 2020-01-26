@@ -94,8 +94,7 @@
 
     </style>
 
-    <script defer type="text/javascript" src="jssm.iife.js"></script>
-    <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
+    <script defer type="text/javascript" src="jssm-viz.iife.js"></script>
     <script defer type="text/javascript" src="ace.js"></script>
     <script defer type="text/javascript" src="ext-language_tools.js"></script>
 
@@ -105,15 +104,15 @@
 
 
 
-        const sm        = jssm.sm,
-              jviz      = require('jssm-viz'),
+        const jviz      = jssm_viz,  // iife puts it directly in namespace
+              jssm      = jviz.jssm,
+              sm        = jssm.sm,
               byId      = z => document.getElementById(z);
 
         const svg_t     = byId('svg_target'),
               editor    = byId('editor'),
               errorX    = byId('errorX'),
               viewLink  = byId('viewLink'),
-              graphRot  = byId('graphRot'),
               textUp    = byId('textUp'),
               textDown  = byId('textDown'),
               addHeader = byId('addHeader'),
@@ -165,15 +164,16 @@
 
 
 
-        const updateVisual = (config) => {
+        const updateVisual = async (fsl_source) => {
 
-          curSM = sm`${config}`;
+          curSM = sm`${fsl_source}`;
 
-          const u_dot  = jviz.dot(curSM),
-                u_svg  = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' }),
-                u_tree = JSON.stringify(jssm.parse(config), undefined, 2);
+          const u_dot  = await jviz.fsl_to_dot(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
+                u_svg  = await jviz.fsl_to_svg_string(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
+                u_tree = JSON.stringify(jssm.parse(fsl_source), undefined, 2);
 
-          viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(config);
+          viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(fsl_source);
+
           svg_t.innerHTML = u_svg;
 
           tree_display ? tree_display.setValue(u_tree, 1) : true;
@@ -283,20 +283,6 @@ ${ace_editor.getValue()}`.trim());
 
 
 
-        const graphRotate = () => {
-
-          // todo whargarbl comeback fixme
-          // this is implemented in a really gross way in jssm-viz right now
-          // remove this once fixed there; this should be a language feature
-
-          window.lrGViz = (!(window.lrGViz)); // graph checks this before issuing the internal instruction :/
-          was = false;
-          updateCode();
-
-        };
-
-
-
         const setZoom = () => {
 
           const newZoom = Math.max(1, byId('zoom').value);
@@ -316,7 +302,6 @@ ${ace_editor.getValue()}`.trim());
 
         textDown.onclick  = bumpTsDown;
         textUp.onclick    = bumpTsUp;
-        graphRot.onclick  = graphRotate;
         zoom.oninput      = setZoom;
         theme.onchange    = setTheme;
         addHeader.onclick = addFslHeader;
@@ -336,10 +321,17 @@ ${ace_editor.getValue()}`.trim());
 
         const l_config = `machine_name: "Traffic light";
 
+flow: up;
+
 Off 'Enable' -> Red;
 Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
 
 [Red Yellow Green] ~> Off;
+
+state Red    : { background-color: pink; };
+state Yellow : { background-color: lightyellow; };
+state Green  : { background-color: lightgreen; };
+state Off    : { background-color: steelblue; text-color: white; };
 `.trim();
 
 
@@ -476,7 +468,6 @@ Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
             </select>
             <input id="showHelp"   type="button" value="?"/>
           </span>
-          <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
           <input id="vis_btn"  type="button" value="Vis" class="active"/>
           <input id="tree_btn" type="button" value="Tree"/>
           <input id="svg_btn"  type="button" value="SVG"/>
