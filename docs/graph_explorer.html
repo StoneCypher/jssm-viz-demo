@@ -92,6 +92,8 @@
       #toolbay                                  { float: right; }
       #viewLink                                 { padding-right: 0.2em; text-decoration: none; }
 
+      .errorRange                               { position: absolute; border-bottom: 2px dotted red; background-color: rgba(255,0,0, 0.3); }
+
     </style>
 
     <script defer type="text/javascript" src="jssm-viz.iife.js"></script>
@@ -102,7 +104,7 @@
 
       window.onload = () => {
 
-
+        const RRange = ace.require('ace/range').Range;
 
         const jviz      = jssm_viz,  // iife puts it directly in namespace
               jssm      = jviz.jssm,
@@ -131,6 +133,54 @@
 
         let   view   = 'vis',
               curSM  = null;
+
+
+
+        const setCodeError = e => {
+
+          if (e.location) {
+
+            const start_r = `${e.location.start.line}:${e.location.start.column}`,
+                  end_r   = `${e.location.end.line}:${e.location.end.column}`;
+
+            errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
+                                                   : `${e.message} (${start_r}&rarr;${end_r})`;
+
+            ace_editor.getSession().setAnnotations([{
+              row: e.location.start.line-1,
+              column: e.location.start.column-1,
+              text: e.message,
+              type: "error"
+            }]);
+
+            // markerId = ace_editor.getSession().addMarker(
+            //   new Range(e.location.start.line-1, e.location.start.column-1, e.location.end.line-1, e.location.end.column-1),
+            //   "error",
+            //   e.message
+            // );
+
+            const r1 = e.location.start.line-1,
+                  c1 = e.location.start.column-1,
+                  r2 = e.location.end.line-1,
+                  c2 = e.location.end.column-1;
+
+            markers.push(
+              ace_editor.session.addMarker(
+                new RRange(r1, ((r2 === r1) && (c2 === c1))? c1-1 : c1, r2, c2),
+                "errorRange",
+                "text"
+              )
+            );
+
+          } else {
+
+            errorX.innerHTML = e.message;
+
+          }
+
+          document.body.classList.toggle('showError', true);
+
+        }
 
 
 
@@ -164,21 +214,31 @@
 
 
 
+        let markers = [];
+
         const updateVisual = async (fsl_source) => {
 
-          curSM = sm`${fsl_source}`;
+          try {
 
-          const u_dot  = await jviz.fsl_to_dot(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
-                u_svg  = await jviz.fsl_to_svg_string(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
-                u_tree = JSON.stringify(jssm.parse(fsl_source), undefined, 2);
+            markers.map(id => ace_editor.session.removeMarker(id));
 
-          viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(fsl_source);
+            curSM = sm`${fsl_source}`;
 
-          svg_t.innerHTML = u_svg;
+            const u_dot  = await jviz.fsl_to_dot(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
+                  u_svg  = await jviz.fsl_to_svg_string(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
+                  u_tree = JSON.stringify(jssm.parse(fsl_source), undefined, 2);
 
-          tree_display ? tree_display.setValue(u_tree, 1) : true;
-          dot_display  ? dot_display.setValue( u_dot,  1) : true;
-          svg_display  ? svg_display.setValue( u_svg,  1) : true;
+            viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(fsl_source);
+
+            svg_t.innerHTML = u_svg;
+
+            tree_display ? tree_display.setValue(u_tree, 1) : true;
+            dot_display  ? dot_display.setValue( u_dot,  1) : true;
+            svg_display  ? svg_display.setValue( u_svg,  1) : true;
+
+          } catch (e) {
+            setCodeError(e);
+          }
 
         };
 
@@ -244,36 +304,7 @@ ${ace_editor.getValue()}`.trim());
             // if (markerId) { ace_editor.getSession().removeMarker(markerId); }
 
           } catch (e) {
-
-            if (e.location) {
-
-              const start_r = `${e.location.start.line}:${e.location.start.column}`,
-                    end_r   = `${e.location.end.line}:${e.location.end.column}`;
-
-              errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
-                                                     : `${e.message} (${start_r}&rarr;${end_r})`;
-
-              ace_editor.getSession().setAnnotations([{
-                row: e.location.start.line-1,
-                column: e.location.start.column-1,
-                text: e.message,
-                type: "error"
-              }]);
-
-              // markerId = ace_editor.getSession().addMarker(
-              //   new Range(e.location.start.line-1, e.location.start.column-1, e.location.end.line-1, e.location.end.column-1),
-              //   "error",
-              //   e.message
-              // );
-
-            } else {
-
-              errorX.innerHTML = e.message;
-
-            }
-
-            document.body.classList.toggle('showError', true);
-
+            setCodeError(e);
           }
 
           was = editor.value;
@@ -319,20 +350,37 @@ ${ace_editor.getValue()}`.trim());
 
 
 
-        const l_config = `machine_name: "Traffic light";
+        const l_config = `
 
-flow: up;
+machine_name: "Traffic light";
+
+flow: down;
+
+
+
+arrange [Green Yellow];
 
 Off 'Enable' -> Red;
-Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
+Red 'Next' => Green 'Next' => Yellow 'Next' => Red;
 
 [Red Yellow Green] ~> Off;
 
-state Red    : { background-color: pink; };
-state Yellow : { background-color: lightyellow; };
-state Green  : { background-color: lightgreen; };
-state Off    : { background-color: steelblue; text-color: white; };
-`.trim();
+
+
+// visual styling
+
+state Red    : { background-color: pink;        corners: rounded; };
+state Yellow : { background-color: lightyellow; corners: rounded; };
+state Green  : { background-color: lightgreen;  corners: rounded; };
+
+state Off : {
+  background-color : steelblue;
+  text-color       : white;
+  shape            : octagon;
+  linestyle        : dashed;
+};
+
+        `.trim();
 
 
 
@@ -340,6 +388,7 @@ state Off    : { background-color: steelblue; text-color: white; };
         editor.onkeyup   = () => updateCode();
 
         ace.require("ace/ext/language_tools");
+
         var ace_editor = ace.edit("editor");
         setTheme();
         ace_editor.session.setMode("ace/mode/fsl");

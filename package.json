@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
@@ -41,7 +41,7 @@
   "devDependencies": {
     "ace-builds": "^1.4.4",
     "eslint": "^4.8.0",
-    "jssm-viz": "^1.9.0",
+    "jssm-viz": "^1.17.0",
     "rimraf": "^2.6.2"
   }
 }
