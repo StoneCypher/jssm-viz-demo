@@ -385,11 +385,11 @@ state Off : {
         `.trim();
 
         const loadMachineConfig = defaultConfig =>{
-          const urlArg          = new URLSearchParams(window.location.search);
-          compressed            = urlArg.get('s');
-          sharedMachineConfig   = compressed ? LZString.decompressFromEncodedURIComponent(compressed) : null;
-          machineConfig         = sharedMachineConfig || defaultConfig;
-          lconfig               = machineConfig;
+          const urlArg                = new URLSearchParams(window.location.search);
+          const compressed            = urlArg.get('s');
+          const sharedMachineConfig   = compressed ? LZString.decompressFromEncodedURIComponent(compressed) : null;
+          const machineConfig         = sharedMachineConfig || defaultConfig;
+          lconfig                     = machineConfig;
         }
 
         editor.innerHTML = l_config;
