@@ -390,9 +390,10 @@ state Off : {
           const sharedMachineConfig   = compressed ? LZString.decompressFromEncodedURIComponent(compressed) : null;
           const machineConfig         = sharedMachineConfig || defaultConfig;
           lconfig                     = machineConfig;
+          return lconfig;
         }
 
-        editor.innerHTML = l_config;
+        editor.innerHTML = loadMachineConfig(lconfig);
         editor.onkeyup   = () => updateCode();
 
         ace.require("ace/ext/language_tools");
