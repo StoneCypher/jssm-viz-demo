@@ -389,11 +389,10 @@ state Off : {
           const compressed            = urlArg.get('s');
           const sharedMachineConfig   = compressed ? LZString.decompressFromEncodedURIComponent(compressed) : null;
           const machineConfig         = sharedMachineConfig || defaultConfig;
-          lconfig                     = machineConfig;
-          return lconfig;
+          return machineConfig;
         }
 
-        editor.innerHTML = loadMachineConfig(lconfig);
+        editor.innerHTML = loadMachineConfig(l_config);
         editor.onkeyup   = () => updateCode();
 
         ace.require("ace/ext/language_tools");
@@ -402,7 +401,7 @@ state Off : {
         setTheme();
         ace_editor.session.setMode("ace/mode/fsl");
 
-        updateVisual(l_config);
+        updateVisual(loadMachineConfig(l_config));
         updateCode();
         byId('vis_btn').click();
         ace_editor.session.setTabSize(2);
