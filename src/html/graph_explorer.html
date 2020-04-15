@@ -106,27 +106,28 @@
 
         const RRange = ace.require('ace/range').Range;
 
-        const jviz      = jssm_viz,  // iife puts it directly in namespace
-              jssm      = jviz.jssm,
-              sm        = jssm.sm,
-              byId      = z => document.getElementById(z);
+        const jviz       = jssm_viz,  // iife puts it directly in namespace
+              jssm       = jviz.jssm,
+              sm         = jssm.sm,
+              byId       = z => document.getElementById(z);
 
-        const svg_t     = byId('svg_target'),
-              editor    = byId('editor'),
-              errorX    = byId('errorX'),
-              viewLink  = byId('viewLink'),
-              textUp    = byId('textUp'),
-              textDown  = byId('textDown'),
-              addHeader = byId('addHeader'),
-              zoom      = byId('zoom'),
-              theme     = byId('theme'),
-              showHelp  = byId('showHelp'),
-              vis_btn   = byId('vis_btn'),
-              tree_btn  = byId('tree_btn'),
-              svg_btn   = byId('svg_btn'),
-              dot_btn   = byId('dot_btn');
+        const svg_t      = byId('svg_target'),
+              editor     = byId('editor'),
+              errorX     = byId('errorX'),
+              viewLink   = byId('viewLink'),
+              editorLink = byId('editorLink'),
+              textUp     = byId('textUp'),
+              textDown   = byId('textDown'),
+              addHeader  = byId('addHeader'),
+              zoom       = byId('zoom'),
+              theme      = byId('theme'),
+              showHelp   = byId('showHelp'),
+              vis_btn    = byId('vis_btn'),
+              tree_btn   = byId('tree_btn'),
+              svg_btn    = byId('svg_btn'),
+              dot_btn    = byId('dot_btn');
 
-        const viewerUrl = 'https://fsl.tools/viewer/?z=';
+        const viewerUrl  = 'https://fsl.tools/viewer/?z=';
 
         const minSz  = 3;
         let   edSize = 21;
@@ -227,10 +228,11 @@
             const u_dot  = await jviz.fsl_to_dot(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
                   u_svg  = await jviz.fsl_to_svg_string(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
                   u_tree = JSON.stringify(jssm.parse(fsl_source), undefined, 2);
+            const compressed = LZString.compressToEncodedURIComponent(fsl_source);
+            viewLink.href    = viewerUrl + compressed;
+            editorLink.href  = "?s="+ compressed;
 
-            viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(fsl_source);
-
-            svg_t.innerHTML = u_svg;
+            svg_t.innerHTML  = u_svg;
 
             tree_display ? tree_display.setValue(u_tree, 1) : true;
             dot_display  ? dot_display.setValue( u_dot,  1) : true;
@@ -382,9 +384,15 @@ state Off : {
 
         `.trim();
 
+        const loadMachineConfig = defaultConfig =>{
+          const urlArg                = new URLSearchParams(window.location.search);
+          const compressed            = urlArg.get('s');
+          const sharedMachineConfig   = compressed ? LZString.decompressFromEncodedURIComponent(compressed) : null;
+          const machineConfig         = sharedMachineConfig || defaultConfig;
+          return machineConfig;
+        }
 
-
-        editor.innerHTML = l_config;
+        editor.innerHTML = loadMachineConfig(l_config);
         editor.onkeyup   = () => updateCode();
 
         ace.require("ace/ext/language_tools");
@@ -393,7 +401,7 @@ state Off : {
         setTheme();
         ace_editor.session.setMode("ace/mode/fsl");
 
-        updateVisual(l_config);
+        updateVisual(loadMachineConfig(l_config));
         updateCode();
         byId('vis_btn').click();
         ace_editor.session.setTabSize(2);
@@ -634,6 +642,7 @@ state Off : {
         <div id="editorBottomBar">
           <div id="toolbay">
             <a href="#" id="viewLink" target="_blank">🌎</a>
+            <a href="#"  id="editorLink" target="_blank">👨🏽‍💻</a>
           </div>
           <div id="errorX"></div>
         </div>
