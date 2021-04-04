@@ -296,10 +296,11 @@ ${ace_editor.getValue()}`.trim());
             if (val === was) { return; }
 
             const newConfig = val;
-            updateVisual(newConfig);
 
             errorX.innerHTML = getStatusReadout();
             document.body.classList.toggle('showError', false);
+
+            updateVisual(newConfig);
 
             ace_editor.getSession().setAnnotations([]);
 
