@@ -45,11 +45,17 @@
       .edLeft   #svg_host                       { height: 100%; width:  50%; right:  0; }
       .edTop    #svg_host                       { height:  50%; width: 100%; bottom: 0; }
       .edBottom #svg_host                       { height:  50%; width: 100%; top:    0; }
+      .edOff    #svg_host                       { height: 100%; width: 100%; }
+      .edOnly   #svg_host                       { display: none; }
 
       .edRight  #editor_target                  { width:  50%; position: absolute; height: 100%; top:    0; right: 0; }
       .edLeft   #editor_target                  { width:  50%; position: absolute; height: 100%; top:    0; left:  0; }
       .edTop    #editor_target                  { width: 100%; position: absolute; height:  50%; top:    0; right: 0; }
       .edBottom #editor_target                  { width: 100%; position: absolute; height:  50%; bottom: 0; right: 0; }
+      .edOff    #editor_target                  { display: none; }
+      .edOnly   #editor_target                  { height: 100%; width: 100%; }
+
+      .edOff    #rotateEditor                   { position: fixed; top: 0.25em; right: 0.25em; }
 
       #editorTopBar .right                      { float: right; }
 
@@ -127,6 +133,7 @@
               textUp     = byId('textUp'),
               textDown   = byId('textDown'),
               addHeader  = byId('addHeader'),
+              rotEditor  = byId('rotateEditor'),
               zoom       = byId('zoom'),
               theme      = byId('theme'),
               showHelp   = byId('showHelp'),
@@ -342,11 +349,26 @@ ${ace_editor.getValue()}`.trim());
 
 
 
+        const rotateEditor = () => {
+          const nextRot = {
+            'edRight'  : 'edBottom',
+            'edBottom' : 'edLeft',
+            'edLeft'   : 'edTop',
+            'edTop'    : 'edOnly',
+            'edOnly'   : 'edOff',
+            'edOff'    : 'edRight'
+          };
+          document.body.className = nextRot[document.body.className] || 'edRight';
+        };
+
+
+
         textDown.onclick  = bumpTsDown;
         textUp.onclick    = bumpTsUp;
         zoom.oninput      = setZoom;
         theme.onchange    = setTheme;
         addHeader.onclick = addFslHeader;
+        rotEditor.onclick = rotateEditor;
         showHelp.onclick  = toggleHelp;
 
         vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
@@ -487,8 +509,9 @@ state Off : {
       <div id="editor_target">
         <div id="editorTopBar">
           <span class="right">
-            <input id="addHeader"  type="button" value="&#x2630;"/>
-            <input id="addPalette" type="button" value="&#x1F3A8;" class="gapAfter"/>
+            <input id="addHeader"    type="button" value="&#x2630;"  />
+            <input id="addPalette"   type="button" value="&#x1F3A8;" />
+            <input id="rotateEditor" type="button" value="&#128260;" class="gapAfter"/>
             <span class="small_label">Zoom</span>
             <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
             <input id="textUp"    type="button" value="T &uarr;"/>
