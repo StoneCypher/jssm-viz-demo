@@ -1,3 +1,12 @@
+
+:root {
+  --TopBarHeight       : 2em;
+  --TopBarButtonHeight : 1.5em;
+  --BottomBarHeight    : 1.5em;
+}
+
+
+
 html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
                                             border: 0; overflow: hidden; font-family: "open sans", sans-serif; }
 
@@ -25,6 +34,7 @@ html, body                                { height: 100%; width: 100%; max-width
 .show_svg_code #editorTopBar #svg_btn,
 .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
 
+#toolbox                                  { position: fixed; top: var(--TopBarHeight); bottom: var(--BottomBarHeight); left: 0; right: 0; }
 
 #svg_host                                 { text-align: center; position: absolute; overflow: auto; }
 #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
@@ -46,7 +56,7 @@ html, body                                { height: 100%; width: 100%; max-width
 #editorTopBar .right                      { float: right; }
 
 #editorTopBar input[type="button"]        { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
-                                            height: 1.5em; line-height: 1.5em; margin: 0 auto; padding: 0 0.3em;
+                                            height: var(--TopBarButtonHeight); line-height: var(--TopBarButtonHeight); margin: 0 auto; padding: 0 0.3em;
                                             background-color: #ddd; color: black; }
 
 #editorTopBar input[type="number"]        { width: 3.5em; }
@@ -54,7 +64,7 @@ html, body                                { height: 100%; width: 100%; max-width
 
 html body #editorTopBar .gapAfter         { margin-right: 1em; }
 
-#editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0;
+#editorBox                                { position: absolute; top: 0; bottom: 0; left: 0; right: 0;
                                             transition: right 0.5s; z-index: 2; background-color: black; }
 .showHelp #editorBox                      { right: 24em; }
 
@@ -64,11 +74,11 @@ html body #editorTopBar .gapAfter         { margin-right: 1em; }
 #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
                                             margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
 
-#editorTopBar                             { position: absolute; top: 0; left: 0; right: 0; height: 2em;
-                                            line-height: 2em; background-color: #eee; padding: 0 0.6em; }
+#editorTopBar                             { position: absolute; top: 0; left: 0; right: 0; height: var(--TopBarHeight);
+                                            line-height: var(--TopBarHeight); background-color: #eee; padding: 0 0.6em; }
 
-#editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
-                                            line-height: 1.5em; background-color: #ccc; padding-left: 0.4em;
+#editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: var(--BottomBarHeight);
+                                            line-height: var(--BottomBarHeight); background-color: #ccc; padding-left: 0.4em;
                                             transition: background-color 0.15s, color 0.15s; }
 
 #editorHelp dl, #editorHelp dt,
