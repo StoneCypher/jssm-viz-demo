@@ -21,8 +21,6 @@
       #textrow td                               { border-top  : 1px solid #ddd; background-color: #eee; }
       #textrow textarea                         { resize: none; }
 
-      #svg_host                                 { width: 50%; text-align: center; position: relative; overflow: auto; }
-
       #svg_target,  #svg_code_target,
       #tree_target, #dot_code_target            { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
                                                   display: none; }
@@ -39,9 +37,17 @@
       .show_svg_code #editorTopBar #svg_btn,
       .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
 
-      #svg_host                                 { height: 100%; }
+
+      #svg_host                                 { text-align: center; position: absolute; overflow: auto; }
       #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                            { width: 50%; position: absolute; height: 100%; top: 0; right: 0; }
+
+      .edRight #svg_host                        { height: 100%; width: 50%; left: 0; }
+      .edLeft  #svg_host                        { height: 100%; width: 50%; right: 0; }
+
+      .edRight  #editor_target                  { width: 50%; position: absolute; height: 100%; top: 0; right: 0; }
+      .edLeft   #editor_target                  { width: 50%; position: absolute; height: 100%; top: 0; left: 0;  }
+/*    .edTop    #editor_target                  { width: 50%; position: absolute; height: 100%; top: 0; right: 0; }
+      .edBottom #editor_target                  { width: 50%; position: absolute; height: 100%; top: 0; right: 0; } */
 
       #editorTopBar .right                      { float: right; }
 
@@ -466,7 +472,7 @@ state Off : {
 
   </head>
 
-  <body>
+  <body class="edRight">
 
     <div id="topbox">
 
