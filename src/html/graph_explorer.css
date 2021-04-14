@@ -1,0 +1,95 @@
+html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
+                                            border: 0; overflow: hidden; font-family: "open sans", sans-serif; }
+
+#topbox                                   { height: 100%; width: 100%; margin: 0; padding: 0; border: 0; }
+
+.showError #editorBottomBar               { background-color: #faa; color: black; }
+
+#textrow                                  { }
+#textrow td                               { border-top  : 1px solid #ddd; background-color: #eee; }
+#textrow textarea                         { resize: none; }
+
+#svg_target,  #svg_code_target,
+#tree_target, #dot_code_target            { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+                                            display: none; }
+
+#svg_code, #dot_code, #tree                { height: 100%; margin: 0; }
+
+.show_svg      #svg_target                { display: block; }
+.show_tree     #tree_target               { display: block; }
+.show_svg_code #svg_code_target           { display: block; }
+.show_dot_code #dot_code_target           { display: block; }
+
+.show_svg      #editorTopBar #vis_btn,
+.show_tree     #editorTopBar #tree_btn,
+.show_svg_code #editorTopBar #svg_btn,
+.show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
+
+
+#svg_host                                 { text-align: center; position: absolute; overflow: auto; }
+#svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
+
+.edRight  #svg_host                       { height: 100%; width:  50%; left:   0; }
+.edLeft   #svg_host                       { height: 100%; width:  50%; right:  0; }
+.edTop    #svg_host                       { height:  50%; width: 100%; bottom: 0; }
+.edBottom #svg_host                       { height:  50%; width: 100%; top:    0; }
+.edOff    #svg_host                       { height: 100%; width: 100%; }
+.edOnly   #svg_host                       { display: none; }
+
+.edRight  #editor_target                  { width:  50%; position: absolute; height: 100%; top:    0; right: 0; }
+.edLeft   #editor_target                  { width:  50%; position: absolute; height: 100%; top:    0; left:  0; }
+.edTop    #editor_target                  { width: 100%; position: absolute; height:  50%; top:    0; right: 0; }
+.edBottom #editor_target                  { width: 100%; position: absolute; height:  50%; bottom: 0; right: 0; }
+.edOff    #editor_target                  { display: none; }
+.edOnly   #editor_target                  { height: 100%; width: 100%; }
+
+#editorTopBar .right                      { float: right; }
+
+#editorTopBar input[type="button"]        { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+                                            height: 1.5em; line-height: 1.5em; margin: 0 auto; padding: 0 0.3em;
+                                            background-color: #ddd; color: black; }
+
+#editorTopBar input[type="number"]        { width: 3.5em; }
+.small_label                              { font-size: 90%; text-align: center; display: inline-block; }
+
+html body #editorTopBar .gapAfter         { margin-right: 1em; }
+
+#editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0;
+                                            transition: right 0.5s; z-index: 2; background-color: black; }
+.showHelp #editorBox                      { right: 24em; }
+
+#editorHelp                               { position: absolute; top: 2em; bottom: 1.5em; right: 0; width: 24em;
+                                            z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; }
+
+#editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
+                                            margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
+
+#editorTopBar                             { position: absolute; top: 0; left: 0; right: 0; height: 2em;
+                                            line-height: 2em; background-color: #eee; padding: 0 0.6em; }
+
+#editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
+                                            line-height: 1.5em; background-color: #ccc; padding-left: 0.4em;
+                                            transition: background-color 0.15s, color 0.15s; }
+
+#editorHelp dl, #editorHelp dt,
+#editorHelp dd                            { border: 0; margin: 0; padding: 0; }
+
+#editorHelp dt                            { font-size: 75%; }
+#editorHelp dt tt                         { padding: 0.2em 0.5em; }
+#editorHelp dl tt                         { font-family: monospace; background-color: #eee; border-radius: 0.25em; }
+#editorHelp dd                            { font-size: 66%; margin: 0.25em 0 1em 0.75em; }
+
+#editorHelp em                            { font-weight: bold; color: #004; }
+#editorHelp h1                            { font-size: 120%; margin: 0; padding: 0; }
+#editorHelp .topicBox        + .topicBox  { margin-top: 1em; }
+#editorHelp .topicBox.folded + .topicBox  { margin-top: 0; }
+#editorHelp .topicBox.folded dl           { display: none; }
+#editorHelp .topicBox.folded p            { display: none; }
+#editorHelp h1::before                    { content: "\23f7"; padding-right: 0.25em; }
+#editorHelp .topicBox.folded h1::before   { content: "\23f5"; }
+#editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
+
+#toolbay                                  { float: right; }
+#viewLink                                 { padding-right: 0.2em; text-decoration: none; }
+
+.errorRange                               { position: absolute; border-bottom: 2px dotted red; background-color: rgba(255,0,0, 0.3); }
