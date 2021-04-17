@@ -8,595 +8,201 @@
 
     <script type="text/javascript" src="lz-string.js"></script>
 
-    <style type="text/css">
+    <link rel="stylesheet" type="text/css" href="graph_explorer.css" />
 
-      html, body                                { height: 100%; width: 100%; max-width: 100%; margin: 0; padding: 0;
-                                                  border: 0; overflow: hidden; font-family: "open sans", sans-serif; }
-
-      #topbox                                   { height: 100%; width: 100%; margin: 0; padding: 0; border: 0; }
-
-      .showError #editorBottomBar               { background-color: #faa; color: black; }
-
-      #textrow                                  { }
-      #textrow td                               { border-top  : 1px solid #ddd; background-color: #eee; }
-      #textrow textarea                         { resize: none; }
-
-      #svg_host                                 { width: 50%; text-align: center; position: relative; overflow: auto; }
-
-      #svg_target,  #svg_code_target,
-      #tree_target, #dot_code_target            { width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-                                                  display: none; }
-
-      #svg_code, #dot_code, #tree                { height: 100%; margin: 0; }
-
-      .show_svg      #svg_target                { display: block; }
-      .show_tree     #tree_target               { display: block; }
-      .show_svg_code #svg_code_target           { display: block; }
-      .show_dot_code #dot_code_target           { display: block; }
-
-      .show_svg      #editorTopBar #vis_btn,
-      .show_tree     #editorTopBar #tree_btn,
-      .show_svg_code #editorTopBar #svg_btn,
-      .show_dot_code #editorTopBar #dot_btn     { background-color: #cdf; border-color: #bcf; color: #006; }
-
-      #svg_host                                 { height: 100%; }
-      #svg_host svg                             { position: absolute; top: 0; left: 0; height: 100%; width: 100%; }
-      #editor_target                            { width: 50%; position: absolute; height: 100%; top: 0; right: 0; }
-
-      #editorTopBar .right                      { float: right; }
-
-      #editorTopBar input[type="button"]        { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
-                                                  height: 1.5em; line-height: 1.5em; margin: 0 auto; padding: 0 0.3em;
-                                                  background-color: #ddd; color: black; }
-
-      #editorTopBar input[type="number"]        { width: 3.5em; }
-      .small_label                              { font-size: 90%; text-align: center; display: inline-block; }
-
-      html body #editorTopBar .gapAfter         { margin-right: 1em; }
-
-      #editorBox                                { position: absolute; top: 2em; bottom: 1.5em; left: 0; right: 0;
-                                                  transition: right 0.5s; z-index: 2; background-color: black; }
-      .showHelp #editorBox                      { right: 24em; }
-
-      #editorHelp                               { position: absolute; top: 2em; bottom: 1.5em; right: 0; width: 24em;
-                                                  z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; }
-
-      #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
-                                                  margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
-
-      #editorTopBar                             { position: absolute; top: 0; left: 0; right: 0; height: 2em;
-                                                  line-height: 2em; background-color: #eee; padding: 0 0.6em; }
-
-      #editorBottomBar                          { position: absolute; bottom: 0; left: 0; right: 0; height: 1.5em;
-                                                  line-height: 1.5em; background-color: #ccc; padding-left: 0.4em;
-                                                  transition: background-color 0.15s, color 0.15s; }
-
-      #editorHelp dl, #editorHelp dt,
-      #editorHelp dd                            { border: 0; margin: 0; padding: 0; }
-
-      #editorHelp dt                            { font-size: 75%; }
-      #editorHelp dt tt                         { padding: 0.2em 0.5em; }
-      #editorHelp dl tt                         { font-family: monospace; background-color: #eee; border-radius: 0.25em; }
-      #editorHelp dd                            { font-size: 66%; margin: 0.25em 0 1em 0.75em; }
-
-      #editorHelp em                            { font-weight: bold; color: #004; }
-      #editorHelp h1                            { font-size: 120%; margin: 0; padding: 0; }
-      #editorHelp .topicBox        + .topicBox  { margin-top: 1em; }
-      #editorHelp .topicBox.folded + .topicBox  { margin-top: 0; }
-      #editorHelp .topicBox.folded dl           { display: none; }
-      #editorHelp .topicBox.folded p            { display: none; }
-      #editorHelp h1::before                    { content: "\23f7"; padding-right: 0.25em; }
-      #editorHelp .topicBox.folded h1::before   { content: "\23f5"; }
-      #editorHelp p                             { font-size: 60%; margin: 0.5em 0; }
-
-      #toolbay                                  { float: right; }
-      #viewLink                                 { padding-right: 0.2em; text-decoration: none; }
-
-    </style>
-
-    <script defer type="text/javascript" src="jssm.iife.js"></script>
-    <script defer type="text/javascript" src="jssm-viz.es5.cjs.js"></script>
+    <script defer type="text/javascript" src="jssm-viz.iife.js"></script>
     <script defer type="text/javascript" src="ace.js"></script>
     <script defer type="text/javascript" src="ext-language_tools.js"></script>
 
-    <script defer type="text/javascript">
-
-      window.onload = () => {
-
-
-
-        const sm        = jssm.sm,
-              jviz      = require('jssm-viz'),
-              byId      = z => document.getElementById(z);
-
-        const svg_t     = byId('svg_target'),
-              editor    = byId('editor'),
-              errorX    = byId('errorX'),
-              viewLink  = byId('viewLink'),
-              graphRot  = byId('graphRot'),
-              textUp    = byId('textUp'),
-              textDown  = byId('textDown'),
-              addHeader = byId('addHeader'),
-              zoom      = byId('zoom'),
-              theme     = byId('theme'),
-              showHelp  = byId('showHelp'),
-              vis_btn   = byId('vis_btn'),
-              tree_btn  = byId('tree_btn'),
-              svg_btn   = byId('svg_btn'),
-              dot_btn   = byId('dot_btn');
-
-        const viewerUrl = 'https://fsl.tools/viewer/?z=';
-
-        const minSz  = 3;
-        let   edSize = 21;
-
-        let   view   = 'vis',
-              curSM  = null;
-
-
-
-        const updateEditor = () => {
-          editor.style.fontSize = `${edSize}px`;
-        };
-
-
-
-        const bumpTsUp = () => {
-          edSize += 1;
-          updateEditor();
-        };
-
-
-
-        const bumpTsDown = () => {
-          edSize = Math.max(edSize - 1, minSz);
-          updateEditor();
-        };
-
-
-
-        const toggleHelp = () =>
-          byId('editor_target').classList.toggle('showHelp');
-
-
-
-        const toggleHelpTopicBox = evt =>
-          evt.target.parentNode.classList.toggle('folded');
-
-
-
-        const updateVisual = (config) => {
-
-          curSM = sm`${config}`;
-
-          const u_dot  = jviz.dot(curSM),
-                u_svg  = jviz.dot_to_svg(jviz.dot(curSM), { engine: curSM.graph_layout() || 'dot' }),
-                u_tree = JSON.stringify(jssm.parse(config), undefined, 2);
-
-          viewLink.href   = viewerUrl + LZString.compressToEncodedURIComponent(config);
-          svg_t.innerHTML = u_svg;
-
-          tree_display ? tree_display.setValue(u_tree, 1) : true;
-          dot_display  ? dot_display.setValue( u_dot,  1) : true;
-          svg_display  ? svg_display.setValue( u_svg,  1) : true;
-
-        };
-
-
-
-        const maybe_s = (count, label) =>
-          `${count} ${label}${count == 1? '' : 's'}`;
-
-
-
-        const getStatusReadout = () => {
-
-          const cpos  = ace_editor.selection.getCursor(),
-                lines = ace_editor.session.getLength(),
-                nodecount = curSM? maybe_s(curSM._states.size, 'state')       : 'no',
-                edgecount = curSM? maybe_s(curSM._edges.length, 'transition') : 'no',
-                evtcount  = curSM? maybe_s(curSM._actions.size, 'action')     : 'no';
-
-          return `Line ${cpos.row+1} col ${cpos.column+1} out of ${lines} lines &nbsp; &nbsp; ${nodecount}; ${edgecount}; ${evtcount}`;
-
-        };
-
-
-
-        const addFslHeader = () => {
-
-          ace_editor.setValue(`
-machine_name     : "A machine name";
-machine_author   : "Shelby Everyperson <user@example.com>";
-machine_license  : MIT;
-machine_comment  : "Just a quick example of how these are written";
-machine_language : en;
-machine_version  : 1.0.0;
-fsl_version      : 1.0.0;
-
-start_states     : [Load Reset];
-end_states       : [];
-
-${ace_editor.getValue()}`.trim());
-
-        };
-
-
-
-        let was      = '',
-            markerId = null;
-
-        const updateCode = () => {
-
-          try {
-
-            const val = ace_editor.getValue();
-            if (val === was) { return; }
-
-            const newConfig = val;
-            updateVisual(newConfig);
-
-            errorX.innerHTML = getStatusReadout();
-            document.body.classList.toggle('showError', false);
-
-            ace_editor.getSession().setAnnotations([]);
-
-            // if (markerId) { ace_editor.getSession().removeMarker(markerId); }
-
-          } catch (e) {
-
-            if (e.location) {
-
-              const start_r = `${e.location.start.line}:${e.location.start.column}`,
-                    end_r   = `${e.location.end.line}:${e.location.end.column}`;
-
-              errorX.innerHTML = (start_r === end_r) ? `${e.message} (${start_r})`
-                                                     : `${e.message} (${start_r}&rarr;${end_r})`;
-
-              ace_editor.getSession().setAnnotations([{
-                row: e.location.start.line-1,
-                column: e.location.start.column-1,
-                text: e.message,
-                type: "error"
-              }]);
-
-              // markerId = ace_editor.getSession().addMarker(
-              //   new Range(e.location.start.line-1, e.location.start.column-1, e.location.end.line-1, e.location.end.column-1),
-              //   "error",
-              //   e.message
-              // );
-
-            } else {
-
-              errorX.innerHTML = e.message;
-
-            }
-
-            document.body.classList.toggle('showError', true);
-
-          }
-
-          was = editor.value;
-          updateEditor();
-
-        }
-
-
-
-        const graphRotate = () => {
-
-          // todo whargarbl comeback fixme
-          // this is implemented in a really gross way in jssm-viz right now
-          // remove this once fixed there; this should be a language feature
-
-          window.lrGViz = (!(window.lrGViz)); // graph checks this before issuing the internal instruction :/
-          was = false;
-          updateCode();
-
-        };
-
-
-
-        const setZoom = () => {
-
-          const newZoom = Math.max(1, byId('zoom').value);
-
-          byId('svg_target').style.width  = `${newZoom}%`;
-          byId('svg_target').style.height = `${newZoom}%`;
-
-        };
-
-
-
-        const setTheme = () => {
-          ace_editor.setTheme(`ace/theme/${byId('theme').value}`);
-        };
-
-
-
-        textDown.onclick  = bumpTsDown;
-        textUp.onclick    = bumpTsUp;
-        graphRot.onclick  = graphRotate;
-        zoom.oninput      = setZoom;
-        theme.onchange    = setTheme;
-        addHeader.onclick = addFslHeader;
-        showHelp.onclick  = toggleHelp;
-
-        vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
-        tree_btn.onclick = () => byId('topbox').className = 'show_tree';
-        svg_btn.onclick  = () => byId('topbox').className = 'show_svg_code';
-        dot_btn.onclick  = () => byId('topbox').className = 'show_dot_code';
-
-        [... document.querySelectorAll('#editorHelp .topicBox h1')].map(h1 => {
-          h1.onclick = toggleHelpTopicBox;
-          h1.parentNode.classList.add('folded');
-        });
-
-
-
-        const l_config = `machine_name: "Traffic light";
-
-Off 'Enable' -> Red;
-Red 'Proceed' => Green 'Proceed' => Yellow 'Proceed' => Red;
-
-[Red Yellow Green] ~> Off;
-`.trim();
-
-
-
-        editor.innerHTML = l_config;
-        editor.onkeyup   = () => updateCode();
-
-        ace.require("ace/ext/language_tools");
-        var ace_editor = ace.edit("editor");
-        setTheme();
-        ace_editor.session.setMode("ace/mode/fsl");
-
-        updateVisual(l_config);
-        updateCode();
-        byId('vis_btn').click();
-        ace_editor.session.setTabSize(2);
-//        ace_editor.session.useSoftTabs(true);
-        ace_editor.setOptions({ enableLiveAutocompletion: true });
-        ace_editor.selection.on('changeCursor', () => errorX.innerHTML = getStatusReadout() );
-//        ace_editor.renderer.setTabSize(2);
-        ace_editor.focus();
-        ace_editor.navigateFileEnd();
-
-        window.ae = ace_editor;
-        window.cm = curSM;
-        // word wrap
-
-        var tree_display = ace.edit("tree");
-        tree_display.session.setMode("ace/mode/javascript");
-        tree_display.getSession().setUseWrapMode(true)
-        tree_display.setReadOnly(true);
-
-        var svg_display = ace.edit("svg_code");
-        svg_display.session.setMode("ace/mode/svg");
-        svg_display.getSession().setUseWrapMode(true)
-        svg_display.setReadOnly(true);
-
-        var dot_display = ace.edit("dot_code");
-        dot_display.session.setMode("ace/mode/dot");
-        dot_display.getSession().setUseWrapMode(true)
-        dot_display.setReadOnly(true);
-
-        ace_editor.commands.bindKeys({
-          'ctrl-r'    : null,
-          'ctrl-t'    : null,
-          'ctrl-l'    : null,
-          'command-r' : null,
-          'command-t' : null,
-          'command-l' : null
-        });
-
-        svg_display.commands.bindKeys({
-          'ctrl-r'    : null,
-          'ctrl-t'    : null,
-          'ctrl-l'    : null,
-          'command-r' : null,
-          'command-t' : null,
-          'command-l' : null
-        });
-
-        dot_display.commands.bindKeys({
-          'ctrl-r'    : null,
-          'ctrl-t'    : null,
-          'ctrl-l'    : null,
-          'command-r' : null,
-          'command-t' : null,
-          'command-l' : null
-        });
-
-      }
-
-    </script>
+    <script defer type="text/javascript" src="graph_explorer.js"></script>
 
 
   </head>
 
-  <body>
+  <body class="edRight">
 
     <div id="topbox">
 
-      <div id="svg_host">
-        <div id="svg_target"></div>
-        <div id="tree_target"><pre id="tree">tree</pre></div>
-        <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
-        <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
+      <div id="editorTopBar">
+        <span class="right">
+          <input id="addHeader"    type="button" value="&#x2630;"  />
+          <input id="addPalette"   type="button" value="&#x1F3A8;" />
+          <input id="rotateEditor" type="button" value="&#128260;" class="gapAfter"/>
+          <span class="small_label">Zoom</span>
+          <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
+          <input id="textUp"    type="button" value="T &uarr;"/>
+          <input id="textDown"  type="button" value="T &darr;"/>
+          <select id="theme" class="gapAfter">
+            <option>ambiance</option>
+            <option>chaos</option>
+            <option>chrome</option>
+            <option>clouds</option>
+            <option>clouds_midnight</option>
+            <option>cobalt</option>
+            <option>crimson_editor</option>
+            <option>dawn</option>
+            <option>dracula</option>
+            <option>dreamweaver</option>
+            <option>eclipse</option>
+            <option>github</option>
+            <option>gob</option>
+            <option>gruvbox</option>
+            <option>idle_fingers</option>
+            <option>iplastic</option>
+            <option>katzenmilch</option>
+            <option>kr_theme</option>
+            <option>kuroir</option>
+            <option>merbivore</option>
+            <option>merbivore_soft</option>
+            <option>mono_industrial</option>
+            <option>monokai</option>
+            <option>pastel_on_dark</option>
+            <option selected>solarized_dark</option>
+            <option>solarized_light</option>
+            <option>sqlserver</option>
+            <option>terminal</option>
+            <option>textmate</option>
+            <option>tomorrow</option>
+            <option>tomorrow_night</option>
+            <option>tomorrow_night_blue</option>
+            <option>tomorrow_night_bright</option>
+            <option>tomorrow_night_eighties</option>
+            <option>twilight</option>
+            <option>vibrant_ink</option>
+            <option>xcode</option>
+          </select>
+          <input id="showHelp"   type="button" value="?"/>
+        </span>
+        <input id="vis_btn"  type="button" value="Vis" class="active"/>
+        <input id="tree_btn" type="button" value="Tree"/>
+        <input id="svg_btn"  type="button" value="SVG"/>
+        <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
+        <input id="png_btn"  type="button" value="Export PNG"/>
       </div>
-      <div id="editor_target">
-        <div id="editorTopBar">
-          <span class="right">
-            <input id="addHeader"  type="button" value="&#x2630;"/>
-            <input id="addPalette" type="button" value="&#x1F3A8;" class="gapAfter"/>
-            <span class="small_label">Zoom</span>
-            <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
-            <input id="textUp"    type="button" value="T &uarr;"/>
-            <input id="textDown"  type="button" value="T &darr;"/>
-            <select id="theme" class="gapAfter">
-              <option>ambiance</option>
-              <option>chaos</option>
-              <option>chrome</option>
-              <option>clouds</option>
-              <option>clouds_midnight</option>
-              <option>cobalt</option>
-              <option>crimson_editor</option>
-              <option>dawn</option>
-              <option>dracula</option>
-              <option>dreamweaver</option>
-              <option>eclipse</option>
-              <option>github</option>
-              <option>gob</option>
-              <option>gruvbox</option>
-              <option>idle_fingers</option>
-              <option>iplastic</option>
-              <option>katzenmilch</option>
-              <option>kr_theme</option>
-              <option>kuroir</option>
-              <option>merbivore</option>
-              <option>merbivore_soft</option>
-              <option>mono_industrial</option>
-              <option>monokai</option>
-              <option>pastel_on_dark</option>
-              <option selected>solarized_dark</option>
-              <option>solarized_light</option>
-              <option>sqlserver</option>
-              <option>terminal</option>
-              <option>textmate</option>
-              <option>tomorrow</option>
-              <option>tomorrow_night</option>
-              <option>tomorrow_night_blue</option>
-              <option>tomorrow_night_bright</option>
-              <option>tomorrow_night_eighties</option>
-              <option>twilight</option>
-              <option>vibrant_ink</option>
-              <option>xcode</option>
-            </select>
-            <input id="showHelp"   type="button" value="?"/>
-          </span>
-          <input id="graphRot" type="button" value="&#8635;" class="gapAfter"/>
-          <input id="vis_btn"  type="button" value="Vis" class="active"/>
-          <input id="tree_btn" type="button" value="Tree"/>
-          <input id="svg_btn"  type="button" value="SVG"/>
-          <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
-          <input id="png_btn"  type="button" value="Export PNG"/>
+      <div id="toolbox">
+        <div id="svg_host">
+          <div id="svg_target"></div>
+          <div id="tree_target"><pre id="tree">tree</pre></div>
+          <div id="svg_code_target"><pre id="svg_code">svg code</pre></div>
+          <div id="dot_code_target"><pre id="dot_code">dot code</pre></div>
         </div>
-        <div id="editorBox">
-          <pre id="editor"></pre>
-        </div>
-        <div id="editorHelp">
-
-          <div class="topicBox">
-            <h1>Transitions</h1>
-            <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
-            <dl>
-              <dt><tt>On -&gt; Off;</tt></dt>
-              <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
-
-              <dt><tt>On =&gt; Off;</tt></dt>
-              <dd>A <em>main path</em> transition</dd>
-
-              <dt><tt>On ~&gt; Off;</tt></dt>
-              <dd>A <em>forced only</em> transition</dd>
-
-              <dt><tt>On &lt;-&gt; Off;</tt></dt>
-              <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
-
-              <dt><tt>On &lt;=~&gt; Off;</tt></dt>
-              <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
-
-              <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
-              <dd><em>Writing in chains</em>, for density and readability</dd>
-
-              <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
-              <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
-            </dl>
+        <div id="editor_target">
+          <div id="editorBox">
+            <pre id="editor"></pre>
           </div>
+          <div id="editorHelp">
 
-          <div class="topicBox">
-            <h1>Actions</h1>
-            <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
+            <div class="topicBox">
+              <h1>Transitions</h1>
+              <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
+              <dl>
+                <dt><tt>On -&gt; Off;</tt></dt>
+                <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+
+                <dt><tt>On =&gt; Off;</tt></dt>
+                <dd>A <em>main path</em> transition</dd>
+
+                <dt><tt>On ~&gt; Off;</tt></dt>
+                <dd>A <em>forced only</em> transition</dd>
+
+                <dt><tt>On &lt;-&gt; Off;</tt></dt>
+                <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
+
+                <dt><tt>On &lt;=~&gt; Off;</tt></dt>
+                <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
+
+                <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
+                <dd><em>Writing in chains</em>, for density and readability</dd>
+
+                <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
+                <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
+              </dl>
+            </div>
+
+            <div class="topicBox">
+              <h1>Actions</h1>
+              <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
+              <dl>
+                <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
+                <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
+
+                <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
+                <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
+
+                <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
+                <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
+              </dl>
+            </div>
+
+  <!--
+            <h1>Probability</h1>
+            <p>These edges can be randomized under an action.</p>
             <dl>
-              <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
-              <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
+              <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
+              <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
 
-              <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
-              <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
-
-              <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
-              <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
+              <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
+              <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
             </dl>
-          </div>
+  -->
 
-<!--
-          <h1>Probability</h1>
-          <p>These edges can be randomized under an action.</p>
-          <dl>
-            <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
-            <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
+  <!--
+            <h1>Named Ordered Sets</h1>
+            <h1>Stripes</h1>
+            <h1>Cycles</h1>
 
-            <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
-            <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
-          </dl>
--->
-
-<!--
-          <h1>Named Ordered Sets</h1>
-          <h1>Stripes</h1>
-          <h1>Cycles</h1>
-
-          <h1>Timeouts</h1>
-          <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
-          <dl>
-            <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
-            <dd>A traffic light which changes colors on a timer automatically</dd>
-          </dl>
--->
-
-          <div class="topicBox">
-            <h1>Spread</h1>
-            <p>Spread is a convenient way to write multiple similar edges at once.</p>
+            <h1>Timeouts</h1>
+            <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
             <dl>
-              <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
-              <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
-
-              <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
-              <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
-
-              <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
-              <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
-<!--
-              <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
-              <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
--->
+              <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
+              <dd>A traffic light which changes colors on a timer automatically</dd>
             </dl>
-          </div>
+  -->
 
-          <div class="topicBox">
-            <h1>Machine Attributes</h1>
-            <p>The machine itself has some attributes.</p>
-            <dl>
-              <dt><tt>machine_name: "Example";</tt></dt>
-              <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
+            <div class="topicBox">
+              <h1>Spread</h1>
+              <p>Spread is a convenient way to write multiple similar edges at once.</p>
+              <dl>
+                <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
+                <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
 
-              <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
-              <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+                <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
+                <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
 
-              <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
-              <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
-            </dl>
+                <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
+                <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
+  <!--
+                <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
+                <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
+  -->
+              </dl>
+            </div>
+
+            <div class="topicBox">
+              <h1>Machine Attributes</h1>
+              <p>The machine itself has some attributes.</p>
+              <dl>
+                <dt><tt>machine_name: "Example";</tt></dt>
+                <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
+
+                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+
+                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
+              </dl>
+            </div>
+
           </div>
 
         </div>
-
-        <div id="editorBottomBar">
-          <div id="toolbay">
-            <a href="#" id="viewLink" target="_blank">🌎</a>
-          </div>
-          <div id="errorX"></div>
+      </div>
+      <div id="editorBottomBar">
+        <div id="toolbay">
+          <a href="#" id="viewLink" target="_blank">🌎</a>
+          <a href="#"  id="editorLink" target="_blank">👨🏽‍💻</a>
         </div>
+        <div id="errorX"></div>
       </div>
 
     </div>
