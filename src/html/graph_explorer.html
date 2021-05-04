@@ -96,25 +96,25 @@
               <h1>Transitions</h1>
               <p>Transitions, or edges, are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
               <dl>
-                <dt><tt>On -&gt; Off;</tt></dt>
-                <dd>A one-directional <em>transition</em> from a state called <tt>On</tt> to a state called <tt>Off</tt></dd>
+                <dt><code>On -&gt; Off;</code></dt>
+                <dd>A one-directional <em>transition</em> from a state called <code>On</code> to a state called <code>Off</code></dd>
 
-                <dt><tt>On =&gt; Off;</tt></dt>
+                <dt><code>On =&gt; Off;</code></dt>
                 <dd>A <em>main path</em> transition</dd>
 
-                <dt><tt>On ~&gt; Off;</tt></dt>
+                <dt><code>On ~&gt; Off;</code></dt>
                 <dd>A <em>forced only</em> transition</dd>
 
-                <dt><tt>On &lt;-&gt; Off;</tt></dt>
-                <dd><em>Two one-directional transitions</em>, one from <tt>On</tt> to <tt>Off</tt>, and one from <tt>Off</tt> to <tt>On</tt></dd>
+                <dt><code>On &lt;-&gt; Off;</code></dt>
+                <dd><em>Two one-directional transitions</em>, one from <code>On</code> to <code>Off</code>, and one from <code>Off</code> to <code>On</code></dd>
 
-                <dt><tt>On &lt;=~&gt; Off;</tt></dt>
-                <dd>Two one-directional transitions, <em>one forced-only</em> from <tt>On</tt> to <tt>Off</tt>, and <em>one main path</em> from <tt>Off</tt> to <tt>On</tt></dd>
+                <dt><code>On &lt;=~&gt; Off;</code></dt>
+                <dd>Two one-directional transitions, <em>one forced-only</em> from <code>On</code> to <code>Off</code>, and <em>one main path</em> from <code>Off</code> to <code>On</code></dd>
 
-                <dt><tt>Red -> Green -> Yellow -> Red;</tt></dt>
+                <dt><code>Red -> Green -> Yellow -> Red;</code></dt>
                 <dd><em>Writing in chains</em>, for density and readability</dd>
 
-                <dt><tt>"Just today" -> "Tomorrow's list";</tt></dt>
+                <dt><code>"Just today" -> "Tomorrow's list";</code></dt>
                 <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
               </dl>
             </div>
@@ -123,14 +123,14 @@
               <h1>Actions</h1>
               <p>Actions, or events, allow the state machine to handle things through the machine structure rather than functional behavior.</p>
               <dl>
-                <dt><tt>On 'toggle' -&gt; Off;</tt></dt>
-                <dd>A statement that, when in the <tt>On</tt> state, the <tt>toggle</tt> action will cause a switch to the <tt>Off</tt> state</dd>
+                <dt><code>On 'toggle' -&gt; Off;</code></dt>
+                <dd>A statement that, when in the <code>On</code> state, the <code>toggle</code> action will cause a switch to the <code>Off</code> state</dd>
 
-                <dt><tt>On 'toggle' -&gt; Off 'toggle' -> On;</tt></dt>
-                <dd>A <tt>toggle action</tt> which <em>changes the state both ways</em> between <tt>Off</tt> and <tt>On</tt> as appropriate</dd>
+                <dt><code>On 'toggle' -&gt; Off 'toggle' -> On;</code></dt>
+                <dd>A <code>toggle action</code> which <em>changes the state both ways</em> between <code>Off</code> and <code>On</code> as appropriate</dd>
 
-                <dt><tt>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</tt></dt>
-                <dd>A <tt>proceed action</tt> which cycles through a traffic light's colors automatically</dd>
+                <dt><code>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</code></dt>
+                <dd>A <code>proceed action</code> which cycles through a traffic light's colors automatically</dd>
               </dl>
             </div>
 
@@ -138,10 +138,10 @@
             <h1>Probability</h1>
             <p>These edges can be randomized under an action.</p>
             <dl>
-              <dt><tt>UnflippedCoin 'flip' 50% -> [Heads Tails];</tt></dt>
-              <dd>Two edges <em>which, with equal probability, may be followed</em> on a <tt>flip action</tt>, to produce either <tt>Heads</tt> or <tt>Tails</tt></dd>
+              <dt><code>UnflippedCoin 'flip' 50% -> [Heads Tails];</code></dt>
+              <dd>Two edges <em>which, with equal probability, may be followed</em> on a <code>flip action</code>, to produce either <code>Heads</code> or <code>Tails</code></dd>
 
-              <dt><tt>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</tt></dt>
+              <dt><code>UnrolledDie 'roll' 1% -> [1 2 3 4 5 6];</code></dt>
               <dd>A six-sided die.  The percentages need not actually add up to 100; they merely must be non-negative.</dd>
             </dl>
   -->
@@ -154,7 +154,7 @@
             <h1>Timeouts</h1>
             <p>Timeouts allow you to assign behavior once a state has been active for a certain length of time.</p>
             <dl>
-              <dt><tt>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</tt></dt>
+              <dt><code>Red after 30s -> Green after 25s -> Yellow after 5s -> Red;</code></dt>
               <dd>A traffic light which changes colors on a timer automatically</dd>
             </dl>
   -->
@@ -163,17 +163,17 @@
               <h1>Spread</h1>
               <p>Spread is a convenient way to write multiple similar edges at once.</p>
               <dl>
-                <dt><tt>Warrior -> [Barbarian Ranger Paladin];</tt></dt>
-                <dd><em>Three transitions</em>, one each from the state <tt>Warrior</tt> to the states <tt>Barbarian</tt>, <tt>Ranger</tt>, and <tt>Paladin</tt></dd>
+                <dt><code>Warrior -> [Barbarian Ranger Paladin];</code></dt>
+                <dd><em>Three transitions</em>, one each from the state <code>Warrior</code> to the states <code>Barbarian</code>, <code>Ranger</code>, and <code>Paladin</code></dd>
 
-                <dt><tt>[Red Yellow Green] ~> Off;</tt></dt>
-                <dd><em>Three forced transitions</em>, one each from the states <tt>Red</tt>, <tt>Yellow</tt>, and <tt>Green</tt> to the state <tt>Off</tt></dd>
+                <dt><code>[Red Yellow Green] ~> Off;</code></dt>
+                <dd><em>Three forced transitions</em>, one each from the states <code>Red</code>, <code>Yellow</code>, and <code>Green</code> to the state <code>Off</code></dd>
 
-                <dt><tt>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</tt></dt>
-                <dd><em>Nine transitions</em>, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, and <tt>Frightened</tt> to each other, including potentially themselves</dd>
+                <dt><code>[Asleep Awake Frightened] -> [Asleep Awake Frightened];</code></dt>
+                <dd><em>Nine transitions</em>, one each from the states <code>Asleep</code>, <code>Awake</code>, and <code>Frightened</code> to each other, including potentially themselves</dd>
   <!--
-                <dt><tt>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</tt></dt>
-                <dd><em>Twenty transitions, one each from the states <tt>Asleep</tt>, <tt>Awake</tt>, <tt>Angry</tt>, <tt>Frightened</tt>, and <tt>Confused</tt> to each other, but with self-references excluded</dd>
+                <dt><code>[Asleep Awake Angry Frightened Confused] -/> [Asleep Awake Angry Frightened Confused];</code></dt>
+                <dd><em>Twenty transitions, one each from the states <code>Asleep</code>, <code>Awake</code>, <code>Angry</code>, <code>Frightened</code>, and <code>Confused</code> to each other, but with self-references excluded</dd>
   -->
               </dl>
             </div>
@@ -182,13 +182,13 @@
               <h1>Machine Attributes</h1>
               <p>The machine itself has some attributes.</p>
               <dl>
-                <dt><tt>machine_name: "Example";</tt></dt>
+                <dt><code>machine_name: "Example";</code></dt>
                 <dd>Sets the name of the machine.  Used by the search and generation machinery.</dd>
 
-                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dt><code>machine_author: "Bob &lt;who@whom.example.com&gt;";</code></dt>
                 <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
 
-                <dt><tt>machine_author: "Bob &lt;who@whom.example.com&gt;";</tt></dt>
+                <dt><code>machine_author: "Bob &lt;who@whom.example.com&gt;";</code></dt>
                 <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
               </dl>
             </div>
