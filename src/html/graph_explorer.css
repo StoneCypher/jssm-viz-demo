@@ -69,7 +69,7 @@ html body #editorTopBar .gapAfter         { margin-right: 1em; }
 .showHelp #editorBox                      { right: 24em; }
 
 #editorHelp                               { position: absolute; top: 2em; bottom: 1.5em; right: 0; width: 24em;
-                                            z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; }
+                                            z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; overflow: auto}
 
 #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
                                             margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
