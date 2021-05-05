@@ -91,9 +91,9 @@
           <div id="editorBox">
             <pre id="editor"></pre>
           </div>
-          <div id="editorHelp">
+          <article id="editorHelp">
 
-            <div class="topicBox">
+            <section class="topicBox">
               <h1>Transitions</h1>
               <p><dfn>Transitions</dfn> (or <dfn>edges<dfn>) are the core of a state machine.  Most states are implicitly declared by being in a transition.</p>
               <dl>
@@ -118,9 +118,9 @@
                 <dt><code>"Just today" -> "Tomorrow's list";</code></dt>
                 <dd><em>Using quote marks</em> to include characters (in this case spaces and an apostrophe) which would not otherwise be legal in a name</dd>
               </dl>
-            </div>
+            </section>
 
-            <div class="topicBox">
+            <section class="topicBox">
               <h1>Actions</h1>
               <p><dfn>Actions</dfn> (or <dfn>events</dfn>), allow the state machine to handle things through the machine structure rather than functional behavior.</p>
               <dl>
@@ -133,7 +133,7 @@
                 <dt><code>Red 'proceed' -> Green 'proceed' -> Yellow 'proceed' -> Red;</code></dt>
                 <dd>A <code>proceed action</code> which cycles through a traffic light's colors automatically</dd>
               </dl>
-            </div>
+            </section>
 
   <!--
             <h1>Probability</h1>
@@ -160,7 +160,7 @@
             </dl>
   -->
 
-            <div class="topicBox">
+            <section class="topicBox">
               <h1>Spread</h1>
               <p><dfn>Spread</dfn> is a convenient way to write multiple similar edges at once.</p>
               <dl>
@@ -177,9 +177,9 @@
                 <dd><em>Twenty transitions, one each from the states <code>Asleep</code>, <code>Awake</code>, <code>Angry</code>, <code>Frightened</code>, and <code>Confused</code> to each other, but with self-references excluded</dd>
   -->
               </dl>
-            </div>
+            </section>
 
-            <div class="topicBox">
+            <section class="topicBox">
               <h1>Machine Attributes</h1>
               <p>The machine itself has some attributes.</p>
               <dl>
@@ -192,9 +192,9 @@
                 <dt><code>machine_author: "Bob &lt;who@whom.example.com&gt;";</code></dt>
                 <dd>The author of the machine.  Does not require an email format; takes a string or a list of strings.</dd>
               </dl>
-            </div>
+            </section>
 
-          </div>
+          </article>
 
         </div>
       </div>
