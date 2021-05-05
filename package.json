@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
@@ -37,7 +37,6 @@
     "url": "https://github.com/StoneCypher/jssm-viz-demo/issues"
   },
   "homepage": "https://github.com/StoneCypher/jssm-viz-demo#readme",
-  "dependencies": {},
   "devDependencies": {
     "ace-builds": "^1.4.4",
     "eslint": "^4.8.0",
