@@ -70,7 +70,7 @@ html body #editorTopBar .gapAfter         { margin-right: 1em; }
 .showHelp #editorBox                      { right: 24em; }
 
 #editorHelp                               { position: absolute; top: 2em; bottom: 1.5em; right: 0; width: 24em;
-                                            z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; }
+                                            z-index: 1; padding: 0.25em 0.5em; box-sizing: border-box; overflow: auto}
 
 #editor                                   { font-family: "inconsolata", monospace; box-sizing: border-box;
                                             margin: 0; padding: 0 0 0 0.5em; border: 0; height: 100%; }
@@ -86,8 +86,8 @@ html body #editorTopBar .gapAfter         { margin-right: 1em; }
 #editorHelp dd                            { border: 0; margin: 0; padding: 0; }
 
 #editorHelp dt                            { font-size: 75%; }
-#editorHelp dt tt                         { padding: 0.2em 0.5em; }
-#editorHelp dl tt                         { font-family: monospace; background-color: #eee; border-radius: 0.25em; }
+#editorHelp dt code                       { padding: 0.2em 0.5em; }
+#editorHelp dl code                       { font-family: monospace; background-color: #eee; border-radius: 0.25em; }
 #editorHelp dd                            { font-size: 66%; margin: 0.25em 0 1em 0.75em; }
 
 #editorHelp em                            { font-weight: bold; color: #004; }
