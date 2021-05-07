@@ -55,7 +55,8 @@ html, body                                { height: 100%; width: 100%; max-width
 
 #editorTopBar .right                      { float: right; }
 
-#editorTopBar input[type="button"]        { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+#editorTopBar input[type="button"],
+#editorTopBar button                      { border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
                                             height: var(--TopBarButtonHeight); line-height: var(--TopBarButtonHeight); margin: 0 auto; padding: 0 0.3em;
                                             background-color: #ddd; color: black; }
 

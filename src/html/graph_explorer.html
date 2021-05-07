@@ -2,7 +2,7 @@
 <html>
 
   <head>
-
+    <meta charset="UTF-8" />
     <title>Viz test</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet">
 
@@ -25,13 +25,13 @@
    
       <div id="editorTopBar">
         <span class="right">
-          <input id="addHeader"    type="button" value="&#x2630;"  />
-          <input id="addPalette"   type="button" value="&#x1F3A8;" />
-          <input id="rotateEditor" type="button" value="&#128260;" class="gapAfter"/>
+          <button id="addHeader">&#x2630;</button>
+          <button id="addPalette">&#x1F3A8;</button>
+          <button id="rotateEditor" class="gapAfter">&#128260;</button>
           <span class="small_label">Zoom</span>
-          <input id="zoom"      type="number" min="0" step="10" value="100" class="gapAfter"/>
-          <input id="textUp"    type="button" value="T &uarr;"/>
-          <input id="textDown"  type="button" value="T &darr;"/>
+          <input id="zoom" type="number" min="0" step="10" value="100" class="gapAfter"/>
+          <button id="textUp">T &uarr;</button>
+          <button id="textDown">T &darr;</button>
           <select id="theme" class="gapAfter">
             <option>ambiance</option>
             <option>chaos</option>
@@ -71,13 +71,13 @@
             <option>vibrant_ink</option>
             <option>xcode</option>
           </select>
-          <input id="showHelp"   type="button" value="?"/>
+          <button id="showHelp">?</button>
         </span>
-        <input id="vis_btn"  type="button" value="Vis" class="active"/>
-        <input id="tree_btn" type="button" value="Tree"/>
-        <input id="svg_btn"  type="button" value="SVG"/>
-        <input id="dot_btn"  type="button" value="DOT" class="gapAfter"/>
-        <input id="png_btn"  type="button" value="Export PNG"/>
+        <button id="vis_btn" class="active">Vis</button>
+        <button id="tree_btn">Tree</button>
+        <button id="svg_btn">SVG</button>
+        <button id="dot_btn" class="gapAfter">DOT</button>
+        <button id="png_btn">Export PNG</button>
       </div>
       <div id="toolbox">
         <div id="svg_host">
