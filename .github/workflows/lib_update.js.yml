@@ -1,0 +1,68 @@
+name: Update underlying jssm-viz
+
+on: [repository_dispatch]
+
+jobs:
+
+
+
+  remote-invoked-build:
+
+    strategy:
+      matrix:
+        include:
+          - node-version: 18.x   # the action is ubuntu node 18 only, so matrix testing makes no sense
+            os: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Node ${{ matrix.node-version }} ${{ matrix.os }} remote build
+      if: github.event.action == 'upgrade_jssm_viz'
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+    - name: Remote-build
+      run: |
+        echo Identifying to Git
+        git config --global user.email "stonecypher@users.noreply.github.com"
+        git config --global user.name "John Haugeland through Github Actions"
+        echo "Attempting automated upgrade to jssm-viz version '${{ github.event.client_payload.lib_version }}' "
+        echo "  - Installing base"
+        npm install
+        echo "  - Upgrading jssm-viz"
+        npm uninstall --save jssm-viz && npm install --save jssm-viz@${{ github.event.client_payload.lib_version }}
+        echo "  - Analyzing new install"
+        export NEWTAG=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' package.json)
+        echo "NEWTAG=$NEWTAG" >> $GITHUB_ENV
+        echo "    * jssm-viz version newly installed is '${{ github.event.client_payload.lib_version }}' "
+        echo "  - Updating local version"
+        npm version ${{ github.event.client_payload.lib_version }} -f
+        echo "  - Running new build"
+        npm run build
+        echo "  - Adding package to git"
+        git diff package.json
+        git add package.json
+        echo "  - Committing package to git"
+        git commit -m "Automated upgrade of jssm-viz library to ${{ github.event.client_payload.lib_version }}"
+        echo "  - Pushing package to git"
+        git push origin
+        git ls-remote --exit-code --tags origin ${{ github.event.client_payload.lib_version }} || git tag -a ${{ github.event.client_payload.lib_version }} -m "Update jssm-viz to ${{ github.event.client_payload.lib_version }}"
+#        git push origin --tags
+
+    - name: Create the release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.UPGRADETAG }}
+        release_name: ${{ env.UPGRADETAG }}
+        body_path: CHANGELOG.md
+
+    - name: Publish to npm
+      run: |
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.JSSM_VIZ_UPGRADE_PERSONAL_ACCESS_TOKEN }}
