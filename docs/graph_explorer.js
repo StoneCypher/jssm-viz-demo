@@ -1,3 +1,12 @@
+document.onchange = function () {
+  // selectExampleMachine(option) {
+  const byId       = z => document.getElementById(z);
+  const editor = byId('editor'),
+        fslFileUrl = byId('select_machine');
+
+  console.log(`fslFileURL :: ${JSON.stringify(fslFileUrl, null, 2)}`);
+}
+
 window.onload = () => {
 
   const PrevTheme = localStorage.getItem('PrevTheme') || 'solarized_dark',
