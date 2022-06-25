@@ -1,6 +1,33 @@
 
 const ExampleMachines = [{
-  machine_name: "Sequential Function Chart",
+  name: "traffic_light",
+  url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/sequential_function_chart.fsl",
+  fsl: `
+    machine_name: "Traffic light";
+
+    flow: down;
+
+    arrange [Green Yellow];
+
+    Off 'Enable' -> Red;
+      Red 'Next' => Green 'Next' => Yellow 'Next' => Red;
+
+    [Red Yellow Green] ~> Off;
+
+    // visual styling
+
+    state Red    : { background-color: pink;        corners: rounded; };
+    state Yellow : { background-color: lightyellow; corners: rounded; };
+    state Green  : { background-color: lightgreen;  corners: rounded; };
+
+    state Off : {
+      background-color : steelblue;
+      text-color       : white;
+      shape            : octagon;
+      linestyle        : dashed;
+    };`,
+}, {
+  name: "sequential_function_chart",
   url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/sequential_function_chart.fsl",
   fsl: `
     machine_name     : "Sequential Function Chart";
@@ -56,12 +83,11 @@ const ExampleMachines = [{
       background-color: skyblue;
       text-color: black;
       linestyle: dashed;
-    };`
-  },
-  {
-    machine_name: "Unit Chains",
-    url: "https://github.com/StoneCypher/jssm/raw/main/src/machines/unit_chains.fsl",
-    fsl: `
+    };`,
+}, {
+  name: "unit_chains",
+  url: "https://github.com/StoneCypher/jssm/raw/main/src/machines/unit_chains.fsl",
+  fsl: `
     machine_name     : "Unit Chains";
     machine_author   : "MachinShin <machinshin@gmail.com>";
     machine_license  : MIT;
@@ -109,12 +135,11 @@ const ExampleMachines = [{
     fathom '100' -> cable '10' -> "nautic mile";
     fathom '15' -> shackle;
     foot '6080' -> "nautic mile";
-    "nautic mile" '3' -> league;`
-  },
-  {
-    machine_name: "TCP/IP 1.0",
-    url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/linguist/tcp%20ip.fsl",
-    fsl: `
+    "nautic mile" '3' -> league;`,
+}, {
+  name: "tcp_ip_1.0",
+  url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/linguist/tcp%20ip.fsl",
+  fsl: `
       machine_name      : "TCP/IP";
       machine_reference : "http://www.texample.net/tikz/examples/tcp-state-machine/";
       machine_version   : 1.0.0;
@@ -157,17 +182,9 @@ const ExampleMachines = [{
 
       CloseWait 'Close / FIN' -> LastAck;
 
-      LastAck 'ACK' -> Closed;`
-  }
-]
+      LastAck 'ACK' -> Closed;`,
+}]
 
-document.onchange = function () {
-  const byId       = z => document.getElementById(z);
-  const editor = byId('editor'),
-    fslFileUrl = byId('select_machine');
-
-  console.log(`fslFileURL :: ${JSON.stringify(fslFileUrl, null, 2)}`);
-}
 
 window.onload = () => {
 
@@ -186,7 +203,7 @@ window.onload = () => {
   const svg_t      = byId('svg_target'),
     editor     = byId('editor'),
     errorX     = byId('errorX'),
-    example    = byId('example_machine'),
+    examples   = byId('select_machine'),
     viewLink   = byId('viewLink'),
     editorLink = byId('editorLink'),
     textUp     = byId('textUp'),
@@ -435,6 +452,7 @@ ${ace_editor.getValue()}`.trim());
   textUp.onclick    = bumpTsUp;
   zoom.oninput      = setZoom;
   theme.onchange    = setTheme;
+  examples.onchange = showSelectedExample
   addHeader.onclick = addFslHeader;
   rotEditor.onclick = rotateEditor;
   showHelp.onclick  = toggleHelp;
@@ -451,37 +469,7 @@ ${ace_editor.getValue()}`.trim());
 
 
 
-  const l_config = `
-
-machine_name: "Traffic light";
-
-flow: down;
-
-
-
-arrange [Green Yellow];
-
-Off 'Enable' -> Red;
-  Red 'Next' => Green 'Next' => Yellow 'Next' => Red;
-
-[Red Yellow Green] ~> Off;
-
-
-
-// visual styling
-
-state Red    : { background-color: pink;        corners: rounded; };
-state Yellow : { background-color: lightyellow; corners: rounded; };
-state Green  : { background-color: lightgreen;  corners: rounded; };
-
-state Off : {
-  background-color : steelblue;
-  text-color       : white;
-  shape            : octagon;
-  linestyle        : dashed;
-};
-
-  `.trim();
+  const l_config = ExampleMachines[0].fsl.trim();
 
   const loadMachineConfig = defaultConfig =>{
     const urlArg                = new URLSearchParams(window.location.search);
