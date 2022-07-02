@@ -39,7 +39,7 @@ jobs:
         echo "NEWTAG=$NEWTAG" >> $GITHUB_ENV
         echo "    * jssm-viz version newly installed is '${{ github.event.client_payload.lib_version }}' "
         echo "  - Updating local version"
-        npm version ${{ github.event.client_payload.lib_version }} -f
+        npm version ${{ github.event.client_payload.lib_version }} -f --no-git-tag-version --no-commit-hooks
         echo "  - Running new build"
         npm run build
         echo "  - Adding package to git"
