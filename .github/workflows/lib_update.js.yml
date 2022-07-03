@@ -57,8 +57,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.UPGRADETAG }}
-        release_name: ${{ env.UPGRADETAG }}
+        tag_name: ${{ github.event.client_payload.lib_version }}
+        release_name: ${{ github.event.client_payload.lib_version }}
         body_path: CHANGELOG.md
 
     - name: Publish to npm
