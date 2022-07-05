@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "5.76.0",
+  "version": "5.76.1",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "clonejs": "cp ./node_modules/jssm-viz/dist/jssm-viz.iife.js ./docs/",
     "clonehtml": "cp ./src/html/* ./docs/",
     "clone": "npm run clonejs && npm run clonehtml && npm run cloneace",
-    "build": "npm run clean && npm run clone"
+    "build": "npm run clean && npm run clone && npm run changelog",
+    "changelog": "rm -f CHANGELOG.md && better_git_changelog -b"
   },
   "repository": {
     "type": "git",
