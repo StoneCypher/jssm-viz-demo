@@ -1,4 +1,3 @@
-
 const ExampleMachines = [{
   name: "traffic_light",
   url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/sequential_function_chart.fsl",
@@ -427,6 +426,13 @@ ${ace_editor.getValue()}`.trim());
     setThemeTo( byId('theme').value );
 
 
+  const showSelectedExample = () => {
+    const selected = byId('select_machine').value
+    const selectedMachine = ExampleMachines.find( mn => mn.name === selected );
+    const fsl = selectedMachine.fsl;
+    ace_editor.setValue(fsl);
+    updateVisual(fsl);
+  };
 
   const rotateEditor = () => {
 
