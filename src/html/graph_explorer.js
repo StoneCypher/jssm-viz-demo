@@ -2,186 +2,186 @@ const ExampleMachines = [{
   name: "traffic_light",
   url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/sequential_function_chart.fsl",
   fsl: `
-    machine_name: "Traffic light";
+machine_name: "Traffic light";
 
-    flow: down;
+flow: down;
 
-    arrange [Green Yellow];
+arrange [Green Yellow];
 
-    Off 'Enable' -> Red;
-      Red 'Next' => Green 'Next' => Yellow 'Next' => Red;
+Off 'Enable' -> Red;
+  Red 'Next' => Green 'Next' => Yellow 'Next' => Red;
 
-    [Red Yellow Green] ~> Off;
+[Red Yellow Green] ~> Off;
 
-    // visual styling
+// visual styling
 
-    state Red    : { background-color: pink;        corners: rounded; };
-    state Yellow : { background-color: lightyellow; corners: rounded; };
-    state Green  : { background-color: lightgreen;  corners: rounded; };
+state Red    : { background-color: pink;        corners: rounded; };
+state Yellow : { background-color: lightyellow; corners: rounded; };
+state Green  : { background-color: lightgreen;  corners: rounded; };
 
-    state Off : {
-      background-color : steelblue;
-      text-color       : white;
-      shape            : octagon;
-      linestyle        : dashed;
-    };`,
+state Off : {
+  background-color : steelblue;
+  text-color       : white;
+  shape            : octagon;
+  linestyle        : dashed;
+};`,
 }, {
   name: "sequential_function_chart",
   url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/sequential_function_chart.fsl",
   fsl: `
-    machine_name     : "Sequential Function Chart";
-    machine_author   : "MachinShin <machinshin@gmail.com>";
-    machine_license  : MIT;
-    machine_comment  : "#madewithfsl";
-    machine_language : en;
-    machine_version  : 1.0.0;
-    fsl_version      : 1.0.0;
+machine_name     : "Sequential Function Chart";
+machine_author   : "MachinShin <machinshin@gmail.com>";
+machine_license  : MIT;
+machine_comment  : "#madewithfsl";
+machine_language : en;
+machine_version  : 1.0.0;
+fsl_version      : 1.0.0;
 
-    start_states     : ["Start Batch"];
-    end_states       : ["End Batch"];
+start_states     : ["Start Batch"];
+end_states       : ["End Batch"];
 
-    "Start Batch" => "Check Reactor";
+"Start Batch" => "Check Reactor";
 
-    "Check Reactor" 'Empty'
-      -> "Charge A (2000 lbs)";
-    "Check Reactor" 'Not Empty'
-      => "Drain Reactor" 'Drain Reactor Complete' -> "Check Reactor";
-    "Charge A (2000 lbs)" 'Charge A complete'
-      -> "Charge B (5000 lbs)";
+"Check Reactor" 'Empty'
+  -> "Charge A (2000 lbs)";
+"Check Reactor" 'Not Empty'
+  => "Drain Reactor" 'Drain Reactor Complete' -> "Check Reactor";
+"Charge A (2000 lbs)" 'Charge A complete'
+  -> "Charge B (5000 lbs)";
 
-    "Charge B (5000 lbs)" 'Charge B1 complete'
-      => "Temp Control (100deg C)";
-    "Charge B (5000 lbs" 'Charge B2 complete'
-      => "Pressure Control (5 psig)";
+"Charge B (5000 lbs)" 'Charge B1 complete'
+  => "Temp Control (100deg C)";
+"Charge B (5000 lbs" 'Charge B2 complete'
+  => "Pressure Control (5 psig)";
 
-    "Temp Control (100deg C)" 'At temperature'
-      => "Wait (120 minutes)";
-    "Pressure Control (5 psig)" 'At pressure'
-      => "Wait (120 minutes)";
+"Temp Control (100deg C)" 'At temperature'
+  => "Wait (120 minutes)";
+"Pressure Control (5 psig)" 'At pressure'
+  => "Wait (120 minutes)";
 
-    "Wait (120 minutes)" -> "Sample";
+"Wait (120 minutes)" -> "Sample";
 
-    "Sample" 'Good'
-      => "Discharge";
-    "Sample" 'Bad'
-      -> "Wait (120 minutes)";
+"Sample" 'Good'
+  => "Discharge";
+"Sample" 'Bad'
+  -> "Wait (120 minutes)";
 
-    "Discharge" 'Complete'
-      => "End Batch";
+"Discharge" 'Complete'
+  => "End Batch";
 
-    state "Start Batch": {
-      shape: rectangle;
-      corners: rounded;
-      background-color: limegreen;
-      text-color: white;
-      linestyle: dashed;
-    };
-    state "End Batch": {
-      shape: rectangle;
-      corners: rounded;
-      background-color: skyblue;
-      text-color: black;
-      linestyle: dashed;
-    };`,
+state "Start Batch": {
+  shape: rectangle;
+  corners: rounded;
+  background-color: limegreen;
+  text-color: white;
+  linestyle: dashed;
+};
+state "End Batch": {
+  shape: rectangle;
+  corners: rounded;
+  background-color: skyblue;
+  text-color: black;
+  linestyle: dashed;
+};`,
 }, {
   name: "unit_chains",
   url: "https://github.com/StoneCypher/jssm/raw/main/src/machines/unit_chains.fsl",
   fsl: `
-    machine_name     : "Unit Chains";
-    machine_author   : "MachinShin <machinshin@gmail.com>";
-    machine_license  : MIT;
-    machine_comment  : "#madewithfsl";
-    machine_language : en;
-    machine_version  : 1.0.0;
-    fsl_version      : 1.0.0;
-    flow: down;
+machine_name     : "Unit Chains";
+machine_author   : "MachinShin <machinshin@gmail.com>";
+machine_license  : MIT;
+machine_comment  : "#madewithfsl";
+machine_language : en;
+machine_version  : 1.0.0;
+fsl_version      : 1.0.0;
+flow: down;
 
-    start_states: [ twip ];
-    end_states: [ league spindle mile "Roman mile" finger ];
+start_states: [ twip ];
+end_states: [ league spindle mile "Roman mile" finger ];
 
-    arrange [ digit finger inch stick ];
-    arrange [ span link shaftment foot hand ];
-    arrange [ "Ramsden's chain" "Gunter's chain" shackle ];
-    arrange [ skein furlong cable ];
-    arrange [ "Roman mile" mile "nautic mile" ];
-    arrange [ spindle league ];
+arrange [ digit finger inch stick ];
+arrange [ span link shaftment foot hand ];
+arrange [ "Ramsden's chain" "Gunter's chain" shackle ];
+arrange [ skein furlong cable ];
+arrange [ "Roman mile" mile "nautic mile" ];
+arrange [ spindle league ];
 
-    link '25' -> "rod, pole, perch";
-    twip '20' -> point;
+link '25' -> "rod, pole, perch";
+twip '20' -> point;
 
-    point '12' -> pica;
-    point '6' -> line '1' -> poppyseed '4' -> barleycorn '3' -> inch '2'
-      -> stick '2' -> hand;
-    point '63' -> finger;
-    pica '6' -> inch;
-    inch '7/8' -> finger;
-    inch '12' -> foot;
-    hand '3' -> foot;
-    line '12' -> inch;
-    inch '3' -> palm;
-    digit '3' -> nail '4' -> span '5' -> ell '96' -> skein '120' -> spindle;
-    digit '4' -> palm '3' -> span;
-    span '2' -> cubit;
-    palm '2' -> shaftment '3' -> cubit;
-    shaftment '2' -> foot;
-    shaftment '5' -> pace '2' -> "grade, step" '4' -> rope '5'
-      -> "Ramsden's chain" '50' -> "Roman mile";
+point '12' -> pica;
+point '6' -> line '1' -> poppyseed '4' -> barleycorn '3' -> inch '2'
+  -> stick '2' -> hand;
+point '63' -> finger;
+pica '6' -> inch;
+inch '7/8' -> finger;
+inch '12' -> foot;
+hand '3' -> foot;
+line '12' -> inch;
+inch '3' -> palm;
+digit '3' -> nail '4' -> span '5' -> ell '96' -> skein '120' -> spindle;
+digit '4' -> palm '3' -> span;
+span '2' -> cubit;
+palm '2' -> shaftment '3' -> cubit;
+shaftment '2' -> foot;
+shaftment '5' -> pace '2' -> "grade, step" '4' -> rope '5'
+  -> "Ramsden's chain" '50' -> "Roman mile";
 
-    cubit '2' -> yard '1760' -> mile;
-    cubit '11' -> "rod, pole, perch" '4' -> "Gunter's chain" '10'
-      -> furlong '8' -> mile;
-    yard '2' -> fathom '11' -> "Gunter's chain";
-    fathom '100' -> cable '10' -> "nautic mile";
-    fathom '15' -> shackle;
-    foot '6080' -> "nautic mile";
-    "nautic mile" '3' -> league;`,
+cubit '2' -> yard '1760' -> mile;
+cubit '11' -> "rod, pole, perch" '4' -> "Gunter's chain" '10'
+  -> furlong '8' -> mile;
+yard '2' -> fathom '11' -> "Gunter's chain";
+fathom '100' -> cable '10' -> "nautic mile";
+fathom '15' -> shackle;
+foot '6080' -> "nautic mile";
+"nautic mile" '3' -> league;`,
 }, {
   name: "tcp_ip_1.0",
   url: "https://raw.githubusercontent.com/StoneCypher/jssm/main/src/machines/linguist/tcp%20ip.fsl",
   fsl: `
-      machine_name      : "TCP/IP";
-      machine_reference : "http://www.texample.net/tikz/examples/tcp-state-machine/";
-      machine_version   : 1.0.0;
+machine_name      : "TCP/IP";
+machine_reference : "http://www.texample.net/tikz/examples/tcp-state-machine/";
+machine_version   : 1.0.0;
 
-      machine_author    : "John Haugeland <stonecypher@gmail.com>";
-      machine_license   : MIT;
+machine_author    : "John Haugeland <stonecypher@gmail.com>";
+machine_license   : MIT;
 
-      jssm_version      : >= 5.0.0;
-      graph_layout      : dot;
+jssm_version      : >= 5.0.0;
+graph_layout      : dot;
 
 
 
-      Closed 'Passive open'      -> Listen;
-      Closed 'Active Open / SYN' -> SynSent;
+Closed 'Passive open'      -> Listen;
+Closed 'Active Open / SYN' -> SynSent;
 
-      Listen 'Close'         -> Closed;
-      Listen 'Send / SYN'    -> SynSent;
-      Listen 'SYN / SYN+ACK' -> SynRcvd;
+Listen 'Close'         -> Closed;
+Listen 'Send / SYN'    -> SynSent;
+Listen 'SYN / SYN+ACK' -> SynRcvd;
 
-      SynSent 'Close'         -> Closed;
-      SynSent 'SYN / SYN+ACK' -> SynRcvd;
-      SynSent 'SYN+ACK / ACK' -> Established;
+SynSent 'Close'         -> Closed;
+SynSent 'SYN / SYN+ACK' -> SynRcvd;
+SynSent 'SYN+ACK / ACK' -> Established;
 
-      SynRcvd 'Timeout / RST' -> Closed;
-      SynRcvd 'Close / FIN'   -> FinWait1;
-      SynRcvd 'ACK'           -> Established;
+SynRcvd 'Timeout / RST' -> Closed;
+SynRcvd 'Close / FIN'   -> FinWait1;
+SynRcvd 'ACK'           -> Established;
 
-      Established 'Close / FIN' -> FinWait1;
-      Established 'FIN / ACK'   -> CloseWait;
+Established 'Close / FIN' -> FinWait1;
+Established 'FIN / ACK'   -> CloseWait;
 
-      FinWait1 'FIN / ACK'     -> Closing;  // the source diagram has this action wrong
-      FinWait1 'FIN+ACK / ACK' -> TimeWait;
-      FinWait1 'ACK / Nothing' -> FinWait2; // this too, see http://www.cs.odu.edu/~cs779/spring17/lectures/architecture_files/image009.jpg
+FinWait1 'FIN / ACK'     -> Closing;  // the source diagram has this action wrong
+FinWait1 'FIN+ACK / ACK' -> TimeWait;
+FinWait1 'ACK / Nothing' -> FinWait2; // this too, see http://www.cs.odu.edu/~cs779/spring17/lectures/architecture_files/image009.jpg
 
-      FinWait2 'FIN / ACK' -> TimeWait;
+FinWait2 'FIN / ACK' -> TimeWait;
 
-      Closing 'ACK' -> TimeWait;
+Closing 'ACK' -> TimeWait;
 
-      TimeWait 'Up to 2*MSL' -> Closed;
+TimeWait 'Up to 2*MSL' -> Closed;
 
-      CloseWait 'Close / FIN' -> LastAck;
+CloseWait 'Close / FIN' -> LastAck;
 
-      LastAck 'ACK' -> Closed;`,
+LastAck 'ACK' -> Closed;`,
 }]
 
 window.onload = () => {
@@ -432,6 +432,7 @@ ${ace_editor.getValue()}`.trim());
     const fsl = selectedMachine.fsl;
     ace_editor.setValue(fsl);
     updateVisual(fsl);
+    ace_editor.clearSelection();
   };
 
   const rotateEditor = () => {
