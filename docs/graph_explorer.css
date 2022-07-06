@@ -103,4 +103,6 @@ html body #editorTopBar .gapAfter         { margin-right: 1em; }
 #toolbay                                  { float: right; }
 #viewLink                                 { padding-right: 0.2em; text-decoration: none; }
 
+#select_machine                           { width: 100px; }
+
 .errorRange                               { position: absolute; border-bottom: 2px dotted red; background-color: rgba(255,0,0, 0.3); }
