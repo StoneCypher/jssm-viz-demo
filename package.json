@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "5.76.1",
+  "version": "5.76.2",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "dist/index.cjs.js",
   "scripts": {
@@ -44,6 +44,6 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "jssm-viz": "^5.76.0"
+    "jssm-viz": "^5.76.2"
   }
 }
