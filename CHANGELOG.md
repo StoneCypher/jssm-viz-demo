@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-127 merges; Changlogging the last 10 commits; Full changelog at [CHANGELOG.long.md](CHANGELOG.long.md)
+144 merges; 13 releases; Changlogging the last 10 commits; Full changelog at [CHANGELOG.long.md](CHANGELOG.long.md)
 
 
 
@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
 
 Published tags:
 
-
+<a href="#5__79__9">5.79.9</a>, <a href="#5__79__8">5.79.8</a>, <a href="#5__79__6">5.79.6</a>, <a href="#5__79__3">5.79.3</a>, <a href="#5__79__2">5.79.2</a>, <a href="#5__79__1">5.79.1</a>, <a href="#5__79__0">5.79.0</a>, <a href="#5__78__0">5.78.0</a>, <a href="#5__77__1">5.77.1</a>, <a href="#5__77__0">5.77.0</a>, <a href="#5__76__2">5.76.2</a>, <a href="#5__76__0">5.76.0</a>, <a href="#5__75__1">5.75.1</a>
 
 
 
@@ -22,61 +22,13 @@ Published tags:
 
 &nbsp;
 
-## [Untagged] - 7/5/2022 9:07:40 PM
+## [Untagged] - 7/25/2022 5:50:49 AM
 
-Commit [60077c7e097cdb54f2150599686bc49f5c32d9ba](https://github.com/StoneCypher/jssm/commit/60077c7e097cdb54f2150599686bc49f5c32d9ba)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-Merges [0bffd71, e5a6429]
-
-  * Merge pull request #32 from machinshin/feature/example-machine-dropdown
-  * Example Machines selectable in live editor
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 7/5/2022 8:50:54 PM
-
-Commit [e5a642999f1833f3f8b1fbee163cec00c3d727aa](https://github.com/StoneCypher/jssm/commit/e5a642999f1833f3f8b1fbee163cec00c3d727aa)
-
-Author: `Vat Raghavan <machinshin@gmail.com>`
-
-  * CR1
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 7/5/2022 4:17:18 PM
-
-Commit [0bffd719949ef1978a922b54c098833cbb7bc7bf](https://github.com/StoneCypher/jssm/commit/0bffd719949ef1978a922b54c098833cbb7bc7bf)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-  * add a changelog to support autoreleases
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 7/5/2022 4:11:21 PM
-
-Commit [b0ff557590cafa2c551aee4b3a84e51daad00e09](https://github.com/StoneCypher/jssm/commit/b0ff557590cafa2c551aee4b3a84e51daad00e09)
+Commit [db0907513617808e0866034644897bfca901193e](https://github.com/StoneCypher/jssm/commit/db0907513617808e0866034644897bfca901193e)
 
 Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
 
-  * Automated upgrade of jssm-viz library to 5.76.0
+  * Automated upgrade of jssm-viz library to 5.79.9
 
 
 
@@ -85,28 +37,15 @@ Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github
 
 &nbsp;
 
-## [Untagged] - 7/5/2022 12:54:28 AM
+<a name="5__79__9" />
 
-Commit [baaef0b0e87ecbb3f2feb3551d70536a19e1bd24](https://github.com/StoneCypher/jssm/commit/baaef0b0e87ecbb3f2feb3551d70536a19e1bd24)
+## [5.79.9] - 7/22/2022 12:32:26 AM
 
-Author: `Vat Raghavan <machinshin@gmail.com>`
-
-  * select a machine&update view
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 7/3/2022 4:57:23 PM
-
-Commit [add4166ef7a7e499f5fc6b8b403f8965c5a65f64](https://github.com/StoneCypher/jssm/commit/add4166ef7a7e499f5fc6b8b403f8965c5a65f64)
+Commit [7358a163e36928eee8254cf5797614bc9afc3a89](https://github.com/StoneCypher/jssm/commit/7358a163e36928eee8254cf5797614bc9afc3a89)
 
 Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
 
-  * Automated upgrade of jssm-viz library to 5.75.1
+  * Automated upgrade of jssm-viz library to 5.79.8
 
 
 
@@ -115,28 +54,15 @@ Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github
 
 &nbsp;
 
-## [Untagged] - 7/3/2022 3:10:37 PM
+<a name="5__79__8" />
 
-Commit [a728ce6ecb509c8f15ef11f52b358c22e2b01155](https://github.com/StoneCypher/jssm/commit/a728ce6ecb509c8f15ef11f52b358c22e2b01155)
+## [5.79.8] - 7/22/2022 12:04:41 AM
 
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-  * wrong tag expression
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 7/3/2022 2:54:22 PM
-
-Commit [9386832a6c7238c080a0b1e03c4cd9e8a4aacea8](https://github.com/StoneCypher/jssm/commit/9386832a6c7238c080a0b1e03c4cd9e8a4aacea8)
+Commit [e46d07108725480466dc875d9df3a27f16e693dc](https://github.com/StoneCypher/jssm/commit/e46d07108725480466dc875d9df3a27f16e693dc)
 
 Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
 
-  * Automated upgrade of jssm-viz library to 5.75.0
+  * Automated upgrade of jssm-viz library to 5.79.6
 
 
 
@@ -145,13 +71,15 @@ Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github
 
 &nbsp;
 
-## [Untagged] - 7/3/2022 2:21:02 PM
+<a name="5__79__6" />
 
-Commit [5aec91347eae6da0ce918a5abd2dbddc54410f27](https://github.com/StoneCypher/jssm/commit/5aec91347eae6da0ce918a5abd2dbddc54410f27)
+## [5.79.6] - 7/18/2022 6:50:28 PM
 
-Author: `John Haugeland <stonecypher@gmail.com>`
+Commit [2ae3cfc751a0bf78ee30206d7fbb7080db48d702](https://github.com/StoneCypher/jssm/commit/2ae3cfc751a0bf78ee30206d7fbb7080db48d702)
 
-  * Update node.js.yml
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.79.3
 
 
 
@@ -160,10 +88,97 @@ Author: `John Haugeland <stonecypher@gmail.com>`
 
 &nbsp;
 
-## [Untagged] - 7/2/2022 2:58:12 PM
+<a name="5__79__3" />
 
-Commit [4bb8f74255f09e239ce0c4fc15d2bbde8344a802](https://github.com/StoneCypher/jssm/commit/4bb8f74255f09e239ce0c4fc15d2bbde8344a802)
+## [5.79.3] - 7/14/2022 11:46:56 PM
 
-Author: `John Haugeland <stonecypher@gmail.com>`
+Commit [555092785c5beccf26261c9b51f4fff4013e860b](https://github.com/StoneCypher/jssm/commit/555092785c5beccf26261c9b51f4fff4013e860b)
 
-  * forgot to tell npm to leave git alone
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.79.2
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__79__2" />
+
+## [5.79.2] - 7/14/2022 2:54:33 PM
+
+Commit [012f3e7426ab8ace092c279f9c6fef4c4c31875d](https://github.com/StoneCypher/jssm/commit/012f3e7426ab8ace092c279f9c6fef4c4c31875d)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.79.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__79__1" />
+
+## [5.79.1] - 7/13/2022 9:40:12 PM
+
+Commit [1dc2bdf5db3dc03f4b3de365c28f7c047011c1f5](https://github.com/StoneCypher/jssm/commit/1dc2bdf5db3dc03f4b3de365c28f7c047011c1f5)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.79.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__79__0" />
+
+## [5.79.0] - 7/9/2022 4:37:47 PM
+
+Commit [24fd6eebf1ddec83f48b41ff32b681c186bfd31c](https://github.com/StoneCypher/jssm/commit/24fd6eebf1ddec83f48b41ff32b681c186bfd31c)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.78.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__78__0" />
+
+## [5.78.0] - 7/7/2022 10:44:09 PM
+
+Commit [b6c4e30a078178c0685f304ce52bebf1aac803d0](https://github.com/StoneCypher/jssm/commit/b6c4e30a078178c0685f304ce52bebf1aac803d0)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.77.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__77__1" />
+
+## [5.77.1] - 7/7/2022 10:25:31 PM
+
+Commit [ce0e57f247274b6ed957ea2d557432a970acf5fd](https://github.com/StoneCypher/jssm/commit/ce0e57f247274b6ed957ea2d557432a970acf5fd)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.77.0
