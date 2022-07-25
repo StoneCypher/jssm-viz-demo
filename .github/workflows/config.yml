@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Unified issue tracker
+    url: https://github.com/StoneCypher/fsl/
+    about: Issues for all FSL and JSSM repositories go here
+  - name: Live community on Discord
+    url: https://discord.com/invite/9P95USqnMK
+    about: Come chat with us
