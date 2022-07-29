@@ -24,6 +24,7 @@ jobs:
       with:
         node-version: 18.x
         cache: 'npm'
+        registry-url: https://registry.npmjs.org/
     - name: Remote-build
       run: |
         echo Identifying to Git
