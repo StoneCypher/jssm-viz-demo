@@ -182,7 +182,7 @@ TimeWait 'Up to 2*MSL' -> Closed;
 CloseWait 'Close / FIN' -> LastAck;
 
 LastAck 'ACK' -> Closed;`,
-}]
+}];
 
 window.onload = () => {
 
@@ -197,6 +197,11 @@ window.onload = () => {
         jssm       = jviz.jssm,
         sm         = jssm.sm,
         byId       = z => document.getElementById(z);
+
+  console.log('Versions:');
+  console.log(`  - jssm          : ${jssm.version}`);
+  console.log(`  - jssm-viz      : ${jviz.version}`);
+  console.log(`  - jssm-viz-demo : ${version}`);
 
   const svg_t      = byId('svg_target'),
         editor     = byId('editor'),

@@ -10,7 +10,8 @@
     "clonejs": "cp ./node_modules/jssm-viz/dist/jssm-viz.iife.js ./docs/",
     "clonehtml": "cp ./src/html/* ./docs/",
     "clone": "npm run clonejs && npm run clonehtml && npm run cloneace",
-    "build": "npm run clean && npm run clone && npm run changelog",
+    "version": "rm -f ./docs/version.js && node ./src/build_js/set_version.js",
+    "build": "npm run clean && npm run version && npm run clone && npm run changelog",
     "changelog": "rm -f CHANGELOG.md && better_git_changelog -b"
   },
   "repository": {
