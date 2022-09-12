@@ -199,9 +199,9 @@ window.onload = () => {
         byId       = z => document.getElementById(z);
 
   console.log('Versions:');
-  console.log(`  - jssm          : ${jssm.version}`);
-  console.log(`  - jssm-viz      : ${jviz.version}`);
-  console.log(`  - jssm-viz-demo : ${version}`);
+  console.log(`  - jssm          : ${jssm.version} ${ new Date(jssm.build_time).toLocaleString() }`);
+  console.log(`  - jssm-viz      : ${jviz.version} ${ new Date(jviz.build_time).toLocaleString() }`);
+  console.log(`  - jssm-viz-demo : ${version} ${      new Date(     build_time).toLocaleString() }`);
 
   const svg_t      = byId('svg_target'),
         editor     = byId('editor'),
