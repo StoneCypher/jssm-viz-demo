@@ -1,5 +1,5 @@
 
-const version    = "5.85.3",
-      build_time = 1663020958332;
+const version    = "5.85.8",
+      build_time = 1663041882177;
 
-module.exports = { version, build_time };
+if (module) { module.exports = { version, build_time }; }
