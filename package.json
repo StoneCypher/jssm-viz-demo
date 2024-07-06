@@ -2,7 +2,7 @@
   "name": "jssm-viz-demo",
   "version": "5.98.8",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
-  "main": "dist/index.cjs.js",
+  "main": "src/build_js/nothing_to_run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf ./docs/ && mkdir docs",
@@ -42,7 +42,8 @@
   "devDependencies": {
     "ace-builds": "^1.4.4",
     "better_git_changelog": "^1.6.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "semver": "^7.6.2"
   },
   "dependencies": {
     "jssm-viz": "^5.98.8"

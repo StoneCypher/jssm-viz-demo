@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-175 merges; 34 releases
+197 merges; 61 releases
 
 
 
@@ -12,8 +12,482 @@ All notable changes to this project will be documented in this file.
 
 Published tags:
 
-<a href="#5__85__8">5.85.8</a>, <a href="#5__85__7">5.85.7</a>, <a href="#5__85__3">5.85.3</a>, <a href="#5__85__2">5.85.2</a>, <a href="#5__85__1">5.85.1</a>, <a href="#5__84__0">5.84.0</a>, <a href="#5__83__2">5.83.2</a>, <a href="#5__83__1">5.83.1</a>, <a href="#5__83__0">5.83.0</a>, <a href="#5__82__5">5.82.5</a>, <a href="#5__82__4">5.82.4</a>, <a href="#5__82__0">5.82.0</a>, <a href="#5__81__2">5.81.2</a>, <a href="#5__81__0">5.81.0</a>, <a href="#5__80__1">5.80.1</a>, <a href="#5__80__0">5.80.0</a>, <a href="#5__79__18">5.79.18</a>, <a href="#5__79__17">5.79.17</a>, <a href="#5__79__16">5.79.16</a>, <a href="#5__79__11">5.79.11</a>, <a href="#5__79__10">5.79.10</a>, <a href="#5__79__9">5.79.9</a>, <a href="#5__79__8">5.79.8</a>, <a href="#5__79__6">5.79.6</a>, <a href="#5__79__3">5.79.3</a>, <a href="#5__79__2">5.79.2</a>, <a href="#5__79__1">5.79.1</a>, <a href="#5__79__0">5.79.0</a>, <a href="#5__78__0">5.78.0</a>, <a href="#5__77__1">5.77.1</a>, <a href="#5__77__0">5.77.0</a>, <a href="#5__76__2">5.76.2</a>, <a href="#5__76__0">5.76.0</a>, <a href="#5__75__1">5.75.1</a>
+<a href="#5__98__8">5.98.8</a>, <a href="#5__98__2">5.98.2</a>, <a href="#5__98__0">5.98.0</a>, <a href="#5__97__1">5.97.1</a>, <a href="#5__96__1">5.96.1</a>, <a href="#5__96__0">5.96.0</a>, <a href="#5__95__0">5.95.0</a>, <a href="#5__90__1">5.90.1</a>, <a href="#5__90__0">5.90.0</a>, <a href="#5__89__6">5.89.6</a>, <a href="#5__89__3">5.89.3</a>, <a href="#5__89__2">5.89.2</a>, <a href="#5__89__1">5.89.1</a>, <a href="#5__89__0">5.89.0</a>, <a href="#5__88__4">5.88.4</a>, <a href="#5__88__3">5.88.3</a>, <a href="#5__88__2">5.88.2</a>, <a href="#5__88__1">5.88.1</a>, <a href="#5__88__0">5.88.0</a>, <a href="#5__87__0">5.87.0</a>, <a href="#5__86__3">5.86.3</a>, <a href="#5__86__2">5.86.2</a>, <a href="#5__86__1">5.86.1</a>, <a href="#5__86__0">5.86.0</a>, <a href="#5__85__11">5.85.11</a>, <a href="#5__85__10">5.85.10</a>, <a href="#5__85__9">5.85.9</a>, <a href="#5__85__8">5.85.8</a>, <a href="#5__85__7">5.85.7</a>, <a href="#5__85__3">5.85.3</a>, <a href="#5__85__2">5.85.2</a>, <a href="#5__85__1">5.85.1</a>, <a href="#5__84__0">5.84.0</a>, <a href="#5__83__2">5.83.2</a>, <a href="#5__83__1">5.83.1</a>, <a href="#5__83__0">5.83.0</a>, <a href="#5__82__5">5.82.5</a>, <a href="#5__82__4">5.82.4</a>, <a href="#5__82__0">5.82.0</a>, <a href="#5__81__2">5.81.2</a>, <a href="#5__81__0">5.81.0</a>, <a href="#5__80__1">5.80.1</a>, <a href="#5__80__0">5.80.0</a>, <a href="#5__79__18">5.79.18</a>, <a href="#5__79__17">5.79.17</a>, <a href="#5__79__16">5.79.16</a>, <a href="#5__79__11">5.79.11</a>, <a href="#5__79__10">5.79.10</a>, <a href="#5__79__9">5.79.9</a>, <a href="#5__79__8">5.79.8</a>, <a href="#5__79__6">5.79.6</a>, <a href="#5__79__3">5.79.3</a>, <a href="#5__79__2">5.79.2</a>, <a href="#5__79__1">5.79.1</a>, <a href="#5__79__0">5.79.0</a>, <a href="#5__78__0">5.78.0</a>, <a href="#5__77__1">5.77.1</a>, <a href="#5__77__0">5.77.0</a>, <a href="#5__76__2">5.76.2</a>, <a href="#5__76__0">5.76.0</a>, <a href="#5__75__1">5.75.1</a>
 
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+## [Untagged] - 7/6/2024 12:56:08 PM
+
+Commit [8e1ebe3f3d403928b333912deb5ebff5f1a8ef62](https://github.com/StoneCypher/jssm/commit/8e1ebe3f3d403928b333912deb5ebff5f1a8ef62)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.98.8
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__98__8" />
+
+## [5.98.8] - 4/25/2024 11:50:56 AM
+
+Commit [306da040771f846e10c120c77949b016797620bc](https://github.com/StoneCypher/jssm/commit/306da040771f846e10c120c77949b016797620bc)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.98.2
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__98__2" />
+
+## [5.98.2] - 3/26/2024 8:30:40 PM
+
+Commit [4a5eff084d2378df3ed2c43070bf0ede95b4d294](https://github.com/StoneCypher/jssm/commit/4a5eff084d2378df3ed2c43070bf0ede95b4d294)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.98.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__98__0" />
+
+## [5.98.0] - 2/5/2024 3:05:55 PM
+
+Commit [bd5e2efd8404b5999a38d9eb90fbcefee097bbb9](https://github.com/StoneCypher/jssm/commit/bd5e2efd8404b5999a38d9eb90fbcefee097bbb9)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.97.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__97__1" />
+
+## [5.97.1] - 1/6/2024 11:57:28 AM
+
+Commit [bd5eba3a9f637ed265a2509d6c8fb8a772a45fc1](https://github.com/StoneCypher/jssm/commit/bd5eba3a9f637ed265a2509d6c8fb8a772a45fc1)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.96.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__96__1" />
+
+## [5.96.1] - 1/1/2024 1:37:41 AM
+
+Commit [da8074dd3095125ac42d7de58e29a372f1f25565](https://github.com/StoneCypher/jssm/commit/da8074dd3095125ac42d7de58e29a372f1f25565)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.96.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__96__0" />
+
+## [5.96.0] - 1/1/2024 12:54:22 AM
+
+Commit [32994cdf01b009d0075e005e0a468403004ca372](https://github.com/StoneCypher/jssm/commit/32994cdf01b009d0075e005e0a468403004ca372)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.95.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__95__0" />
+
+## [5.95.0] - 10/25/2023 1:02:20 PM
+
+Commit [dbac2a770fba8cb49b5d469611544b88b701d03d](https://github.com/StoneCypher/jssm/commit/dbac2a770fba8cb49b5d469611544b88b701d03d)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.90.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__90__1" />
+
+## [5.90.1] - 10/25/2023 12:42:44 PM
+
+Commit [ac532d54bed0971ace9d93704cbde770252f58f0](https://github.com/StoneCypher/jssm/commit/ac532d54bed0971ace9d93704cbde770252f58f0)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.90.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__90__0" />
+
+## [5.90.0] - 10/25/2023 11:39:16 AM
+
+Commit [2ad65fce84771aff9ea1c32d1e526e108dc9cd08](https://github.com/StoneCypher/jssm/commit/2ad65fce84771aff9ea1c32d1e526e108dc9cd08)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.89.6
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__89__6" />
+
+## [5.89.6] - 10/25/2023 11:07:19 AM
+
+Commit [32c462b1b904f9311d4c2989f4bf863db8234433](https://github.com/StoneCypher/jssm/commit/32c462b1b904f9311d4c2989f4bf863db8234433)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.89.3
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__89__3" />
+
+## [5.89.3] - 6/6/2023 12:40:17 AM
+
+Commit [5fd30ad312c21cdacd7d404b23a8a3ef539a7e88](https://github.com/StoneCypher/jssm/commit/5fd30ad312c21cdacd7d404b23a8a3ef539a7e88)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.89.2
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__89__2" />
+
+## [5.89.2] - 5/13/2023 11:50:54 PM
+
+Commit [8e4490c0783f4f798cf1b4dd81d92fb89f1083e7](https://github.com/StoneCypher/jssm/commit/8e4490c0783f4f798cf1b4dd81d92fb89f1083e7)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.89.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__89__1" />
+
+## [5.89.1] - 5/7/2023 12:42:58 PM
+
+Commit [f1ecd7c4bc38a9433a68d214319b43d7a99d0e26](https://github.com/StoneCypher/jssm/commit/f1ecd7c4bc38a9433a68d214319b43d7a99d0e26)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.89.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__89__0" />
+
+## [5.89.0] - 2/7/2023 4:02:21 PM
+
+Commit [10bbce8070f783663a2fe5ed993e0b278935b61b](https://github.com/StoneCypher/jssm/commit/10bbce8070f783663a2fe5ed993e0b278935b61b)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.88.4
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__88__4" />
+
+## [5.88.4] - 12/18/2022 7:26:21 PM
+
+Commit [5ab0028c4f0738011e2e525e27d3d403d0faaa72](https://github.com/StoneCypher/jssm/commit/5ab0028c4f0738011e2e525e27d3d403d0faaa72)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.88.3
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__88__3" />
+
+## [5.88.3] - 12/4/2022 8:09:13 PM
+
+Commit [2577cb9a3249c41788c7ba9c399e11a310e33b07](https://github.com/StoneCypher/jssm/commit/2577cb9a3249c41788c7ba9c399e11a310e33b07)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.88.2
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__88__2" />
+
+## [5.88.2] - 12/4/2022 7:35:37 PM
+
+Commit [9ff8ed52b61fb61a14c6159e62d4c7ed0ee38d58](https://github.com/StoneCypher/jssm/commit/9ff8ed52b61fb61a14c6159e62d4c7ed0ee38d58)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.88.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__88__1" />
+
+## [5.88.1] - 12/4/2022 11:55:00 AM
+
+Commit [b78411532958139cce81cfc96948bffa343d6c81](https://github.com/StoneCypher/jssm/commit/b78411532958139cce81cfc96948bffa343d6c81)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.88.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__88__0" />
+
+## [5.88.0] - 12/3/2022 8:28:06 PM
+
+Commit [8bb09698d6b9b2f66aca2195c69e12dd9790e0c2](https://github.com/StoneCypher/jssm/commit/8bb09698d6b9b2f66aca2195c69e12dd9790e0c2)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.87.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__87__0" />
+
+## [5.87.0] - 11/12/2022 6:17:52 PM
+
+Commit [0bc0036c7a363c8a3b6b3e6d7970fdf6a083c5a9](https://github.com/StoneCypher/jssm/commit/0bc0036c7a363c8a3b6b3e6d7970fdf6a083c5a9)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.86.3
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__86__3" />
+
+## [5.86.3] - 11/12/2022 12:58:43 PM
+
+Commit [b8a57d4560908ecc0d480fb1714bffcaf502e512](https://github.com/StoneCypher/jssm/commit/b8a57d4560908ecc0d480fb1714bffcaf502e512)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.86.2
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__86__2" />
+
+## [5.86.2] - 11/11/2022 6:49:40 PM
+
+Commit [7dda6aadc0caa416a9f7c2dcf688ea11be12120d](https://github.com/StoneCypher/jssm/commit/7dda6aadc0caa416a9f7c2dcf688ea11be12120d)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.86.1
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__86__1" />
+
+## [5.86.1] - 11/11/2022 6:31:22 PM
+
+Commit [b2260957191f0806a6d0b0c7ab6ce7690fbb4eb0](https://github.com/StoneCypher/jssm/commit/b2260957191f0806a6d0b0c7ab6ce7690fbb4eb0)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.86.0
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__86__0" />
+
+## [5.86.0] - 9/16/2022 11:24:58 PM
+
+Commit [45b2b33d5965a8841f8cb40ace612dfabbe963ed](https://github.com/StoneCypher/jssm/commit/45b2b33d5965a8841f8cb40ace612dfabbe963ed)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.85.11
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__85__11" />
+
+## [5.85.11] - 9/16/2022 5:43:10 PM
+
+Commit [c0461d949df039a285833eabca4209cf61bd6cf7](https://github.com/StoneCypher/jssm/commit/c0461d949df039a285833eabca4209cf61bd6cf7)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.85.10
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__85__10" />
+
+## [5.85.10] - 9/12/2022 9:27:17 PM
+
+Commit [ad65870d70f975457ca9862fed7faa15edb665fd](https://github.com/StoneCypher/jssm/commit/ad65870d70f975457ca9862fed7faa15edb665fd)
+
+Author: `John Haugeland through Github Actions <stonecypher@users.noreply.github.com>`
+
+  * Automated upgrade of jssm-viz library to 5.85.9
+
+
+
+
+&nbsp;
+
+&nbsp;
+
+<a name="5__85__9" />
+
+## [5.85.9] - 9/12/2022 9:05:07 PM
+
+Commit [decd3ba58f50c3b568280d09c36c6b0366737e4f](https://github.com/StoneCypher/jssm/commit/decd3ba58f50c3b568280d09c36c6b0366737e4f)
+
+Author: `John Haugeland <stonecypher@gmail.com>`
+
+  * unifying rebuild
 
 
 
@@ -987,21 +1461,6 @@ Author: `John Haugeland <stonecypher@gmail.com>`
 
 &nbsp;
 
-## [Untagged] - 5/18/2022 4:27:42 PM
-
-Commit [d738a50d9e387f3dcf267fd25f8182f492e1e5eb](https://github.com/StoneCypher/jssm/commit/d738a50d9e387f3dcf267fd25f8182f492e1e5eb)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-  * cleanup
-
-
-
-
-&nbsp;
-
-&nbsp;
-
 ## [Untagged] - 5/17/2022 8:28:49 AM
 
 Commit [d327e4b99ca7fc3aa8d1c7ec8ce3bfc0e32076aa](https://github.com/StoneCypher/jssm/commit/d327e4b99ca7fc3aa8d1c7ec8ce3bfc0e32076aa)
@@ -1101,38 +1560,6 @@ Merges [e7d917a, 8ab19ee]
 
 &nbsp;
 
-## [Untagged] - 5/6/2021 9:46:35 PM
-
-Commit [52e8bea29f0d6a008f1d3d96b3e7481a48e9ae28](https://github.com/StoneCypher/jssm/commit/52e8bea29f0d6a008f1d3d96b3e7481a48e9ae28)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-Merges [765123c, c27ee43]
-
-  * WIP on master: 765123c Persist preferences for rotate and theme, fixes StoneCypher/fsl#605, fixes StoneCypher/fsl#257, fixes StoneCypher/fsl#604
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 5/6/2021 9:46:35 PM
-
-Commit [c27ee431fc2f8ae00a10c36ca7e26803f667e7f2](https://github.com/StoneCypher/jssm/commit/c27ee431fc2f8ae00a10c36ca7e26803f667e7f2)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-  * index on master: 765123c Persist preferences for rotate and theme, fixes StoneCypher/fsl#605, fixes StoneCypher/fsl#257, fixes StoneCypher/fsl#604
-
-
-
-
-&nbsp;
-
-&nbsp;
-
 ## [Untagged] - 5/6/2021 4:03:15 PM
 
 Commit [8ab19eefcd610466df4d862ff74d54867f007a47](https://github.com/StoneCypher/jssm/commit/8ab19eefcd610466df4d862ff74d54867f007a47)
@@ -1202,25 +1629,6 @@ Commit [a3ee4fef95509cd2abf22613b13ce578a89729d2](https://github.com/StoneCypher
 Author: `Zearin <Zearin@users.noreply.github.com>`
 
   * input[type='button'] ▶︎ button
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 5/6/2021 10:17:27 AM
-
-Commit [b6270769af1fd317ff1758be1e1676c06976a082](https://github.com/StoneCypher/jssm/commit/b6270769af1fd317ff1758be1e1676c06976a082)
-
-Author: `dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>`
-
-  * Bump lodash from 4.17.19 to 4.17.21
-  * Bumps [lodash](https://github.com/lodash/lodash) from 4.17.19 to 4.17.21.
-- [Release notes](https://github.com/lodash/lodash/releases)
-- [Commits](https://github.com/lodash/lodash/compare/4.17.19...4.17.21)
-  * Signed-off-by: dependabot[bot] <support@github.com>
 
 
 
@@ -1778,25 +2186,6 @@ Author: `Vat Raghavan <machinshin@gmail.com>`
 
 &nbsp;
 
-## [Untagged] - 11/2/2019 10:31:38 AM
-
-Commit [ed47db2a871c6554a15f82527758bb544634c4b9](https://github.com/StoneCypher/jssm/commit/ed47db2a871c6554a15f82527758bb544634c4b9)
-
-Author: `dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>`
-
-  * Bump lodash from 4.17.11 to 4.17.15
-  * Bumps [lodash](https://github.com/lodash/lodash) from 4.17.11 to 4.17.15.
-- [Release notes](https://github.com/lodash/lodash/releases)
-- [Commits](https://github.com/lodash/lodash/compare/4.17.11...4.17.15)
-  * Signed-off-by: dependabot[bot] <support@github.com>
-
-
-
-
-&nbsp;
-
-&nbsp;
-
 ## [Untagged] - 5/25/2019 5:23:07 PM
 
 Commit [a191d87128ca21e945b5cfa873da06d4fd3c2f81](https://github.com/StoneCypher/jssm/commit/a191d87128ca21e945b5cfa873da06d4fd3c2f81)
@@ -2080,21 +2469,6 @@ Commit [a2310e929237d50c24d7f5031eac58fa3bbbde2b](https://github.com/StoneCypher
 Author: `John Haugeland <stonecypher@gmail.com>`
 
   * Add zoom.  Widen render.  Hard-lock package versions
-
-
-
-
-&nbsp;
-
-&nbsp;
-
-## [Untagged] - 11/14/2018 9:29:47 PM
-
-Commit [5368b8fb493ff0ea1312244f353a25d8bb511d61](https://github.com/StoneCypher/jssm/commit/5368b8fb493ff0ea1312244f353a25d8bb511d61)
-
-Author: `John Haugeland <stonecypher@gmail.com>`
-
-  * okay, browserify, babel 6-7, viz.js upgrade, and more
 
 
 
