@@ -17,10 +17,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Node ${{ matrix.node-version }} ${{ matrix.os }} remote build
       if: github.event.action == 'upgrade_jssm_viz'
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
         cache: 'npm'
