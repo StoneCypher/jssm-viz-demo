@@ -1,6 +1,6 @@
 {
   "name": "jssm-viz-demo",
-  "version": "5.101.0",
+  "version": "5.104.1",
   "description": "Show how to use jssm-viz in a project, to render a jssm machine",
   "main": "src/build_js/nothing_to_run.js",
   "scripts": {
@@ -46,6 +46,6 @@
     "semver": "^7.6.2"
   },
   "dependencies": {
-    "jssm-viz": "^5.101.0"
+    "jssm-viz": "^5.104.1"
   }
 }
