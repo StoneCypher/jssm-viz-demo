@@ -187,7 +187,8 @@ LastAck 'ACK' -> Closed;`,
 window.onload = () => {
 
   const PrevTheme = localStorage.getItem('PrevTheme') || 'solarized_dark',
-        PrevRot   = localStorage.getItem('PrevRot')   || 'edRight';
+        PrevRot   = localStorage.getItem('PrevRot')   || 'edRight',
+        PrevFlow  = localStorage.getItem('PrevFlow')  || 'none';
 
 
 
@@ -213,6 +214,7 @@ window.onload = () => {
         textDown   = byId('textDown'),
         addHeader  = byId('addHeader'),
         rotEditor  = byId('rotateEditor'),
+        rotGraph   = byId('rotateGraph'),
         zoom       = byId('zoom'),
         theme      = byId('theme'),
         showHelp   = byId('showHelp'),
@@ -309,6 +311,49 @@ window.onload = () => {
 
 
 
+  // fsl#193 - rotate the rendered graph, overriding the machine's `flow:`.
+  // 'none' means no override: the machine's own flow (or the default) is
+  // respected.  The override is applied only to the copy of the source handed
+  // to the renderer; the editor buffer and the share links keep the user's
+  // text untouched.
+
+  const FlowOrder = ['none', 'up', 'right', 'down', 'left'];
+
+  const FlowGlyphs = {
+    none  : '&#8635;',
+    up    : '&uarr;',
+    right : '&rarr;',
+    down  : '&darr;',
+    left  : '&larr;'
+  };
+
+  let flowOverride = FlowOrder.includes(PrevFlow) ? PrevFlow : 'none';
+
+  // jssm allows at most one `flow:` statement, so the override must replace
+  // any declared flow rather than accompany it
+  const stripFlow = fsl_source =>
+    fsl_source.replace(/(^|[;\n])(\s*)flow\s*:\s*(?:up|right|down|left)\s*;/g, '$1$2');
+
+  const applyFlowOverride = fsl_source =>
+    (flowOverride === 'none')
+      ? fsl_source
+      : `flow: ${flowOverride};\n${stripFlow(fsl_source)}`;
+
+  const updateRotGraphButton = () => {
+    rotGraph.innerHTML = FlowGlyphs[flowOverride];
+    rotGraph.title     = 'Rotate graph (overrides flow)'
+                       + (flowOverride === 'none' ? '' : ` - currently ${flowOverride}`);
+  };
+
+  const rotateGraph = () => {
+    flowOverride = FlowOrder[(FlowOrder.indexOf(flowOverride) + 1) % FlowOrder.length];
+    localStorage.setItem('PrevFlow', flowOverride);
+    updateRotGraphButton();
+    updateVisual(ace_editor.getValue());
+  };
+
+
+
   let markers = [];
 
   const updateVisual = async (fsl_source) => {
@@ -319,8 +364,10 @@ window.onload = () => {
 
       curSM = sm`${fsl_source}`;
 
-      const u_dot  = await jviz.fsl_to_dot(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
-            u_svg  = await jviz.fsl_to_svg_string(fsl_source, { engine: curSM.graph_layout() || 'dot' }),
+      const render_source = applyFlowOverride(fsl_source);
+
+      const u_dot  = await jviz.fsl_to_dot(render_source, { engine: curSM.graph_layout() || 'dot' }),
+            u_svg  = await jviz.fsl_to_svg_string(render_source, { engine: curSM.graph_layout() || 'dot' }),
             u_tree = JSON.stringify(jssm.parse(fsl_source), undefined, 2);
       const compressed = LZString.compressToEncodedURIComponent(fsl_source);
       viewLink.href    = viewerUrl + compressed;
@@ -465,6 +512,7 @@ ${ace_editor.getValue()}`.trim());
   examples.onchange = showSelectedExample
   addHeader.onclick = addFslHeader;
   rotEditor.onclick = rotateEditor;
+  rotGraph.onclick  = rotateGraph;
   showHelp.onclick  = toggleHelp;
 
   vis_btn.onclick  = () => byId('topbox').className = 'show_svg';
@@ -558,6 +606,7 @@ ${ace_editor.getValue()}`.trim());
 
   document.body.className = PrevRot;
   setThemeTo(PrevTheme);
+  updateRotGraphButton();
 
   for (let idx=0; idx<theme.options.length; ++idx) {
     if (theme.options[idx].text === PrevTheme) {
